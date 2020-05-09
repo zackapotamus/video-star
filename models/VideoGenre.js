@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       foreignKey: true
     }
+  }, {
+    timestamps: false,
   });
   VideoGenre.associate = (models) => {
     VideoGenre.belongsTo(models.Video, {foreignKey: "videoId", targetKey: "id"});
