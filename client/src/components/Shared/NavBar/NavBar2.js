@@ -2,18 +2,22 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faUser, faComment, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import "./components/NavBar/NavBar.css"
+import "./NavBar.css"
 
-function NavBar1() {
+function NavBar2() {
   // We'll go into the Hooks API later, for now, we are just using some code
   // from the react-router docs (https://reacttraining.com/react-router/web/api/Hooks/uselocation)
   // This allows the component to check the route any time the user uses a link to navigate.
   const location = useLocation();
 
   return (
-    <nav className="navbar navbar-expand-lg border-bottom border-light">
-            <h1><span className="navbar-brand mb-3 ml-3">VideoStar</span></h1>
-            <div className="navbar-collapse" id="navbarSupportedContent">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-light ml-auto">
+      
+      <a className="navbar-brand" href="/">
+        <img src="./assets/img/videostar-logo.png" alt="logo" style={{ width: 200 }} />
+      </a>
+    
+    <div className="collapse navbar-collapse" id="navbarNav">
     <ul className="nav navbar-nav nav-flex-icons ml-auto">
       <li className="nav-item">
         <Link to="/" className={location.pathname === "/" ? "nav-link active" : "nav-link"}>My Library</Link>
@@ -32,10 +36,10 @@ function NavBar1() {
           Dropdown
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Account</a>
+          <a class="dropdown-item" href="#">Profile</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="#">Log Out</a>
         </div>
       </li>
     </ul>
@@ -44,4 +48,4 @@ function NavBar1() {
   );
 }
 
-export default NavTabs;
+export default NavBar2;
