@@ -12,13 +12,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
   }, {
-    timestamps: false
+    timestamps: false,
+    underscored: true,
+    freezeTableName: true
   });
 
   Genre.associate = function(models) {
     Genre.belongsToMany(models.Video, {
-      through: models.VideoGenre,
-      foreignKey: "genreId"
+      through: models.Video_Genre,
+      foreignKey: "genre_id"
     });
   };
   return Genre;

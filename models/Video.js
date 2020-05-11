@@ -1,40 +1,56 @@
 module.exports = function(sequelize, DataTypes) {
   var Video = sequelize.define("Video", {
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
     adult: DataTypes.BOOLEAN,
     backdrop_path: DataTypes.STRING,
-    posterPath: DataTypes.STRING,
-    tmdId: DataTypes.INTEGER,
-    imdbId: DataTypes.INTEGER,
-    originalTitle: DataTypes.STRING,
+    budget: DataTypes.INTEGER,
+    homepage: DataTypes.STRING,
+    poster_path: DataTypes.STRING,
+    tmd_id: DataTypes.INTEGER,
+    imdb_id: DataTypes.INTEGER,
+    original_language: DataTypes.STRING,
+    original_title: DataTypes.STRING,
     overview: DataTypes.TEXT,
     popularity: DataTypes.FLOAT,
-    releaseDate: DataTypes.DATE,
+    production_companies: DataTypes.STRING,
+    production_countries: DataTypes.STRING,
+    release_date: DataTypes.DATE,
     runtime: DataTypes.INTEGER,
-    isBorrowed: {
+    spoken_languages: DataTypes.STRING,
+    status: DataTypes.STRING,
+    is_borrowed: {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
-    isLent: {
+    is_lent: {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
     tagline: DataTypes.STRING,
     title: DataTypes.STRING,
-    voteAverage: DataTypes.FLOAT,
-    voteCount: DataTypes.INTEGER,
-    videoType: DataTypes.STRING(16),
-    lendBorrowName: DataTypes.STRING,
-    lendBorrowDate: DataTypes.DATE
+    vote_average: DataTypes.FLOAT,
+    vote_count: DataTypes.INTEGER,
+    video_type: {
+      type: DataTypes.STRING(16),
+      allowNull: false
+    },
+    lend_borrow_name: DataTypes.STRING,
+    lend_borrow_date: DataTypes.DATE
+  }, {
+    underscored: true,
+    freezeTableName: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
   });
 
   Video.associate = function(models) {
     Video.belongsToMany(models.Genre, {
-      through: models.VideoGenre,
-      foreignKey: "videoId"
+      through: models.Video_Genre,
+      foreignKey: "video_id",
+      as: 'genres'
     });
   };
   return Video;

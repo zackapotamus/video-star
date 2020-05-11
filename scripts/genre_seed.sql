@@ -1,6 +1,6 @@
 USE videostar_db;
 
-INSERT INTO Genres (id, name) 
+INSERT INTO Genre (id, name) 
 VALUES
 (28, 'Action'),
 (12, 'Adventure'),

@@ -3,39 +3,39 @@ const db = require("../models");
 var passport = require("../config/passport");
 const { Op } = db.Sequelize;
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
-  app.post("/api/login", passport.authenticate("local"), function(req, res) {
+  app.post("/api/login", passport.authenticate("local"), function (req, res) {
     res.json(req.user);
   });
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
-  app.post("/api/signup", function(req, res) {
+  app.post("/api/signup", function (req, res) {
     db.User.create({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
     })
-      .then(function() {
+      .then(function () {
         res.redirect(307, "/api/login");
       })
-      .catch(function(err) {
+      .catch(function (err) {
         res.status(401).json(err);
       });
   });
 
   // Route for logging user out
-  app.get("/logout", function(req, res) {
+  app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
   });
 
   // Route for getting some data about our user to be used client side
-  app.get("/api/user_data", function(req, res) {
+  app.get("/api/user_data", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
@@ -45,8 +45,128 @@ module.exports = function(app) {
       res.json({
         name: req.user.name,
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
       });
+    }
+  });
+
+  app.get("/api/video", async (req, res) => {
+    console.log(req.query);
+    try {
+      if (req.query.id) {
+        let videoId = req.query.id;
+        let video = await db.Video.findAll({
+          include: {
+            model: db.Genre,
+            through: {
+              attributes: [],
+            },
+          },
+          where: {
+            id: videoId,
+            user_id: 1, // ******* this will change when auth is working *******
+          },
+        });
+        res.status(200).json(video);
+      } else if (req.query.genres) {
+        let genres = req.query.genres.split(",").map(genre_id => +genre_id);
+        let video = await db.Video.findAll({
+          include: {
+            model: db.Genre,
+            as: 'genres',
+            through: {
+              attributes: [],
+            },
+          },
+          where: {
+            'Video_Genre.genre_id':
+            {
+              [Op.in]: genres
+            }
+          }
+      });
+        res.status(200).json(video);
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
+  app.get("/api/video/:id", async (req, res) => {
+    try {
+      let videoId = req.params.id;
+      let video = await db.Video.findAll({
+        include: {
+          model: db.Genre,
+          through: {
+            attributes: [],
+          },
+        },
+        where: {
+          id: videoId,
+          user_id: 1, // ******* this will change when auth is working *******
+        },
+      });
+      res.status(200).json(video);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  app.get("/api/borrowed", async (req, res) => {
+    try {
+      let videos = await db.Video.findAll({
+        include: {
+          model: db.Genre,
+          through: {
+            attributes: [],
+          },
+        },
+        where: {
+          user_id: 1, // ******* this will change when auth is working *******
+          is_borrowed: true,
+        },
+      });
+      res.status(200).json(videos);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
+  app.post("/api/video", async (req, res) => {
+    try {
+      let video = await db.Video.create({
+        user_id: 1, // ******* this will change when auth is working *******
+        adult: req.body.adult,
+        backdrop_path: req.body.backdrop_path,
+        posterPath: req.body.poster_path,
+        tmd_id: req.body.id,
+        imdb_id: req.body.imdb_id,
+        original_title: req.body.original_title,
+        overview: req.body.overview,
+        popularity: req.body.popularity,
+        relase_date: req.body.release_date,
+        runtime: req.body.runtime,
+        is_borrowed: req.body.is_borrowed,
+        is_lent: req.body.is_lent,
+        tagline: req.body.tagline,
+        title: req.body.title,
+        vote_average: req.body.vote_average,
+        vote_count: req.body.vote_count,
+        video_type: req.body.video_type,
+        lend_borrow_name: req.body.lend_borrow_name,
+        lend_borrow_date: req.body.lend_borrow_date,
+        foo: "bar",
+      });
+      if (req.body.genres) {
+        await video.addGenres(req.body.genres);
+      }
+      res.json(video.id);
+    } catch (err) {
+      res.status(500).json(err);
+      console.log(err);
     }
   });
 };
