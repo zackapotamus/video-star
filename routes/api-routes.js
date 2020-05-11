@@ -50,7 +50,7 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/video", async (req, res) => {
+  app.get("/api/videos", async (req, res) => {
     console.log(req.query);
     try {
       if (req.query.id) {
@@ -93,12 +93,13 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/video/:id", async (req, res) => {
+  app.get("/api/videos/:id", async (req, res) => {
     try {
       let videoId = req.params.id;
       let video = await db.Video.findAll({
         include: {
           model: db.Genre,
+          as: 'genres',
           through: {
             attributes: [],
           },
@@ -135,7 +136,7 @@ module.exports = function (app) {
     }
   });
 
-  app.post("/api/video", async (req, res) => {
+  app.post("/api/videos", async (req, res) => {
     try {
       let video = await db.Video.create({
         user_id: 1, // ******* this will change when auth is working *******
