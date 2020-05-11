@@ -9,10 +9,10 @@ function NavBarLogin() {
   const location = useLocation();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light ml-auto">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
       
       <a className="navbar-brand" href="/">
-        <img src="./assets/img/videostar-logo.png" alt="logo" style={{ marginLeft: 20, marginTop: 20, width: 200 }} />
+        <img src="./assets/img/videostar-logo.png" alt="logo" style={{ width: 200 }} />
       </a>
       
       <div className="collapse navbar-collapse" id="navbarNav">
