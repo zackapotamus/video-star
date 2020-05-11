@@ -69,22 +69,52 @@ module.exports = function (app) {
         });
         res.status(200).json(video);
       } else if (req.query.genres) {
-        let genres = req.query.genres.split(",").map(genre_id => +genre_id);
-        let video = await db.Video.findAll({
-          include: {
+        let genres = req.query.genres.split(",").map((genre_id) => +genre_id);
+        let optionsObj = {
+          include: [{
             model: db.Genre,
-            as: 'genres',
+            as: "genres",
             through: {
               attributes: [],
             },
-          },
+          },{
+            model: db.Genre,
+            as: "filter_genres",
+            through: {
+              attributes: [],
+            },
+            attributes: [],
+          }],
           where: {
-            'Video_Genre.genre_id':
-            {
-              [Op.in]: genres
-            }
-          }
-      });
+            "$filter_genres.id$": {
+              [Op.in]: genres,
+            },
+          },
+        };
+        for (let i = 0; i < genres.length; i++) {
+
+        }
+        let video = await db.Video.findAll({
+          include: [{
+            model: db.Genre,
+            as: "genres",
+            through: {
+              attributes: [],
+            },
+          },{
+            model: db.Genre,
+            as: "filter_genres",
+            through: {
+              attributes: [],
+            },
+            attributes: [],
+          }],
+          where: {
+            "$filter_genres.id$": {
+              [Op.in]: genres,
+            },
+          },
+        });
         res.status(200).json(video);
       }
     } catch (err) {
@@ -99,7 +129,7 @@ module.exports = function (app) {
       let video = await db.Video.findAll({
         include: {
           model: db.Genre,
-          as: 'genres',
+          as: "genres",
           through: {
             attributes: [],
           },
