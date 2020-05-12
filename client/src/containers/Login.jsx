@@ -1,18 +1,65 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
-
-import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
-import LoginForm from '../components/Shared/Form/LoginForm';
-import Hero from '../components/Shared/Hero/Hero';
-import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
+import axios from "axios";
+import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
+import LoginForm from "../components/Shared/Form/LoginForm";
+import Hero from "../components/Shared/Hero/Hero";
+import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      dmail: "",
+      password: "",
+      redirectTo: null,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log("handleSubmit");
+
+    axios
+      .post("/api/login", {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then((response) => {
+        console.log("login response: ");
+        console.log(response);
+        if (response.status === 200) {
+          // update App.js state
+          this.props.updateUser({
+            loggedIn: true,
+            email: response.data.email,
+          });
+          // update the state to redirect to home
+          this.setState({
+            redirectTo: "/mylibrary",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("login error: ");
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <>
         <NavBarLogin />
 
-        <Hero imageUrl='./assets/img/filmmaker.jpg' page='Login'/>
+        <Hero imageUrl="./assets/img/filmmaker.jpg" page="Login" />
 
         <GreyBlockTop />
 
@@ -26,7 +73,7 @@ class Login extends Component {
                 </div>
 
                 <div>
-                  <LoginForm />
+                  <LoginForm handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
                 </div>
               </div>
             </div>

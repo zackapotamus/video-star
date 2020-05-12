@@ -3,7 +3,7 @@ import React from 'react';
 const GreyBlockTop = () => {
 
     const greyblock = {
-        backgroundImage: 'url(./img/grey-block.png)',
+        backgroundImage: 'url(./assets/img/grey-block.png)',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
