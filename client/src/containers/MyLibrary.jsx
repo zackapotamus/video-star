@@ -14,7 +14,7 @@ class MyLibrary extends Component {
                 <Hero imageUrl={WatchingMovieImage}/>
                 <GreyBlockTop page='My Library' />
 
-                {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
+                {/* LIBRARY OF VIDEOS GOES HERE */}
                 
                 <GreyBlock />  
             </>
