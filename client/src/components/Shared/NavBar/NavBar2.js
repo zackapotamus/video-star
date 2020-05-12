@@ -34,24 +34,11 @@ function NavBar2() {
       <li className="nav-item">
         <Link to="/borrow" className={location.pathname === "/borrow" ? "nav-link active" : "nav-link"}>Borrow</Link>
       </li>
-<<<<<<< HEAD
       <li className="nav-item">
         <Link to="/account" className={location.pathname === "/account" ? "nav-link active" : "nav-link"}>Account</Link>
       </li>
       <li className="nav-item">
         <Link to="/login" className={location.pathname === "/login" ? "nav-link active" : "nav-link"}>Logout</Link>
-=======
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="/profile" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/profile">Account</a>
-          <a class="dropdown-item" href="/profile">Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/logout">Log Out</a>
-        </div>
->>>>>>> 73eb8eb56bb90a5cbe3dff5aa6babc19a48f3712
       </li>
       
     </ul>
