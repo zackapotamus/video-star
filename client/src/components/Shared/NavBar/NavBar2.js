@@ -23,6 +23,9 @@ function NavBar2() {
         <Link to="/" className={location.pathname === "/" ? "nav-link active" : "nav-link"}>My Library</Link>
       </li>
       <li className="nav-item">
+        <Link to="/add" className={location.pathname === "/lend" ? "nav-link active" : "nav-link"}>Add</Link>
+      </li>
+      <li className="nav-item">
         <Link to="/lentborrowed" className={location.pathname === "/lentborrowed" ? "nav-link active" : "nav-link"}>Lent/Borrowed</Link>
       </li>
       <li className="nav-item">
@@ -31,17 +34,13 @@ function NavBar2() {
       <li className="nav-item">
         <Link to="/borrow" className={location.pathname === "/borrow" ? "nav-link active" : "nav-link"}>Borrow</Link>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Account</a>
-          <a class="dropdown-item" href="#">Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Log Out</a>
-        </div>
+      <li className="nav-item">
+        <Link to="/account" className={location.pathname === "/account" ? "nav-link active" : "nav-link"}>Account</Link>
       </li>
+      <li className="nav-item">
+        <Link to="/login" className={location.pathname === "/login" ? "nav-link active" : "nav-link"}>Logout</Link>
+      </li>
+      
     </ul>
     </div>
     </nav>
