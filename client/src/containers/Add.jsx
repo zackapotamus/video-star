@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import NavBar2 from '../components/Shared/NavBar/NavBar2';
 
+
 class Add extends Component {
     render() {
         return (
             <>
+<<<<<<< HEAD
             <NavBar2 />
             <div class="row">
               <div class="col-sm-1"></div>
@@ -24,6 +26,9 @@ class Add extends Component {
             </div>
             </div>
             </div>
+=======
+              
+>>>>>>> 73eb8eb56bb90a5cbe3dff5aa6babc19a48f3712
             </>
         );
     }
