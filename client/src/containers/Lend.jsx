@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import NavBar2 from '../components/Shared/NavBar/NavBar2';
+import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
+import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
 
 class Lend extends Component {
     render() {
         return (
+          <>
             <div>
                 <NavBar2 />
+                <GreyBlockTop page='Lend'/>
+
+                <div className="container" style={{marginBottom: 100}}>
                 <div class="row">
               <div class="col-sm-1"></div>
                 <div class="col-sm-10">
@@ -18,20 +24,20 @@ class Lend extends Component {
                         <form>
                             <div className="form-group px-5">
                               <label for="exampleFormControlInput1">Movie Title</label>
-                              <input type="title" className="form-control" id="exampleFormControlInput1" placeholder="Frozen">
+                              <input type="title" className="form-control mb-3" id="exampleFormControlInput1" placeholder="Frozen">
                             </input>
                             <div className="form-group">
                               <label for="exampleFormControlInput1">Lendee's Name</label>
-                              <input type="borrower" className="form-control" id="exampleFormControlInput2" placeholder="John Smith">
+                              <input type="borrower" className="form-control mb-3" id="exampleFormControlInput2" placeholder="John Smith">
                             </input>
                             <div className="form-group">
                               <label for="exampleFormControlInput1">Lending Date</label>
-                              <input type="borrow-date" className="form-control" id="exampleFormControlInput3" placeholder="mm/dd/yyyy">
+                              <input type="borrow-date" className="form-control mb-3" id="exampleFormControlInput3" placeholder="mm/dd/yyyy">
                               </input>
                             </div>
                             <div className="form-group">
                               <label for="exampleFormControlInput1">Return Date</label>
-                              <input type="return-date" className="form-control" id="exampleFormControlInput4" placeholder="mm/dd/yyyy">
+                              <input type="return-date" className="form-control mb-3" id="exampleFormControlInput4" placeholder="mm/dd/yyyy">
                               </input>
                             </div>
                             <button type="submit" className="btn btn-primary">Lend Video</button>
@@ -44,6 +50,9 @@ class Lend extends Component {
                 </div>
                 </div>
             </div>
+            </div>
+            <GreyBlock />
+            </>
         );
     }
 }

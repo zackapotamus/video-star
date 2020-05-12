@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
-
 import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
+// import NavBar2 from '../components/Shared/NavBar/NavBar2';
 import LoginForm from '../components/Shared/Form/LoginForm';
 import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
