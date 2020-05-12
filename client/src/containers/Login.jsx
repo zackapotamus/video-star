@@ -5,6 +5,8 @@ import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
 import LoginForm from '../components/Shared/Form/LoginForm';
 import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
+import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
+import FilmMakerImage from '../img/filmmaker.jpg';
 
 class Login extends Component {
   render() {
@@ -12,11 +14,11 @@ class Login extends Component {
       <>
         <NavBarLogin />
 
-        <Hero imageUrl='./assets/img/filmmaker.jpg' page='Login'/>
+        <Hero imageUrl={FilmMakerImage} />
 
-        <GreyBlockTop />
+        <GreyBlockTop page='Login'/>
 
-        <div className="container">
+        <div className="container" style={{marginBottom: 100}}>
           <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
@@ -32,6 +34,9 @@ class Login extends Component {
             </div>
           </div>
         </div>
+
+        <GreyBlock />
+        
       </>
     );
   }

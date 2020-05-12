@@ -16,7 +16,7 @@ const LoginForm = () => {
                             <input type="password" className="form-control">
                             </input>
                         </div>
-                        <button type="submit" className="btn btn-primary mr-3">Submit</button>
+                        <button type="submit" className="btn btn-primary mr-3" style={{marginBottom: 15}}>Submit</button>
                     </form>
                 </div>
             </div>

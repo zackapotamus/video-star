@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faUser, faComment, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import "./NavBar.css";
+import VideoStarLogo from '../../../img/videostar-logo.png';
 
 function NavBarLogin() {
 
@@ -12,7 +13,7 @@ function NavBarLogin() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
       
       <a className="navbar-brand" href="/">
-        <img src="./assets/img/videostar-logo.png" alt="logo" style={{ width: 200 }} />
+        <img src={VideoStarLogo} alt="logo" style={{ width: 200 }} />
       </a>
       
       <div className="collapse navbar-collapse" id="navbarNav">

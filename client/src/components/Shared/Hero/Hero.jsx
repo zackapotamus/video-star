@@ -9,14 +9,15 @@ const Hero = (props) => {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             height: 400,
-            marginTop: 5
+            marginTop: 5,
+            marginBottom: 0
     }
 
 
     return (
         <div className="jumbotron jumbotron-fluid" style={jumbotron}>
             <div className="container">
-                <h1 className="display-4" style={{textAlign: 'center', marginTop: 100}}>{props.page}</h1>
+                
             </div>
         </div>
     );
