@@ -1,18 +1,19 @@
 import React, { Component } from "react";
+import { Redirect } from 'react-router-dom'
 // import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
 import axios from "axios";
-import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
-import LoginForm from '../components/Shared/Form/LoginForm';
-import Hero from '../components/Shared/Hero/Hero';
-import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
-import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
-import FilmMakerImage from '../img/filmmaker.jpg';
+import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
+import LoginForm from "../components/Shared/Form/LoginForm";
+import Hero from "../components/Shared/Hero/Hero";
+import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
+import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
+import FilmMakerImage from "../img/filmmaker.jpg";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      dmail: "",
+      email: "",
       password: "",
       redirectTo: null,
     };
@@ -57,35 +58,43 @@ class Login extends Component {
   }
 
   render() {
-    return (
-      <>
-        <NavBarLogin />
+    if (this.state.redirectTo) {
+      return <Redirect to={{ pathname: this.state.redirectTo }} />;
+    } else {
+      return (
+        <>
+          <NavBarLogin />
 
-        <Hero imageUrl={FilmMakerImage} />
+          <Hero imageUrl={FilmMakerImage} />
 
-        <GreyBlockTop page='Login'/>
+          <GreyBlockTop page="Login" />
 
-        <div className="container" style={{marginBottom: 100}}>
-          <div className="row">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-10">
-              <div className="card">
-                <div className="card-body">
-                  <h2 className="card-title">Log In to Your Account</h2>
-                </div>
+          <div className="container" style={{ marginBottom: 100 }}>
+            <div className="row">
+              <div className="col-sm-1"></div>
+              <div className="col-sm-10">
+                <div className="card">
+                  <div className="card-body">
+                    <h2 className="card-title">Log In to Your Account</h2>
+                  </div>
 
-                <div>
-                  <LoginForm handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+                  <div>
+                    <LoginForm
+                      handleChange={this.handleChange}
+                      handleSubmit={this.handleSubmit}
+                      emailValue={this.state.email}
+                      passwordValue={this.state.password}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <GreyBlock />
-        
-      </>
-    );
+          <GreyBlock />
+        </>
+      );
+    }
   }
 }
 
