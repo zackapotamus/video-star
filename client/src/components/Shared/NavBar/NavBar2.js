@@ -2,7 +2,8 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faUser, faComment, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import "./NavBar.css"
+import "./NavBar.css";
+import VideoStarLogo from '../../../img/videostar-logo.png';
 
 function NavBar2() {
   // We'll go into the Hooks API later, for now, we are just using some code
@@ -14,13 +15,16 @@ function NavBar2() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-light ml-auto">
       
       <a className="navbar-brand" href="/">
-        <img src="./assets/img/videostar-logo.png" alt="logo" style={{ width: 200 }} />
+        <img src={VideoStarLogo} alt="logo" style={{ width: 200 }} />
       </a>
     
     <div className="collapse navbar-collapse" id="navbarNav">
     <ul className="nav navbar-nav nav-flex-icons ml-auto">
       <li className="nav-item">
         <Link to="/" className={location.pathname === "/" ? "nav-link active" : "nav-link"}>My Library</Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/add" className={location.pathname === "/lend" ? "nav-link active" : "nav-link"}>Add</Link>
       </li>
       <li className="nav-item">
         <Link to="/lentborrowed" className={location.pathname === "/lentborrowed" ? "nav-link active" : "nav-link"}>Lent/Borrowed</Link>
@@ -31,17 +35,13 @@ function NavBar2() {
       <li className="nav-item">
         <Link to="/borrow" className={location.pathname === "/borrow" ? "nav-link active" : "nav-link"}>Borrow</Link>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="/profile" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/profile">Account</a>
-          <a class="dropdown-item" href="/profile">Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/logout">Log Out</a>
-        </div>
+      <li className="nav-item">
+        <Link to="/account" className={location.pathname === "/account" ? "nav-link active" : "nav-link"}>Account</Link>
       </li>
+      <li className="nav-item">
+        <Link to="/login" className={location.pathname === "/login" ? "nav-link active" : "nav-link"}>Logout</Link>
+      </li>
+      
     </ul>
     </div>
     </nav>

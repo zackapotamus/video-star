@@ -16,7 +16,7 @@ const LoginForm = (props) => {
                             <input type="password" name="password" className="form-control" handleChange={props.handleChange}>
                             </input>
                         </div>
-                        <button type="submit" className="btn btn-primary mr-3" onClick={props.handleSubmit}>Submit</button>
+                        <button type="submit" className="btn btn-primary mr-3" style={{marginBottom: 15}} onClick={props.handleSubmit}>Submit</button>
                     </form>
                 </div>
             </div>
