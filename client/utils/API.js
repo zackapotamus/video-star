@@ -20,5 +20,13 @@ export default {
   // Updates a video with the given id
   updateVideo: function(videoData) {
     return axios.put("/api/videos", videoData);
+  },
+  // Search for movie
+  searchMovies: function(searchTerm) {
+    return axios.get(`/api/search/${searchTerm}`);
+  },
+  // Log in
+  login: function(loginData) {
+    return axios.post("/api/login", loginData);
   }
 };
