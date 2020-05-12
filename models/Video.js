@@ -52,6 +52,11 @@ module.exports = function(sequelize, DataTypes) {
       foreignKey: "video_id",
       as: 'genres'
     });
+    Video.belongsToMany(models.Genre, {
+      through: models.Video_Genre,
+      foreignKey: "video_id",
+      as: 'filter_genres'
+    });
   };
   return Video;
 };

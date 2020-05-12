@@ -1,20 +1,24 @@
 import axios from "axios";
 
 export default {
-  // Gets all books
+  // Gets all videos
   getVideos: function() {
-    return axios.get("/api/video");
+    return axios.get("/api/videos");
   },
-  // Gets the book with the given id
+  // Gets the video with the given id
   getVideo: function(id) {
     return axios.get(`/api/videos/${id}`);
   },
-  // Deletes the book with the given id
+  // Deletes the video with the given id
   deleteVideo: function(id) {
     return axios.delete(`/api/videos/${id}`);
   },
-  // Saves a book to the database
+  // Saves a video to the database
   saveVideo: function(videoData) {
-    return axios.post("/api/videos/", videoData);
+    return axios.post("/api/videos", videoData);
+  },
+  // Updates a video with the given id
+  updateVideo: function(videoData) {
+    return axios.put("/api/videos", videoData);
   }
 };
