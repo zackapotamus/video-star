@@ -8,7 +8,11 @@ module.exports = function (app) {
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
   app.post("/api/login", passport.authenticate("local"), function (req, res) {
-    res.json(req.user);
+    res.status(200).json({
+      email: req.user.email,
+      name: req.user.name,
+      bio: req.user.bio,
+    });
   });
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
@@ -21,7 +25,8 @@ module.exports = function (app) {
       password: req.body.password,
     })
       .then(function () {
-        res.redirect(307, "/api/login");
+        // res.redirect(307, "/api/login");
+        res.status(200).send();
       })
       .catch(function (err) {
         res.status(401).json(err);
@@ -38,14 +43,17 @@ module.exports = function (app) {
   app.get("/api/user_data", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back an empty object
-      res.json({});
+      res.json({ user: null });
     } else {
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
-        name: req.user.name,
-        email: req.user.email,
-        id: req.user.id,
+        user: {
+          name: req.user.name,
+          email: req.user.email,
+          // id: req.user.id,
+          bio: req.user.bio,
+        },
       });
     }
   });
@@ -71,44 +79,48 @@ module.exports = function (app) {
       } else if (req.query.genres) {
         let genres = req.query.genres.split(",").map((genre_id) => +genre_id);
         let optionsObj = {
-          include: [{
-            model: db.Genre,
-            as: "genres",
-            through: {
+          include: [
+            {
+              model: db.Genre,
+              as: "genres",
+              through: {
+                attributes: [],
+              },
+            },
+            {
+              model: db.Genre,
+              as: "filter_genres",
+              through: {
+                attributes: [],
+              },
               attributes: [],
             },
-          },{
-            model: db.Genre,
-            as: "filter_genres",
-            through: {
-              attributes: [],
-            },
-            attributes: [],
-          }],
+          ],
           where: {
             "$filter_genres.id$": {
               [Op.in]: genres,
             },
           },
         };
-        for (let i = 0; i < genres.length; i++) {
-
-        }
+        for (let i = 0; i < genres.length; i++) {}
         let video = await db.Video.findAll({
-          include: [{
-            model: db.Genre,
-            as: "genres",
-            through: {
+          include: [
+            {
+              model: db.Genre,
+              as: "genres",
+              through: {
+                attributes: [],
+              },
+            },
+            {
+              model: db.Genre,
+              as: "filter_genres",
+              through: {
+                attributes: [],
+              },
               attributes: [],
             },
-          },{
-            model: db.Genre,
-            as: "filter_genres",
-            through: {
-              attributes: [],
-            },
-            attributes: [],
-          }],
+          ],
           where: {
             "$filter_genres.id$": {
               [Op.in]: genres,
