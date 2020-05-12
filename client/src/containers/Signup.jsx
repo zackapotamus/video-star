@@ -3,16 +3,18 @@ import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
 import SignupForm from '../components/Shared/Form/SignupForm';
 import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
+import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
+import FilmMakerImage from '../img/filmmaker.jpg';
 
 class Signup extends Component {
-    render() {
-        return (
-            <>
-                <NavBarLogin />
-                <Hero imageUrl='./assets/img/filmmaker.jpg' page='Signup'/>
-                <GreyBlockTop />
-                
-                <div className="container">
+  render() {
+    return (
+      <>
+        <NavBarLogin />
+        <Hero imageUrl={FilmMakerImage} />
+        <GreyBlockTop page='Signup' />
+
+        <div className="container" style={{ marginBottom: 80 }}>
           <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
@@ -22,15 +24,17 @@ class Signup extends Component {
                 </div>
 
                 <div>
-                <SignupForm />
+                  <SignupForm />
                 </div>
               </div>
             </div>
           </div>
         </div>
-            </>
-        );
-    }
+        
+        <GreyBlock />
+      </>
+    );
+  }
 }
 
 export default Signup;

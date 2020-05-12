@@ -26,7 +26,7 @@ const SignupForm = () => {
                             <input type="password" className="form-control">
                             </input>
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <button type="submit" className="btn btn-primary" style={{marginBottom: 15}}>Submit</button>
                     </form>
                 </div>
             </div>
