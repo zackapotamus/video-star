@@ -6,6 +6,7 @@ import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import FilmMakerImage from "../img/filmmaker.jpg";
 import axios from "axios";
+import jwt from "jsonwebtoken";
 import { Redirect } from 'react-router-dom'
 
 class Signup extends Component {
