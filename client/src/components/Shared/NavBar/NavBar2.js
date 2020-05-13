@@ -27,7 +27,7 @@ function NavBar2() {
         <Link to="/lentborrowed" className={location.pathname === "/lentborrowed" ? "nav-link active" : "nav-link"}>Lent/Borrowed</Link>
       </li>
       <li className="nav-item">
-        <Link to="/add" className={location.pathname === "/add" ? "nav-link active" : "nav-link"}>Add</Link>
+        <Link to="/add" className={location.pathname === "/add" ? "nav-link active" : "nav-link"}>Add to Library</Link>
       </li>
       <li className="nav-item">
         <Link to="/lend" className={location.pathname === "/lend" ? "nav-link active" : "nav-link"}>Lend</Link>
