@@ -7,6 +7,12 @@ import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
 import FilmMakerImage from '../img/filmmaker.jpg';
 
 class Signup extends Component {
+  async componentDidMount() {
+    if (this.props.checkForToken()) {
+      await this.props.history.push("/mylibrary");
+    }
+  }
+
   render() {
     return (
       <>
