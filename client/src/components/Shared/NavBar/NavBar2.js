@@ -21,13 +21,13 @@ function NavBar2() {
     <div className="collapse navbar-collapse" id="navbarNav">
     <ul className="nav navbar-nav nav-flex-icons ml-auto">
       <li className="nav-item">
-        <Link to="/" className={location.pathname === "/" ? "nav-link active" : "nav-link"}>My Library</Link>
-      </li>
-      <li className="nav-item">
-        <Link to="/add" className={location.pathname === "/lend" ? "nav-link active" : "nav-link"}>Add</Link>
+        <Link to="/mylibrary" className={location.pathname === "/mylibrary" ? "nav-link active" : "nav-link"}>My Library</Link>
       </li>
       <li className="nav-item">
         <Link to="/lentborrowed" className={location.pathname === "/lentborrowed" ? "nav-link active" : "nav-link"}>Lent/Borrowed</Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/add" className={location.pathname === "/add" ? "nav-link active" : "nav-link"}>Add</Link>
       </li>
       <li className="nav-item">
         <Link to="/lend" className={location.pathname === "/lend" ? "nav-link active" : "nav-link"}>Lend</Link>
