@@ -9,6 +9,48 @@ import axios from "axios";
 import { Redirect } from 'react-router-dom'
 
 class Signup extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: "",
+      password: "",
+      name: "",
+      confirm: "",
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this); // why?
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    try {
+      let response = await axios.post("/api/auth/signup", {
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name
+      });
+      console.log("signup submit response:", response);
+      if (response.data.success) {
+        const decoded = jwt.verify(
+          response.data.data,
+          process.env.REACT_APP_SESSION_SECRET
+        );
+      }
+      localStorage.setItem("jwt", response.data.data);
+      this.props.checkForToken();
+      await this.props.history.push("/mylibrary");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async componentDidMount() {
     if (this.props.checkForToken()) {
       await this.props.history.push("/mylibrary");
