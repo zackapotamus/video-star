@@ -44,6 +44,7 @@ class Login extends Component {
           this.props.updateUser({
             loggedIn: true,
             email: response.data.email,
+            name: response.data.name
           });
           // update the state to redirect to home
           this.setState({

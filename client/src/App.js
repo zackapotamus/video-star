@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // import logo from './assets/img/videostar-logo-master.svg';
 import "./App.css";
 import axios from "axios";
-
 import Signup from "./containers/Signup";
 import Login from "./containers/Login";
 import Profile from "./containers/Profile";
@@ -14,6 +13,7 @@ import Borrow from "./containers/Borrow";
 import Details from "./containers/Details";
 import Contact from "./containers/Contact";
 import Add from "./containers/Add";
+import PrivateRoute from "./components/App/PrivateRoute";
 
 import Footer from "./components/Shared/Footer/Footer";
 
@@ -21,8 +21,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: false,
-      username: null,
+      isLoggedIn: false,
+      email: null,
+      name: null,
     };
 
     this.getUser = this.getUser.bind(this);
@@ -31,10 +32,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log("app.js component did mount. get user");
     this.getUser();
   }
 
   updateUser(userObject) {
+    console.log("updateUser");
     this.setState(userObject);
   }
 
@@ -46,14 +49,16 @@ class App extends Component {
         console.log("Get User: There is a user saved in the server session: ");
 
         this.setState({
-          loggedIn: true,
-          username: response.data.user.username,
+          isLoggedIn: true,
+          email: response.data.user.email,
+          name: response.data.user.name
         });
       } else {
         console.log("Get user: no user");
         this.setState({
-          loggedIn: false,
-          username: null,
+          isLoggedIn: false,
+          email: null,
+          name: null,
         });
       }
     });
@@ -61,19 +66,21 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Route exact path="/" component={Signup} />
-        <Route exact path="/signup" component={Signup} />
-        {/* <Route exact path="/login" component={Login} /> */}
-        <Route exact path="/login" render={() => <Login updateUser={this.updateUser} />}/>
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/mylibrary" component={MyLibrary} />
-        <Route exact path="/lentborrow" component={LentBorrow} />
-        <Route exact path="/lend" component={Lend} />
-        <Route exact path="/borrow" component={Borrow} />
-        <Route exact path="/details" component={Details} />
-        <Route exact path="/contact" component={Contact} />
-        <Route exact path="/add" component={Add} />
-
+        <Switch>
+          {/* <Route exact path="/" component={Signup} /> */}
+          <Route exact path="/" render={() => <Signup updateUser={this.updateUser} isLoggedIn={this.state.isLoggedIn} />} />
+          {/* <Route exact path="/signup" render={() => <Signup updateUser={this.updateUser} isLoggedIn={this.state.loggedIn} />} /> */}
+          {/* <Route exact path="/login" component={Login} /> */}
+          <Route exact path="/login" render={() => <Login updateUser={this.updateUser} isLoggedIn={this.state.isLoggedIn} />}/>
+          <PrivateRoute exact path="/profile" component={Profile} isLoggedIn={this.state.isLoggedIn} />
+          <Route exact path="/mylibrary" component={MyLibrary} isLoggedIn={this.state.isLoggedIn} />
+          <PrivateRoute exact path="/lentborrow" component={LentBorrow} isLoggedIn={this.state.isLoggedIn} />
+          <PrivateRoute exact path="/lend" component={Lend} isLoggedIn={this.state.isLoggedIn} />
+          <PrivateRoute exact path="/borrow" component={Borrow} isLoggedIn={this.state.isLoggedIn} />
+          <PrivateRoute exact path="/details" component={Details} isLoggedIn={this.state.isLoggedIn} />
+          <Route exact path="/contact" component={Contact} />
+          <PrivateRoute exact path="/add" component={Add} isLoggedIn={this.state.isLoggedIn} />
+        </Switch>
         <Footer />
       </Router>
     );
