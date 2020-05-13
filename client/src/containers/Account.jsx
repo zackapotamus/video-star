@@ -4,13 +4,13 @@ import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
 import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
 import Card from '../components/Shared/Card/Card';
 
-class Profile extends Component {
+class Account extends Component {
     render() {
         return (
             <>
                 <NavBar2 />
 
-                <GreyBlockTop page='Profile' />
+                <GreyBlockTop page='Account' />
 
                 <Card />
 
@@ -21,4 +21,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+export default Account;
