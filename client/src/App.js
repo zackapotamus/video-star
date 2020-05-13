@@ -28,25 +28,50 @@ class App extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  checkForToken() {
-    let ret = false;
-    const tokenFromStorage = localStorage.getItem("jwt");
-    if (tokenFromStorage) {
-      this.setState({ isLoggedIn: true });
-      const decoded = jwt.verify(
-        tokenFromStorage,
-        process.env.REACT_APP_SESSION_SECRET
-      );
-      if (decoded && decoded.email && decoded.id) {
-        this.setState({ userObject: decoded, isLoggedIn: true });
-        ret = true;
+  isAuthenticated() {
+    try {
+      const tokenFromStorage = localStorage.getItem("jwt");
+      if (!tokenFromStorage) {
+        return false;
       } else {
-        this.setState({ isLoggedIn: false, userObject: {} });
-        localStorage.setItem("jwt", "");
-        ret = false;
+        const decoded = jwt.verify(
+          tokenFromStorage,
+          process.env.REACT_APP_SESSION_SECRET
+        );
+        if (decoded && decoded.email && decoded.id) {
+          return true;
+        }
       }
+    } catch (err) {
+      return false;
     }
-    return ret;
+  }
+
+  checkForToken() {
+    try {
+      let ret = false;
+      const tokenFromStorage = localStorage.getItem("jwt");
+      if (tokenFromStorage) {
+        this.setState({ isLoggedIn: true });
+        const decoded = jwt.verify(
+          tokenFromStorage,
+          process.env.REACT_APP_SESSION_SECRET
+        );
+        if (decoded && decoded.email && decoded.id) {
+          this.setState({ userObject: decoded, isLoggedIn: true });
+          ret = true;
+        } else {
+          this.setState({ isLoggedIn: false, userObject: {} });
+          localStorage.setItem("jwt", "");
+          ret = false;
+        }
+      }
+      return ret;
+    } catch (err) {
+      this.setState({ isLoggedIn: false, userObject: {} });
+      localStorage.setItem("jwt", "");
+      return false;
+    }
   }
 
   componentDidMount() {
@@ -72,7 +97,7 @@ class App extends Component {
         this.setState({
           isLoggedIn: true,
           email: response.data.user.email,
-          name: response.data.user.name
+          name: response.data.user.name,
         });
       } else {
         console.log("Get user: no user");
@@ -88,13 +113,29 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={(props) => <Signup {...props} checkForToken={this.checkForToken}/>} />
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Signup
+                {...props}
+                isAuthenticated={this.isAuthenticated}
+                checkForToken={this.checkForToken}
+              />
+            )}
+          />
           <Route exact path="/signup" component={Signup} />
           {/* <Route exact path="/login" component={Login} /> */}
           <Route
             exact
             path="/login"
-            render={(props) => <Login {...props} checkForToken={this.checkForToken} />}
+            render={(props) => (
+              <Login
+                {...props}
+                isAuthenticated={this.isAuthenticated}
+                checkForToken={this.checkForToken}
+              />
+            )}
           />
           <PrivateRoute exact path="/account" component={Profile} />
           <PrivateRoute exact path="/mylibrary" component={MyLibrary} />

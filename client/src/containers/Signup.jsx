@@ -7,7 +7,7 @@ import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import FilmMakerImage from "../img/filmmaker.jpg";
 import axios from "axios";
 import jwt from "jsonwebtoken";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 
 class Signup extends Component {
   constructor() {
@@ -35,7 +35,7 @@ class Signup extends Component {
       let response = await axios.post("/api/auth/signup", {
         email: this.state.email,
         password: this.state.password,
-        name: this.state.name
+        name: this.state.name,
       });
       console.log("signup submit response:", response);
       if (response.data.success) {
@@ -53,17 +53,14 @@ class Signup extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.checkForToken()) {
+    if (this.props.isAuthenticated()) {
       await this.props.history.push("/mylibrary");
     }
   }
 
   render() {
     console.log("render signup");
-    if (this.state.redirectTo) {
-      return <Redirect to={{ pathname: this.state.redirectTo }} />;
-    } else {
-      return (
+    return (
       <>
         <NavBarLogin />
         <Hero imageUrl={FilmMakerImage} />
@@ -95,7 +92,7 @@ class Signup extends Component {
 
         <GreyBlock />
       </>
-    );}
+    );
   }
 }
 

@@ -18,25 +18,19 @@ class MyLibrary extends Component {
   //     })
   // }
   render() {
-    if (!this.props.isLoggedIn) {
-      console.log("user is not logged in to my library")
-      return <Redirect to={{ pathname: "/" }} />;
-    } else {
-      console.log("user is logged in to my library");
-      return (
-        <>
-          <NavBar2 />
-          <Hero imageUrl={WatchingMovieImage} />
-          <GreyBlockTop page="My Library" />
+    return (
+      <>
+        <NavBar2 />
+        <Hero imageUrl={WatchingMovieImage} />
+        <GreyBlockTop page="My Library" />
 
-          {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
+        {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
 
-                {/* LIBRARY OF VIDEOS GOES HERE */}
-                
-                <GreyBlock />  
-            </>
-        );
-    }
+        {/* LIBRARY OF VIDEOS GOES HERE */}
+
+        <GreyBlock />
+      </>
+    );
   }
 }
 

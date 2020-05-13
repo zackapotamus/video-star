@@ -24,7 +24,7 @@ class Login extends Component {
 
   async componentDidMount() {
     console.log("login component did mount");
-    if (this.props.checkForToken()) {
+    if (this.props.isAuthenticated()) {
       await this.props.history.push("/mylibrary");
     } else {
       console.log("not logged in");
