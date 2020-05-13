@@ -1,13 +1,22 @@
 import React from "react";
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
-  if (isLoggedIn) {
-    console.log("user is logged in. render the page");
+const checkForToken = () => {
+  const token = localStorage.getItem("jwt");
+  try {
+    const decoded = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    return !!decoded;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  if (checkForToken()) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else {
-    console.log("user is not logged in");
     return <Redirect to="/" />;
   }
 };

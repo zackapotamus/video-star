@@ -11,6 +11,11 @@ function NavBar2() {
   // This allows the component to check the route any time the user uses a link to navigate.
   const location = useLocation();
 
+  const logOutUser = () => {
+    localStorage.setItem("jwt", "");
+    this.props.history.push("/");
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-light ml-auto">
       

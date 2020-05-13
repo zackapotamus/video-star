@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import logo from './assets/img/videostar-logo-master.svg';
 import "./App.css";
 import axios from "axios";
+import jwt from "jsonwebtoken";
 import Signup from "./containers/Signup";
 import Login from "./containers/Login";
 import Profile from "./containers/Account";
@@ -14,7 +15,6 @@ import Details from "./containers/Details";
 import Contact from "./containers/Contact";
 import Add from "./containers/Add";
 import PrivateRoute from "./components/App/PrivateRoute";
-
 import Footer from "./components/Shared/Footer/Footer";
 
 class App extends Component {
@@ -22,23 +22,44 @@ class App extends Component {
     super();
     this.state = {
       isLoggedIn: false,
-      email: null,
-      name: null,
+      userObject: {},
     };
-
-    this.getUser = this.getUser.bind(this);
+    this.checkForToken = this.checkForToken.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.updateUser = this.updateUser.bind(this);
+  }
+
+  checkForToken() {
+    let ret = false;
+    const tokenFromStorage = localStorage.getItem("jwt");
+    if (tokenFromStorage) {
+      this.setState({ isLoggedIn: true });
+      const decoded = jwt.verify(
+        tokenFromStorage,
+        process.env.REACT_APP_SESSION_SECRET
+      );
+      if (decoded && decoded.email && decoded.id) {
+        this.setState({ userObject: decoded, isLoggedIn: true });
+        ret = true;
+      } else {
+        this.setState({ isLoggedIn: false, userObject: {} });
+        localStorage.setItem("jwt", "");
+        ret = false;
+      }
+    }
+    return ret;
   }
 
   componentDidMount() {
-    console.log("app.js component did mount. get user");
-    this.getUser();
+    console.log("App.js did mount");
+    this.checkForToken();
   }
 
-  updateUser(userObject) {
-    console.log("updateUser");
-    this.setState(userObject);
+  logOutUser() {
+    this.setState({
+      userObject: {},
+      isLoggedIn: false,
+    });
+    localStorage.setItem("jwt", "");
   }
 
   getUser() {
@@ -66,19 +87,24 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Route exact path="/" component={Signup} />
-        <Route exact path="/signup" component={Signup} />
-        {/* <Route exact path="/login" component={Login} /> */}
-        <Route exact path="/login" render={() => <Login updateUser={this.updateUser} />}/>
-        <Route exact path="/account" component={Profile} />
-        <Route exact path="/mylibrary" component={MyLibrary} />
-        <Route exact path="/lentborrowed" component={LentBorrow} />
-        <Route exact path="/lend" component={Lend} />
-        <Route exact path="/borrow" component={Borrow} />
-        <Route exact path="/details" component={Details} />
-        <Route exact path="/contact" component={Contact} />
-        <Route exact path="/add" component={Add} />
-
+        <Switch>
+          <Route exact path="/" render={(props) => <Signup {...props} checkForToken={this.checkForToken}/>} />
+          <Route exact path="/signup" component={Signup} />
+          {/* <Route exact path="/login" component={Login} /> */}
+          <Route
+            exact
+            path="/login"
+            render={(props) => <Login {...props} checkForToken={this.checkForToken} />}
+          />
+          <PrivateRoute exact path="/account" component={Profile} />
+          <PrivateRoute exact path="/mylibrary" component={MyLibrary} />
+          <PrivateRoute exact path="/lentborrowed" component={LentBorrow} />
+          <PrivateRoute exact path="/lend" component={Lend} />
+          <PrivateRoute exact path="/borrow" component={Borrow} />
+          <PrivateRoute exact path="/details" component={Details} />
+          <PrivateRoute exact path="/contact" component={Contact} />
+          <PrivateRoute exact path="/add" component={Add} />
+        </Switch>
         <Footer />
       </Router>
     );

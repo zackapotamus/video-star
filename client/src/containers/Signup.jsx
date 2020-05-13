@@ -9,55 +9,10 @@ import axios from "axios";
 import { Redirect } from 'react-router-dom'
 
 class Signup extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: "",
-      email: "",
-      password: "",
-      confirm: "",
-      redirectTo: null,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    console.log("handleSubmit");
-
-    axios
-      .post("/api/signup", {
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-      })
-      .then((response) => {
-        console.log("signup response: ");
-        console.log(response);
-        if (response.status === 200) {
-          // update App.js state
-          // this.props.updateUser({
-          //   loggedIn: true,
-          //   email: response.data.email,
-          //   name: response.data.name,
-          // });
-          // update the state to redirect to home
-          this.setState({
-            redirectTo: "/login",
-          });
-        }
-      })
-      .catch((error) => {
-        console.log("login error: ");
-        console.log(error);
-      });
+  async componentDidMount() {
+    if (this.props.checkForToken()) {
+      await this.props.history.push("/mylibrary");
+    }
   }
 
   render() {
