@@ -5,7 +5,7 @@ import "./App.css";
 import axios from "axios";
 import Signup from "./containers/Signup";
 import Login from "./containers/Login";
-import Profile from "./containers/Profile";
+import Profile from "./containers/Account";
 import MyLibrary from "./containers/MyLibrary";
 import LentBorrow from "./containers/LentBorrow";
 import Lend from "./containers/Lend";
@@ -66,21 +66,19 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
-          {/* <Route exact path="/" component={Signup} /> */}
-          <Route exact path="/" render={() => <Signup updateUser={this.updateUser} isLoggedIn={this.state.isLoggedIn} />} />
-          {/* <Route exact path="/signup" render={() => <Signup updateUser={this.updateUser} isLoggedIn={this.state.loggedIn} />} /> */}
-          {/* <Route exact path="/login" component={Login} /> */}
-          <Route exact path="/login" render={() => <Login updateUser={this.updateUser} isLoggedIn={this.state.isLoggedIn} />}/>
-          <PrivateRoute exact path="/profile" component={Profile} isLoggedIn={this.state.isLoggedIn} />
-          <Route exact path="/mylibrary" component={MyLibrary} isLoggedIn={this.state.isLoggedIn} />
-          <PrivateRoute exact path="/lentborrow" component={LentBorrow} isLoggedIn={this.state.isLoggedIn} />
-          <PrivateRoute exact path="/lend" component={Lend} isLoggedIn={this.state.isLoggedIn} />
-          <PrivateRoute exact path="/borrow" component={Borrow} isLoggedIn={this.state.isLoggedIn} />
-          <PrivateRoute exact path="/details" component={Details} isLoggedIn={this.state.isLoggedIn} />
-          <Route exact path="/contact" component={Contact} />
-          <PrivateRoute exact path="/add" component={Add} isLoggedIn={this.state.isLoggedIn} />
-        </Switch>
+        <Route exact path="/" component={Signup} />
+        <Route exact path="/signup" component={Signup} />
+        {/* <Route exact path="/login" component={Login} /> */}
+        <Route exact path="/login" render={() => <Login updateUser={this.updateUser} />}/>
+        <Route exact path="/account" component={Profile} />
+        <Route exact path="/mylibrary" component={MyLibrary} />
+        <Route exact path="/lentborrowed" component={LentBorrow} />
+        <Route exact path="/lend" component={Lend} />
+        <Route exact path="/borrow" component={Borrow} />
+        <Route exact path="/details" component={Details} />
+        <Route exact path="/contact" component={Contact} />
+        <Route exact path="/add" component={Add} />
+
         <Footer />
       </Router>
     );

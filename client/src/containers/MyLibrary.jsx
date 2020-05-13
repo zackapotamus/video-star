@@ -31,9 +31,11 @@ class MyLibrary extends Component {
 
           {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
 
-          <GreyBlock />
-        </>
-      );
+                {/* LIBRARY OF VIDEOS GOES HERE */}
+                
+                <GreyBlock />  
+            </>
+        );
     }
   }
 }
