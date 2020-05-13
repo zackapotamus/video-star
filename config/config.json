@@ -1,10 +1,6 @@
 {
   "development": {
     "use_env_variable": "DB_DEV",
-    "username": "root",
-    "password": null,
-    "database": "videostar_db",
-    "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false
   },
