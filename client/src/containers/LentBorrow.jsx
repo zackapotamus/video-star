@@ -4,14 +4,14 @@ import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
 import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
 
-import EmptySeats from '../img/cinema-empty-seats.jpg';
+import RetroCamera from '../img/retro-camera.jpg';
 class LentBorrow extends Component {
 
     render() {
         return (
             <>
                 <NavBar2 />
-                <Hero imageUrl={EmptySeats}/>
+                <Hero imageUrl={RetroCamera}/>
                 <GreyBlockTop page='Lent / Borrowed' />
                 <h6 style={{textAlign: 'center'}}>LENT VIDEOS</h6>
                 {/* TABLE OF LENT VIDEOS GOES HERE */}
