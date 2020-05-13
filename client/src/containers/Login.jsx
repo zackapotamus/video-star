@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom'
-// import NavBarLogin from '../components/Shared/NavBar/NavBarLogin';
+import NavBar2 from '../components/Shared/NavBar/NavBar2';
 import axios from "axios";
-import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
+// import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
 import LoginForm from "../components/Shared/Form/LoginForm";
 import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
@@ -64,7 +64,7 @@ class Login extends Component {
     } else {
       return (
         <>
-          <NavBarLogin />
+          <NavBar2 />
 
           <Hero imageUrl={FilmMakerImage} />
 
