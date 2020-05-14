@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   try {
-    let { name, email, password } = req.body;
+    // let { name, email, password } = req.body;
     if (!(name && email && password)) {
       return res.status(409).json({
         success: false,

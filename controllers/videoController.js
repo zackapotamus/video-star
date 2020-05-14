@@ -58,13 +58,18 @@ router.get("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const token = req.query.token;
+    const { id, genres, token } = req.query;
+    const user;
+    if (genres) {
+      genres = genres.split(",").map(genre => +genre);
+    }
     if (!token) {
       return res.status(403).json({
         success: false,
         message: "Missing token."
       })
     }
+    user = jwt.validate()
   
   } catch (err) {
     console.log(err);
