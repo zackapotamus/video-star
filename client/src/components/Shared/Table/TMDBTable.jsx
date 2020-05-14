@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment'
 
 const TMDBTable = (props) => {
 
@@ -12,7 +13,7 @@ const TMDBTable = (props) => {
             <tr>
               <th scope="col">Poster</th>
               <th scope="col">Title</th>
-              <th scope="col">Synopsis</th>
+              {/* <th scope="col">Synopsis</th> */}
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
               <th scope="col">Run Time</th>
@@ -22,11 +23,13 @@ const TMDBTable = (props) => {
             {props.videosToDisplay.map((video, index) => {
               return (
                 <tr key={index}>
-                  <td><img src={video.poster_path} alt="video poster" /></td>
+                  <td><img src={video.poster_path ? `https://image.tmdb.org/t/p/w92${video.poster_path}` : "path_to_o"} alt="video poster" /></td>
                   <td>{video.title}</td>
+                  
                   <td>{video.vote_average}</td>
-                  <td>{video.release_date}</td>
-                  <td>{video.runtime}</td>
+                  
+                  <td>{moment(video.release_date).format('MMMM Do, YYYY')}</td>
+                  <td>{video.runtime} mins</td>
                   <td>
                     <Link to={{
                       pathname: "/details",

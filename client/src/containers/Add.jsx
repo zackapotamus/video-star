@@ -1,25 +1,28 @@
 import React, { Component } from "react";
 import NavBar2 from "../components/Shared/NavBar/NavBar2";
-import Hero from '../components/Shared/Hero/Hero';
+import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 import AddMovie from "../img/add-movie.jpg";
+import TMDBTable from "../components/Shared/Table/TMDBTable";
 
 class Add extends Component {
   constructor() {
     super();
     this.state = {
+      token: "",
       query: "",
       results: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this); // why?
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
-
+    const token = localStorage.getItem("jwt");
+    this.setState({ token });
   }
 
   handleChange(event) {
@@ -28,17 +31,17 @@ class Add extends Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    // let results = await API.searchMovies(this.state.query);
-    
+    let results = await API.searchMovies(this.state.token, this.state.query);
+    this.setState({ results: results.data });
   }
 
   render() {
     return (
       <>
         <NavBar2 />
-        <Hero imageUrl={AddMovie}/>
+        <Hero imageUrl={AddMovie} />
         <GreyBlockTop page="Add" />
 
         <div className="container" style={{ marginBottom: 100 }}>
@@ -61,12 +64,17 @@ class Add extends Component {
                       value={this.props.queryValue}
                       onChange={this.handleChange}
                     />
+                    <button className="btn-primary" onClick={this.handleSubmit}>
+                      Search
+                    </button>
                   </div>
-                  <button className="btn-primary" onClick={this.handleSubmit}>Search</button>
                 </form>
               </div>
             </div>
           </div>
+        </div>
+        <div className="container">
+          <TMDBTable videosToDisplay={this.state.results} />
         </div>
         <GreyBlock />
       </>
