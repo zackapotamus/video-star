@@ -17,6 +17,8 @@ const VideosTable = (props) => {
               <th scope="col">Run Time</th>
               <th scope="col">Lent</th>
               <th scope="col">Borrowed</th>
+              <th scope="col">Type</th>
+              <th scope="col">Details</th>
             </tr>
           </thead>
           <tbody>
