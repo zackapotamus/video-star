@@ -57,6 +57,7 @@ const TMDBTable = (props) => {
                   </td>
                   <td>
                     <button
+                      disabled={!!props.addedState[index]["Blu-ray"]}
                       onClick={() => {
                         props.handleAddToLibrary(index, "Blu-ray");
                       }}
@@ -67,6 +68,7 @@ const TMDBTable = (props) => {
                       {props.addedState[index]["Blu-ray"] ? "Added" : "Add Blu-ray"}
                     </button>
                     <button
+                      disabled={!!props.addedState[index]["DVD"]}
                       onClick={() => {
                         props.handleAddToLibrary(index, "DVD");
                       }}
@@ -77,6 +79,7 @@ const TMDBTable = (props) => {
                       {props.addedState[index]["DVD"] ? "Added" : "Add DVD"}
                     </button>
                     <button
+                      disabled={!!props.addedState[index]["Digital"]}
                       onClick={() => {
                         props.handleAddToLibrary(index, "Digital");
                       }}
