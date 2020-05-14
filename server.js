@@ -1,6 +1,7 @@
 // Requiring necessary npm packages
 require("dotenv").config();
 var express = require("express");
+var path = require("path");
 // var session = require("express-session");
 // Requiring passport as we've configured it
 // var passport = require("./config/passport");
@@ -27,9 +28,9 @@ app.use("/api/auth", AuthController);
 app.use("/api/user", UserController);
 
 // Serve all the routes through 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/client/public/index.html"));
-  });
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "/client/public/index.html"));
+//   });
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync({}).then(function() {
