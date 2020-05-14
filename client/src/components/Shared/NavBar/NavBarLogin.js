@@ -1,7 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUser, faComment, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import "./NavBar.css";
 import VideoStarLogo from '../../../img/videostar-logo.png';
 
