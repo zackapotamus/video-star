@@ -47,6 +47,12 @@ router.post("/", async (req, res) => {
 router.post("/signup", async (req, res) => {
   try {
     let { name, email, password } = req.body;
+    if (!(name && email && password)) {
+      return res.status(409).json({
+        success: false,
+        message: "Enter valid name, email, and password."
+      })
+    }
     let user = await db.User.create({
       name,
       email,
@@ -63,12 +69,12 @@ router.post("/signup", async (req, res) => {
         process.env.REACT_APP_SESSION_SECRET
       );
       console.log(token);
-      res.json({
+      return res.json({
         success: true,
         data: token,
       });
     } else {
-      res.status(409).json({
+      return res.status(409).json({
         success: false,
         message: "Unable to create user account."
       });
@@ -76,13 +82,13 @@ router.post("/signup", async (req, res) => {
   } catch (err) {
     if (err instanceof db.Sequelize.UniqueConstraintError) {
       console.log(err);
-      res.status(409).json({
+      return res.status(409).json({
         success: false,
         message: "This email address is already in use.",
       });
     } else {
       console.log(err);
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: "Unable to process signup request.",
       });
