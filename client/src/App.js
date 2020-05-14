@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import logo from './assets/img/videostar-logo-master.svg';
-import "./App.css";
+// import "./App.css";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import Signup from "./containers/Signup";
