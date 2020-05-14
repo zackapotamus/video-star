@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
           name: user.name,
           email: user.email,
           id: user.id,
-          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
         },
         process.env.REACT_APP_SESSION_SECRET
       );
@@ -64,7 +64,7 @@ router.post("/signup", async (req, res) => {
           name: user.name,
           email: user.email,
           id: user.id,
-          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
         },
         process.env.REACT_APP_SESSION_SECRET
       );

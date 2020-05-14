@@ -1,11 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const VideosTable = (props) => {
-
+  console.log(props);
   return (
     <div className="container">
-
       <div className="row justify-content-center">
         <table className="table table-striped">
           <thead>
@@ -21,36 +20,41 @@ const VideosTable = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.videosToDisplay.map((video, index) => {
-              return (
-                <tr key={index}>
-                  <td><img src={video.poster_path} alt="video poster" /></td>
-                  <td>{video.original_title}</td>
-                  <td>{video.overview}</td>
-                  <td>{video.popularity}</td>
-                  <td>{video.release_date}</td>
-                  <td>{video.runtime}</td>
-                  <td>{video.is_lent}</td>
-                  <td>{video.is_borrowed}</td>
-                  <td>{video.video_type}</td>
-                  <td>
-                    <Link to={{
+            {props.videosToDisplay.map((video, index) => (
+              <tr key={index}>
+                <td>
+                  <img src={`https://image.tmdb.org/t/p/w92${video.poster_path || "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"}`} alt="video poster" />
+                </td>
+                <td>{video.original_title}</td>
+                <td>{video.overview}</td>
+                <td>{video.popularity}</td>
+                <td>{video.release_date}</td>
+                <td>{video.runtime} mins</td>
+                <td>{video.is_lent}</td>
+                <td>{video.is_borrowed}</td>
+                <td>{video.video_type}</td>
+                <td>
+                  <Link
+                    to={{
                       pathname: "/details",
                       state: {
-                        video: video 
-                      }
-                    }} id={video.id} className="btn btn-outline-success my-2 my-sm-0" role="button">Details
-                    </Link>
-                  </td>
-                </tr>
-              )
-            })}
+                        video: video,
+                      },
+                    }}
+                    id={video.id}
+                    className="btn btn-outline-success my-2 my-sm-0"
+                    role="button"
+                  >
+                    Details
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
 export default VideosTable;
