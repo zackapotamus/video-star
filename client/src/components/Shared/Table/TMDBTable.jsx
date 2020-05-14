@@ -16,6 +16,7 @@ const TMDBTable = (props) => {
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
               <th scope="col">Run Time</th>
+              <th scope="col">Add To Library</th>
             </tr>
           </thead>
           <tbody>
