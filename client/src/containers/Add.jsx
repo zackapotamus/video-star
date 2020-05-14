@@ -1,25 +1,31 @@
 import React, { Component } from "react";
 import NavBar2 from "../components/Shared/NavBar/NavBar2";
-import Hero from '../components/Shared/Hero/Hero';
+import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 import AddMovie from "../img/add-movie.jpg";
+import TMDBTable from "../components/Shared/Table/TMDBTable";
 
 class Add extends Component {
   constructor() {
     super();
     this.state = {
+      token: "",
       query: "",
       results: [],
+      message: "",
+      addedState: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this); // why?
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
   }
 
   componentDidMount() {
-
+    const token = localStorage.getItem("jwt");
+    this.setState({ token });
   }
 
   handleChange(event) {
@@ -28,17 +34,27 @@ class Add extends Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleAddToLibrary(index, videoType) {
+    try {
+      await API.addVideo(this.state.results[index].id, videoType, this.state.token);
+      this.state.addedState[index][videoType] = true;
+      this.setState({ addedState: this.state.addedState });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async handleSubmit(event) {
     event.preventDefault();
-    // let results = await API.searchMovies(this.state.query);
-    
+    let results = await API.searchMovies(this.state.token, this.state.query);
+    this.setState({ results: results.data, addedState: results.data.map(result => ({"DVD": false, "Blu-ray": false, "Digital": false})) });
   }
 
   render() {
     return (
       <>
         <NavBar2 />
-        <Hero imageUrl={AddMovie}/>
+        <Hero imageUrl={AddMovie} />
         <GreyBlockTop page="Add" />
 
         <div className="container" style={{ marginBottom: 100 }}>
@@ -61,12 +77,17 @@ class Add extends Component {
                       value={this.props.queryValue}
                       onChange={this.handleChange}
                     />
+                    <button className="btn-primary" onClick={this.handleSubmit}>
+                      Search
+                    </button>
                   </div>
-                  <button className="btn-primary" onClick={this.handleSubmit}>Search</button>
                 </form>
               </div>
             </div>
           </div>
+        </div>
+        <div className="container">
+          <TMDBTable addedState={this.state.addedState} handleAddToLibrary={this.handleAddToLibrary} videosToDisplay={this.state.results} />
         </div>
         <GreyBlock />
       </>

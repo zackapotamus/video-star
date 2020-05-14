@@ -28,8 +28,8 @@ export default {
     });
   },
   // Saves a video to the database
-  saveVideo: function(tmdId, token) {
-    return axios.post("/api/videos", { id: tmdId, token });
+  addVideo: function(id, video_type, token) {
+    return axios.post("/api/videos", { id, token, video_type });
   },
   // Updates a video with the given id
   updateVideo: function(id, token, videoData) {
