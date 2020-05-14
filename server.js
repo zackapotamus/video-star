@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "production") {
 app.use("/api/auth", AuthController);
 app.use("/api/user", UserController);
 app.use("/api/search", SearchController);
-app.use("/api/video", VideoController);
+app.use("/api/videos", VideoController);
 
 // Serve all the routes through 
 // app.get("*", (req, res) => {
