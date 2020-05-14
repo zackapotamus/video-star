@@ -9,6 +9,7 @@ import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import FilmMakerImage from "../img/filmmaker.jpg";
 import jwt from "jsonwebtoken";
+import API from "../utils/API";
 
 class Login extends Component {
   constructor() {
@@ -40,7 +41,7 @@ class Login extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      let response = await axios.post("/api/auth", {
+      let response = await API.login({
         email: this.state.email,
         password: this.state.password,
       });
