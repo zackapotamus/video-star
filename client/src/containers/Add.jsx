@@ -26,12 +26,16 @@ class Add extends Component {
                   <div className="form-group px-5">
                     <label for="exampleFormControlInput1">Movie Title</label>
                     <input
+                      name="query"
                       type="title"
                       className="form-control"
                       id="exampleFormControlInput1"
                       placeholder="Search for a Movie"
-                    ></input>
+                      value={this.props.queryValue}
+                      onChange={this.props.handleChange}
+                    />
                   </div>
+                  <button className="btn-primary" onClick={this.props.handleSubmit}>Search</button>
                 </form>
               </div>
             </div>

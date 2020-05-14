@@ -2,35 +2,45 @@ import axios from "axios";
 
 export default {
   // Gets all videos
-  getVideos: function() {
+  getVideos: function(token) {
     return axios.get("/api/videos");
   },
   // Gets the video with the given id
-  getVideo: function(id) {
-    return axios.get(`/api/videos/${id}`);
+  getVideo: function(id, token) {
+    return axios.get("/api/video", {
+      params: {
+        id,
+        token
+      }
+    });
   },
   // Deletes the video with the given id
-  deleteVideo: function(id) {
-    return axios.delete(`/api/videos/${id}`);
+  deleteVideo: function(id, token) {
+    return axios.delete("/api/video", {
+      params: {
+        token,
+        id
+      }
+    });
   },
   // Saves a video to the database
-  saveVideo: function(videoData) {
-    return axios.post("/api/videos", videoData);
+  saveVideo: function(tmdId, token) {
+    return axios.post("/api/video", { id: tmdId, token });
   },
   // Updates a video with the given id
-  updateVideo: function(videoData) {
-    return axios.put("/api/videos", videoData);
+  updateVideo: function(id, token, videoData) {
+    return axios.put("/api/video", { id, token, data: videoData });
   },
   // Search for movie
   searchMovies: function(searchTerm) {
-    return axios.get(`/api/search/${searchTerm}`);
+    return axios.get("/api/search", {
+      params: {
+        query: searchTerm
+      }
+    });
   },
   // Log in
   login: function(loginData) {
-    return axios.post("/api/login", loginData);
+    return axios.post("/api/auth", loginData);
   },
-  // Get User Data
-  getUserData: function() {
-    return axios.get("/api/user_data");
-  }
 };
