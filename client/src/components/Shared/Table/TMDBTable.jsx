@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const MoviesTable = (props) => {
+const TMDBTable = (props) => {
 
   return (
     <div className="container">
@@ -16,29 +16,33 @@ const MoviesTable = (props) => {
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
               <th scope="col">Run Time</th>
-              <th scope="col">Lent</th>
-              <th scope="col">Borrowed</th>
             </tr>
           </thead>
           <tbody>
-            {props.moviesToDisplay.map((movie, index) => {
+            {props.videosToDisplay.map((video, index) => {
               return (
                 <tr key={index}>
-                  <td><img src={movie.poster_path} alt="movie poster" /></td>
-                  <td>{movie.original_title}</td>
-                  <td>{movie.overview}</td>
-                  <td>{movie.popularity}</td>
-                  <td>{movie.release_date}</td>
-                  <td>{movie.runtime}</td>
-                  <td>{movie.is_lent}</td>
-                  <td>{movie.is_borrowed}</td>
+                  <td><img src={video.poster_path} alt="video poster" /></td>
+                  <td>{video.title}</td>
+                  <td>{video.vote_average}</td>
+                  <td>{video.release_date}</td>
+                  <td>{video.runtime}</td>
                   <td>
                     <Link to={{
                       pathname: "/details",
                       state: {
-                        movie: movie 
+                        video: video 
                       }
-                    }} id={movie.id} className="btn btn-outline-success my-2 my-sm-0" role="button">Details
+                    }} id={video.id} className="btn btn-outline-success my-2 my-sm-0" role="button">Details
+                    </Link>
+                  </td>
+                  <td>
+                    <Link to={{
+                      pathname: "/details",
+                      state: {
+                        video: video 
+                      }
+                    }} id={video.id} className="btn btn-outline-success my-2 my-sm-0" role="button">Details
                     </Link>
                   </td>
                 </tr>
@@ -52,4 +56,4 @@ const MoviesTable = (props) => {
   )
 }
 
-export default MoviesTable;
+export default TMDBTable;
