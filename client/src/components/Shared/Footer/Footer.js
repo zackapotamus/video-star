@@ -6,8 +6,8 @@ function Footer() {
   return (
     <footer className="page-footer font-small fixed-bottom pt-4">
       <div className="footer-copyright text-center py-3">
-      <img className="mr-3" src={MovieDBLogo} alt="moviedb-logo" style={{ width: 204, marginBottom: 10 }}/>
-        © Copyright VideoStar 2020
+      <img className="mr-3" src={MovieDBLogo} alt="moviedb-logo" style={{ width: 102, float: "left" }}/>
+       <p>© Copyright VideoStar 2020</p> 
       </div>
     </footer>
   );
