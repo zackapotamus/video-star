@@ -124,7 +124,18 @@ class App extends Component {
               />
             )}
           />
-          <Route exact path="/signup" component={Signup} />
+           <Route
+            exact
+            path="/signup"
+            render={(props) => (
+              <Signup
+                {...props}
+                isAuthenticated={this.isAuthenticated}
+                checkForToken={this.checkForToken}
+              />
+            )}
+          />
+          {/* <Route exact path="/signup" component={Signup} /> */}
           {/* <Route exact path="/login" component={Login} /> */}
           <Route
             exact
