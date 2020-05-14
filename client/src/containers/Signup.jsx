@@ -32,7 +32,7 @@ class Signup extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      let response = await axios.post("/api/auth/signup", {
+      let response = await axios.post("/api/user/", {
         email: this.state.email,
         password: this.state.password,
         name: this.state.name,
