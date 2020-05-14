@@ -20,7 +20,7 @@ function NavBarLogin() {
           <ul className="nav navbar-nav ml-auto">
 
             <li className="nav-item">
-              <Link to="/signup" className={location.pathname === "/signup" ? "nav-link active" : "nav-link"}><span className="clearfix d-none d-sm-inline-block" />Sign Up</Link>
+              <Link to="/" className={location.pathname === "/signup" ? "nav-link active" : "nav-link"}><span className="clearfix d-none d-sm-inline-block" />Sign Up</Link>
             </li>
 
             <li className="nav-item">

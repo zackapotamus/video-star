@@ -35,7 +35,11 @@ module.exports = function(sequelize, DataTypes) {
     vote_count: DataTypes.INTEGER,
     video_type: {
       type: DataTypes.STRING(16),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isIn: [['Blu-Ray', 'DVD', 'Digital']],
+        msg: "Must be Blu-Ray, DVD, or Digital."
+      }
     },
     lend_borrow_name: DataTypes.STRING,
     lend_borrow_date: DataTypes.DATE

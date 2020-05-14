@@ -7,8 +7,8 @@ var express = require("express");
 const AuthController = require("./controllers/authController");
 
 // Setting up port and requiring models for syncing
-var PORT = process.env.PORT || 3001;
-var db = require("./models");
+const PORT = process.env.PORT || 3001;
+const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
 var app = express();
