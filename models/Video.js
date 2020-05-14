@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     homepage: DataTypes.STRING,
     poster_path: DataTypes.STRING,
     tmd_id: DataTypes.INTEGER,
-    imdb_id: DataTypes.INTEGER,
+    imdb_id: DataTypes.STRING,
     original_language: DataTypes.STRING,
     original_title: DataTypes.STRING,
     overview: DataTypes.TEXT,
@@ -23,11 +23,13 @@ module.exports = function(sequelize, DataTypes) {
     status: DataTypes.STRING,
     is_borrowed: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      defaultValue: false
     },
     is_lent: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      defaultValue: false
     },
     tagline: DataTypes.STRING,
     title: DataTypes.STRING,
@@ -38,7 +40,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       validate: {
         isIn: [['Blu-Ray', 'DVD', 'Digital']],
-        msg: "Must be Blu-Ray, DVD, or Digital."
+        // msg: "Must be Blu-Ray, DVD, or Digital."
       }
     },
     lend_borrow_name: DataTypes.STRING,

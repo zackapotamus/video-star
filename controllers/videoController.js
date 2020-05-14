@@ -3,28 +3,44 @@ const router = express.Router();
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 const { Op } = db.Sequelize;
+const axios = require("axios");
 
 router.get("/", async (req, res) => {
-  console.log(req.query);
   try {
-    if (req.query.id) {
-      let videoId = req.query.id;
-      let video = await db.Video.findAll({
+    let genres;
+    const { id, token } = req.query;
+    let user;
+    if (req.query.genres) {
+      genres = req.query.genres.split(",").map(genre => +genre);
+    }
+    if (!token) {
+      return res.status(403).json({
+        success: false,
+        message: "Missing token."
+      })
+    }
+    user = jwt.verify(
+      token,
+      process.env.REACT_APP_SESSION_SECRET
+    );
+    if (id) {
+      let video = await db.Video.findOne({
         include: {
           model: db.Genre,
+          as: "genres",
           through: {
             attributes: [],
           },
         },
         where: {
-          id: videoId,
-          user_id: 1, // ******* this will change when auth is working *******
+          id: id,
+          user_id: user.id
         },
       });
       res.status(200).json(video);
-    } else if (req.query.genres) {
-      let genres = req.query.genres.split(",").map((genre_id) => +genre_id);
-      let video = await db.Video.findAll({
+    }
+    else if (genres) {
+      let videos = await db.Video.findAll({
         include: [
           {
             model: db.Genre,
@@ -43,33 +59,29 @@ router.get("/", async (req, res) => {
           },
         ],
         where: {
+          user_id: user.id,
           "$filter_genres.id$": {
             [Op.in]: genres,
           },
         },
       });
-      res.status(200).json(video);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+      res.status(200).json(videos);
 
-router.get("/", async (req, res) => {
-  try {
-    const { id, genres, token } = req.query;
-    const user;
-    if (genres) {
-      genres = genres.split(",").map(genre => +genre);
     }
-    if (!token) {
-      return res.status(403).json({
-        success: false,
-        message: "Missing token."
-      })
-    }
-    user = jwt.validate()
+    else {
+      let video = await db.Video.findAll({
+        include: {
+          model: db.Genre,
+          as: "genres",
+          through: {
+            attributes: [],
+          },
+        },
+        where: {
+          user_id: user.id
+        },
+      });
+      res.status(200).json(video);    }
   
   } catch (err) {
     console.log(err);
@@ -123,37 +135,69 @@ router.get("/api/borrowed", async (req, res) => {
   }
 });
 
-router.post("/api/videos", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    let video = await db.Video.create({
-      user_id: 1, // ******* this will change when auth is working *******
-      adult: req.body.adult,
-      backdrop_path: req.body.backdrop_path,
-      posterPath: req.body.poster_path,
-      tmd_id: req.body.id,
-      imdb_id: req.body.imdb_id,
-      original_title: req.body.original_title,
-      overview: req.body.overview,
-      popularity: req.body.popularity,
-      relase_date: req.body.release_date,
-      runtime: req.body.runtime,
-      is_borrowed: req.body.is_borrowed,
-      is_lent: req.body.is_lent,
-      tagline: req.body.tagline,
-      title: req.body.title,
-      vote_average: req.body.vote_average,
-      vote_count: req.body.vote_count,
-      video_type: req.body.video_type,
-      lend_borrow_name: req.body.lend_borrow_name,
-      lend_borrow_date: req.body.lend_borrow_date,
-      foo: "bar",
-    });
-    if (req.body.genres) {
-      await video.addGenres(req.body.genres);
+    const { id: tmd_id, token, video_type } = req.body;
+    if (!token) {
+      return res.status(403).json({
+        success: false,
+        message: "Missing token."
+      })
     }
-    res.json(video.id);
+    const user = jwt.verify(
+      token,
+      process.env.REACT_APP_SESSION_SECRET
+    );
+    let result = await axios.get(`https://api.themoviedb.org/3/movie/${tmd_id}`, {
+      params: {
+        language: "en-US",
+        api_key: process.env.API_KEY,
+      },
+    });
+    let tmd_movie = result.data;
+    console.log(tmd_movie);
+    let video = await db.Video.create({
+      user_id: user.id,
+      adult: tmd_movie.adult,
+      backdrop_path: tmd_movie.backdrop_path,
+      posterPath: tmd_movie.poster_path,
+      tmd_id: tmd_movie.id,
+      imdb_id: tmd_movie.imdb_id,
+      original_title: tmd_movie.original_title,
+      overview: tmd_movie.overview,
+      popularity: tmd_movie.popularity,
+      relase_date: tmd_movie.release_date,
+      runtime: tmd_movie.runtime,
+      // is_borrowed: req.body.is_borrowed,
+      // is_lent: req.body.is_lent,
+      tagline: tmd_movie.tagline,
+      title: tmd_movie.title,
+      vote_average: tmd_movie.vote_average,
+      vote_count: tmd_movie.vote_count,
+      video_type: video_type,
+      // foo: "bar",
+      // genres: tmd_movie.genres
+    }, {
+      // include: [{
+      //   model: db.Genre,
+      //   as: 'genres',
+      // }]
+    });
+    console.log(tmd_movie.genres);
+    if (tmd_movie.genres) {
+      await video.addGenres(tmd_movie.genres.map(genreObj => genreObj.id));
+    }
+    res.json({
+      success: true,
+      data: video.id
+    });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({
+      success: false,
+      message: "Unable to process request."
+    });
     console.log(err);
   }
 });
+
+module.exports = router;
