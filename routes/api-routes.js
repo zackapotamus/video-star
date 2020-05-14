@@ -1,6 +1,4 @@
-// Requiring our models and passport as we've configured it
 const db = require("../models");
-var passport = require("../config/passport");
 const { Op } = db.Sequelize;
 
 module.exports = function (app) {
