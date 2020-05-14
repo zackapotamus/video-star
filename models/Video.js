@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(16),
       allowNull: false,
       validate: {
-        isIn: [['Blu-Ray', 'DVD', 'Digital']],
+        isIn: [['Blu-ray', 'DVD', 'Digital']],
         // msg: "Must be Blu-Ray, DVD, or Digital."
       }
     },

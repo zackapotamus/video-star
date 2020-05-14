@@ -14,10 +14,13 @@ class Add extends Component {
       token: "",
       query: "",
       results: [],
+      message: "",
+      addedState: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
   }
 
   componentDidMount() {
@@ -31,10 +34,20 @@ class Add extends Component {
     });
   }
 
+  async handleAddToLibrary(index, videoType) {
+    try {
+      await API.addVideo(this.state.results[index].id, videoType, this.state.token);
+      this.state.addedState[index][videoType] = true;
+      this.setState({ addedState: this.state.addedState });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
     let results = await API.searchMovies(this.state.token, this.state.query);
-    this.setState({ results: results.data });
+    this.setState({ results: results.data, addedState: results.data.map(result => ({"DVD": false, "Blu-ray": false, "Digital": false})) });
   }
 
   render() {
@@ -74,7 +87,7 @@ class Add extends Component {
           </div>
         </div>
         <div className="container">
-          <TMDBTable videosToDisplay={this.state.results} />
+          <TMDBTable addedState={this.state.addedState} handleAddToLibrary={this.handleAddToLibrary} videosToDisplay={this.state.results} />
         </div>
         <GreyBlock />
       </>
