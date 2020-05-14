@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import logo from './assets/img/videostar-logo-master.svg';
 import "./App.css";
 import axios from "axios";
-
+import jwt from "jsonwebtoken";
 import Signup from "./containers/Signup";
 import Login from "./containers/Login";
 import Profile from "./containers/Account";
@@ -14,28 +14,77 @@ import Borrow from "./containers/Borrow";
 import Details from "./containers/Details";
 import Contact from "./containers/Contact";
 import Add from "./containers/Add";
-
+import PrivateRoute from "./components/App/PrivateRoute";
 import Footer from "./components/Shared/Footer/Footer";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: false,
-      username: null,
+      isLoggedIn: false,
+      userObject: {},
     };
-
-    this.getUser = this.getUser.bind(this);
+    this.checkForToken = this.checkForToken.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.updateUser = this.updateUser.bind(this);
+  }
+
+  isAuthenticated() {
+    try {
+      const tokenFromStorage = localStorage.getItem("jwt");
+      if (!tokenFromStorage) {
+        return false;
+      } else {
+        const decoded = jwt.verify(
+          tokenFromStorage,
+          process.env.REACT_APP_SESSION_SECRET
+        );
+        if (decoded && decoded.email && decoded.id) {
+          return true;
+        }
+      }
+    } catch (err) {
+      return false;
+    }
+  }
+
+  checkForToken() {
+    try {
+      let ret = false;
+      const tokenFromStorage = localStorage.getItem("jwt");
+      if (tokenFromStorage) {
+        this.setState({ isLoggedIn: true });
+        const decoded = jwt.verify(
+          tokenFromStorage,
+          process.env.REACT_APP_SESSION_SECRET
+        );
+        if (decoded && decoded.email && decoded.id) {
+          this.setState({ userObject: decoded, isLoggedIn: true });
+          ret = true;
+        } else {
+          this.setState({ isLoggedIn: false, userObject: {} });
+          localStorage.setItem("jwt", "");
+          ret = false;
+        }
+      }
+      return ret;
+    } catch (err) {
+      this.setState({ isLoggedIn: false, userObject: {} });
+      localStorage.setItem("jwt", "");
+      return false;
+    }
   }
 
   componentDidMount() {
-    this.getUser();
+    console.log("App.js did mount");
+    this.checkForToken();
   }
 
-  updateUser(userObject) {
-    this.setState(userObject);
+  logOutUser() {
+    this.setState({
+      userObject: {},
+      isLoggedIn: false,
+    });
+    localStorage.setItem("jwt", "");
   }
 
   getUser() {
@@ -46,14 +95,16 @@ class App extends Component {
         console.log("Get User: There is a user saved in the server session: ");
 
         this.setState({
-          loggedIn: true,
-          username: response.data.user.username,
+          isLoggedIn: true,
+          email: response.data.user.email,
+          name: response.data.user.name,
         });
       } else {
         console.log("Get user: no user");
         this.setState({
-          loggedIn: false,
-          username: null,
+          isLoggedIn: false,
+          email: null,
+          name: null,
         });
       }
     });
@@ -61,19 +112,40 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Route exact path="/" component={Signup} />
-        <Route exact path="/signup" component={Signup} />
-        {/* <Route exact path="/login" component={Login} /> */}
-        <Route exact path="/login" render={() => <Login updateUser={this.updateUser} />}/>
-        <Route exact path="/account" component={Profile} />
-        <Route exact path="/mylibrary" component={MyLibrary} />
-        <Route exact path="/lentborrowed" component={LentBorrow} />
-        <Route exact path="/lend" component={Lend} />
-        <Route exact path="/borrow" component={Borrow} />
-        <Route exact path="/details" component={Details} />
-        <Route exact path="/contact" component={Contact} />
-        <Route exact path="/add" component={Add} />
-
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Signup
+                {...props}
+                isAuthenticated={this.isAuthenticated}
+                checkForToken={this.checkForToken}
+              />
+            )}
+          />
+          <Route exact path="/signup" component={Signup} />
+          {/* <Route exact path="/login" component={Login} /> */}
+          <Route
+            exact
+            path="/login"
+            render={(props) => (
+              <Login
+                {...props}
+                isAuthenticated={this.isAuthenticated}
+                checkForToken={this.checkForToken}
+              />
+            )}
+          />
+          <PrivateRoute exact path="/account" component={Profile} />
+          <PrivateRoute exact path="/mylibrary" component={MyLibrary} />
+          <PrivateRoute exact path="/lentborrowed" component={LentBorrow} />
+          <PrivateRoute exact path="/lend" component={Lend} />
+          <PrivateRoute exact path="/borrow" component={Borrow} />
+          <PrivateRoute exact path="/details" component={Details} />
+          <PrivateRoute exact path="/contact" component={Contact} />
+          <PrivateRoute exact path="/add" component={Add} />
+        </Switch>
         <Footer />
       </Router>
     );
