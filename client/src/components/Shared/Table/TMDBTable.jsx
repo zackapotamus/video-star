@@ -38,11 +38,11 @@ const TMDBTable = (props) => {
                   </td>
                   <td>
                     <Link to={{
-                      pathname: "/details",
+                      pathname: "/api/videos/:id",
                       state: {
                         video: video 
                       }
-                    }} id={video.id} className="btn btn-outline-success my-2 my-sm-0" role="button">Details
+                    }} id={video.id} className="btn btn-outline-success my-2 my-sm-0" role="button">Add To Library
                     </Link>
                   </td>
                 </tr>
