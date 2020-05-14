@@ -63,7 +63,7 @@ class Login extends Component {
   render() {
     return (
       <>
-        <NavBar2 />
+        <NavBarLogin />
 
         <Hero imageUrl={FilmMakerImage} />
 

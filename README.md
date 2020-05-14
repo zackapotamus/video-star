@@ -1,5 +1,29 @@
 # VideoStar - A Full Stack React App
 
+This application is specially designed for video collectors and keep track of all the videos in their collection. 
+
+* The user can search for movies in [TMDB (The Movie Database)](https://www.themoviedb.org/?language=en-US) and add them to their collection. 
+* After a search in TMDB, the user gets a table of movies with the results of the search term.
+* The search results table from TMDB show information about each movie: 
+    ** poster image
+    ** movie title
+    ** synopsis
+    ** popularity
+    ** realease date
+* The search results table from TMDB, allows the user to click on the Details button to get more details about a specific movie.
+* The search results table from TMDB, allows the user to click on the 3 Add buttons (`Add Blu-Ray`, `Add DVD`, `Add Digital`) to save the specific movie in their collection as Blu-Ray, DVD or Digital format.
+* The collection can be of 3 different types of videos: Blu-Ray, DVD or Digital. 
+* The user can save their videos as physical Blu-Ray and DVD or as digital format.
+* The user can lend videos to other people and can specify to whom, the lending date and the agreed return date.
+* The user can borrow videos from other people and can specify from whom, the borrowing date and the agreed return date.
+* To use the app the user must signup for a free account or login with its credentials.
+* To signup, the user is required to provide a name, a valid email address and a password.
+* To login, the user only needs to provide a valid email and password. 
+* The user session is controlled with a [JWT (JSON Web Token)](https://jwt.io/) stored in the browser's [Window.sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
+* The user has a profile that can be updated.
+* Once authenticated, the user has access to all the features in the app.
+* Users that are not authenticated can not access any resources.
+
 This is a Full Stack application that follows the [MVC (Model View Controller)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) software design pattern. This app uses: 
 * [React JS](https://reactjs.org/) is the front-end library that is acting as the __View__.
 * [Express JS](https://expressjs.com/) is the web server that is acting as the __Controller__.
