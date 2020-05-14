@@ -4,6 +4,7 @@ var express = require("express");
 var session = require("express-session");
 // Requiring passport as we've configured it
 var passport = require("./config/passport");
+var path = require("path");
 
 // Setting up port and requiring models for syncing
 var PORT = process.env.PORT || 3001;
@@ -21,6 +22,16 @@ app.use(passport.session());
 
 // Requiring our routes
 require("./routes/api-routes.js")(app);
+
+// If production, use the client/build version
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
+// Serve all the routes through 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/client/public/index.html"));
+  });
 
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync({}).then(function() {
