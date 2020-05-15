@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import NavBar2 from '../components/Shared/NavBar/NavBar2';
 import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
 import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
+import MovieCard from '../components/Shared/Card/MovieCard';
 
-class Details extends Component {
-    render() {
+const Details = (props) => {
+
         return (
             <>
                 <NavBar2 />
@@ -12,11 +13,9 @@ class Details extends Component {
                 <div className="container-fluid bg-light py-3">
                     <div className="row">
                         <div className="col-md-6 mx-auto">
-                            <div className="card card-body">
-
-                                {/* MOVIE DETAILS GO HERE */}
-
-                            </div>
+                            
+                            <MovieCard />
+                            
                         </div>
                     </div>
                 </div>
@@ -25,6 +24,5 @@ class Details extends Component {
             </>
         );
     }
-}
 
 export default Details;

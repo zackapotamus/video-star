@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import PlaceholderImage from "../../../img/videostar-placeholder.png";
+import GreyBlockTop from "../GreyBlockTop/GreyBlockTop";
 
 const TMDBTable = (props) => {
   return (
@@ -49,20 +50,20 @@ const TMDBTable = (props) => {
                         },
                       }}
                       id={video.id}
-                      className="btn btn-outline-success my-2 my-sm-0"
+                      className="btn btn-sm btn-outline-success my-2 my-sm-0"
                       role="button"
                     >
                       Details
                     </Link>
                   </td>
-                  <td>
+                  <td style={{width: 200}}>
                     <button
                       disabled={!!props.addedState[index]["Blu-ray"]}
                       onClick={() => {
                         props.handleAddToLibrary(index, "Blu-ray");
                       }}
                       id={video.id}
-                      className="btn btn-outline-success my-2 my-sm-0"
+                      className="btn btn-sm btn-outline-success my-2 my-sm-0"
                       role="button"
                     >
                       {props.addedState[index]["Blu-ray"] ? "Added" : "Add Blu-ray"}
@@ -73,7 +74,7 @@ const TMDBTable = (props) => {
                         props.handleAddToLibrary(index, "DVD");
                       }}
                       id={video.id}
-                      className="btn btn-outline-success my-2 my-sm-0"
+                      className="btn btn-sm btn-outline-success my-2 my-sm-0"
                       role="button"
                     >
                       {props.addedState[index]["DVD"] ? "Added" : "Add DVD"}
@@ -84,7 +85,7 @@ const TMDBTable = (props) => {
                         props.handleAddToLibrary(index, "Digital");
                       }}
                       id={video.id}
-                      className="btn btn-outline-success my-2 my-sm-0"
+                      className="btn btn-sm btn-outline-success my-2 my-sm-0"
                       role="button"
                     >
                       {props.addedState[index]["Digital"] ? "Added" : "Add Digital"}
