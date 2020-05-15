@@ -31,8 +31,8 @@ const LentTable = (props) => {
                   <td>{video.release_date}</td>
                   <td>{video.runtime}</td>
                   <td>{video.lend_borrow_name}</td>
-                  <td>{video.lend_borrow_lending_date}</td>
-                  <td>{video.lend_borrow_returning_date}</td>
+                  <td>{video.lend_borrow_date}</td>
+                  <td>{video.lend_borrow_due_date}</td>
                   <td>
                     <Link to={{
                       pathname: "/details",
