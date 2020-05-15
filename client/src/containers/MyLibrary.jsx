@@ -16,7 +16,8 @@ class MyLibrary extends Component {
       token: "",
       results: [],
     };
-    this.componentDidMount = this.componentDidMount.bind(this); // why?
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   async componentDidMount() {
     let token = localStorage.getItem("jwt");
@@ -25,9 +26,11 @@ class MyLibrary extends Component {
   }
   async handleDelete(index) {
     try {
-      console.log(index, this.state.results);
-        // await API.deleteVideo(this.state.results[index].id, this.state.token);
-        this.setState({ results: this.state.results.filter(r => r.id !== this.state.results[index].id)});
+        let idToDelete = this.state.results[index].id;
+        let result = await API.deleteVideo(idToDelete, this.state.token);
+        if (result.data.success) {
+          this.setState({ results: this.state.results.filter(r => r.id !== idToDelete) });
+        }
       } catch (err) {
       console.log(err);
     }

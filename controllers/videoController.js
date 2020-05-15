@@ -106,7 +106,7 @@ router.delete("/", async (req, res) => {
     token,
     process.env.REACT_APP_SESSION_SECRET
   );
-  let response = await db.Video.delete({
+  let response = await db.Video.destroy({
     where: {
       id: id,
       user_id: user.id
@@ -144,7 +144,6 @@ router.post("/", async (req, res) => {
       },
     });
     let tmd_movie = result.data;
-    console.log(tmd_movie);
     let video = await db.Video.create({
       user_id: user.id,
       adult: tmd_movie.adult,
@@ -172,7 +171,6 @@ router.post("/", async (req, res) => {
       //   as: 'genres',
       // }]
     });
-    console.log(tmd_movie.genres);
     if (tmd_movie.genres) {
       await video.addGenres(tmd_movie.genres.map(genreObj => genreObj.id));
     }
