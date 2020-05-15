@@ -38,12 +38,8 @@ const VideosTable = (props) => {
                 <td>
                   <Link
                     to={{
-                      pathname: "/details",
-                      state: {
-                        video: video,
-                      },
+                      pathname: `/details/${video.id}`
                     }}
-                    id={video.id}
                     className="btn btn-outline-success my-2 my-sm-0"
                     role="button"
                   >
