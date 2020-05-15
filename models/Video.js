@@ -40,7 +40,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       validate: {
         isIn: [['Blu-ray', 'DVD', 'Digital']],
-        // msg: "Must be Blu-Ray, DVD, or Digital."
+        msg: "Must be Blu-Ray, DVD, or Digital."
       }
     },
     lend_borrow_name: DataTypes.STRING,
