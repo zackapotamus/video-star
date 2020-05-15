@@ -20,7 +20,7 @@ function NavBar2() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-light ml-auto">
       
       <a className="navbar-brand" href="/">
-        <img src={VideoStarLogo} alt="logo" style={{ width: 200 }} />
+        <img src={VideoStarLogo} alt="logo" style={{ width: 100 }} />
       </a>
     
     <div className="collapse navbar-collapse" id="navbarNav">
