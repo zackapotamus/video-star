@@ -3,6 +3,7 @@ import ProfileForm from '../Form/ProfileForm';
 
 import BackgroundProfile from '../../../img/background-profile.png';
 import UserImage from '../../../img/user-image.jpeg';
+// import {FaUserCircle} from 'react-icons/fa';
 
 const ProfileCard = (props) => {
 
