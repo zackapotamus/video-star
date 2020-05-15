@@ -1,15 +1,15 @@
-imimport React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const MovieCard = (props) => {
 
-    const [video, setVideo] = useState({});
+    // const [video, setVideo] = useState({});
 
-    // When this component mounts, grab the book with the _id of props.match.params.id
-    // e.g. localhost:3000/books/599dcb67f0f16317844583fc
-    const {id} = useParams()
-    useEffect(() => {
-        this.s
-    }, [])
+    // // When this component mounts, grab the book with the _id of props.match.params.id
+    // // e.g. localhost:3000/books/599dcb67f0f16317844583fc
+    // const {id} = useParams()
+    // useEffect(() => {
+    //     this.s
+    // }, [])
 
     return (
         <>
