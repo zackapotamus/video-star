@@ -16,13 +16,25 @@ class MyLibrary extends Component {
       token: "",
       results: [],
     };
-    this.componentDidMount = this.componentDidMount.bind(this); // why?
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   async componentDidMount() {
     let token = localStorage.getItem("jwt");
     let results = await API.getVideos(token);
     this.setState({ results: results.data, token: token });
   }
+  async handleDelete(index) {
+    try {
+        let idToDelete = this.state.results[index].id;
+        let result = await API.deleteVideo(idToDelete, this.state.token);
+        if (result.data.success) {
+          this.setState({ results: this.state.results.filter(r => r.id !== idToDelete) });
+        }
+      } catch (err) {
+      console.log(err);
+    }
+  };
 
   render() {
     return (
@@ -32,7 +44,7 @@ class MyLibrary extends Component {
         <GreyBlockTop page="My Library" />
 
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
-        <VideosTable videosToDisplay={this.state.results} token={this.state.token}/>
+        <VideosTable videosToDisplay={this.state.results} handleDelete={this.handleDelete} />
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
 

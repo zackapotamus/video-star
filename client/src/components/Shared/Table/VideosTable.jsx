@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 const VideosTable = (props) => {
-  console.log(props);
+  
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -19,6 +19,7 @@ const VideosTable = (props) => {
               <th scope="col">Is It Borrowed?</th>
               <th scope="col">Type</th>
               <th scope="col">Details</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -48,6 +49,17 @@ const VideosTable = (props) => {
                   >
                     Details
                   </Link>
+                </td>
+                {/* delete button to remove the video from the table */}
+                <td>
+                  <button
+                    className="btn btn-outline-danger my-2 my-sm-0"
+                    role="button"
+                    id={video.id}
+                    onClick={() => {props.handleDelete(index)}}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
