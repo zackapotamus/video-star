@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 const VideosTable = (props) => {
-  console.log(props);
   
   return (
     <div className="container">

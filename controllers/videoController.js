@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { Op } = db.Sequelize;
 const axios = require("axios");
 
+// Matches "/api/videos"
 router.get("/", async (req, res) => {
   try {
     let genres;
@@ -92,48 +93,36 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.get("/:id", async (req, res) => {
-  try {
-    let videoId = req.params.id;
-    let video = await db.Video.findAll({
-      include: {
-        model: db.Genre,
-        as: "genres",
-        through: {
-          attributes: [],
-        },
-      },
-      where: {
-        id: videoId,
-        user_id: 1, // ******* this will change when auth is working *******
-      },
+// Matches "/api/videos"
+router.delete("/", async (req, res) => {
+  const { id, token } = req.query;
+  if (!token) {
+    return res.status(403).json({
+      success: false,
+      message: "Missing token."
+    })
+  }
+  user = jwt.verify(
+    token,
+    process.env.REACT_APP_SESSION_SECRET
+  );
+  let response = await db.Video.destroy({
+    where: {
+      id: id,
+      user_id: user.id
+    }
+  });
+  if (response > 0) {
+    return res.json({
+      success: true,
+      message: "Movie deleted."
     });
-    res.status(200).json(video);
-  } catch (err) {
-    res.status(500).json(err);
+  } else {
+    return res.status(404).send();
   }
 });
 
-router.get("/api/borrowed", async (req, res) => {
-  try {
-    let videos = await db.Video.findAll({
-      include: {
-        model: db.Genre,
-        through: {
-          attributes: [],
-        },
-      },
-      where: {
-        user_id: 1, // ******* this will change when auth is working *******
-        is_borrowed: true,
-      },
-    });
-    res.status(200).json(videos);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+// Matches 
 
 router.post("/", async (req, res) => {
   try {
@@ -155,7 +144,6 @@ router.post("/", async (req, res) => {
       },
     });
     let tmd_movie = result.data;
-    console.log(tmd_movie);
     let video = await db.Video.create({
       user_id: user.id,
       adult: tmd_movie.adult,
@@ -183,7 +171,6 @@ router.post("/", async (req, res) => {
       //   as: 'genres',
       // }]
     });
-    console.log(tmd_movie.genres);
     if (tmd_movie.genres) {
       await video.addGenres(tmd_movie.genres.map(genreObj => genreObj.id));
     }
