@@ -4,7 +4,7 @@ import ProfileForm from '../Form/ProfileForm';
 import BackgroundProfile from '../../../img/background-profile.png';
 import UserImage from '../../../img/user-image.jpeg';
 
-const Card = (props) => {
+const ProfileCard = (props) => {
 
     const centerBlockBackground = {
         backgroundImage: `${BackgroundProfile}`,
@@ -21,14 +21,6 @@ const Card = (props) => {
         marginRight: 'auto',
         width: 200
     }
-
-    // const formstyle = {
-    //     display: 'block',
-    //     marginLeft: 'auto',
-    //     marginRight: 'auto',
-    //     position: 'relative',
-    //     width: '40%',
-    // }
 
     return (
         <>
@@ -48,4 +40,4 @@ const Card = (props) => {
     );
 };
 
-export default Card;
+export default ProfileCard;

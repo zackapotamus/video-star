@@ -32,7 +32,7 @@ class MyLibrary extends Component {
         <GreyBlockTop page="My Library" />
 
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
-        <VideosTable videosToDisplay={this.state.results} />
+        <VideosTable videosToDisplay={this.state.results} token={this.state.token}/>
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
 
