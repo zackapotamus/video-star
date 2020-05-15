@@ -43,9 +43,8 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     lend_borrow_name: DataTypes.STRING,
-    lend_borrow_lending_date: DataTypes.DATE,
-    lend_borrow_borrowing_date: DataTypes.DATE,
-    lend_borrow_returning_date: DataTypes.DATE
+    lend_borrow_date: DataTypes.DATE,
+    lend_borrow_due_date: DataTypes.DATE,
   }, {
     underscored: true,
     freezeTableName: true,
