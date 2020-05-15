@@ -23,6 +23,15 @@ class MyLibrary extends Component {
     let results = await API.getVideos(token);
     this.setState({ results: results.data, token: token });
   }
+  async handleDelete(index) {
+    try {
+      console.log(index, this.state.results);
+        // await API.deleteVideo(this.state.results[index].id, this.state.token);
+        this.setState({ results: this.state.results.filter(r => r.id !== this.state.results[index].id)});
+      } catch (err) {
+      console.log(err);
+    }
+  };
 
   render() {
     return (
@@ -32,7 +41,7 @@ class MyLibrary extends Component {
         <GreyBlockTop page="My Library" />
 
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
-        <VideosTable videosToDisplay={this.state.results} />
+        <VideosTable videosToDisplay={this.state.results} handleDelete={this.handleDelete} />
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
 
