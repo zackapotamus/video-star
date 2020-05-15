@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const VideosTable = (props) => {
   console.log(props);
@@ -14,9 +15,8 @@ const VideosTable = (props) => {
               <th scope="col">Synopsis</th>
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
-              <th scope="col">Run Time</th>
-              <th scope="col">Lent</th>
-              <th scope="col">Borrowed</th>
+              <th scope="col">Is It Lent?</th>
+              <th scope="col">Is It Borrowed?</th>
               <th scope="col">Type</th>
               <th scope="col">Details</th>
             </tr>
@@ -30,8 +30,7 @@ const VideosTable = (props) => {
                 <td>{video.original_title}</td>
                 <td>{video.overview}</td>
                 <td>{video.popularity}</td>
-                <td>{video.release_date}</td>
-                <td>{video.runtime} mins</td>
+                <td>{moment(video.release_date).format("MMMM Do, YYYY")}</td>
                 <td>{video.is_lent}</td>
                 <td>{video.is_borrowed}</td>
                 <td>{video.video_type}</td>
