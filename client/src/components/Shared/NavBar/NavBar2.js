@@ -17,7 +17,7 @@ function NavBar2() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-light ml-auto">
+    <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark border-bottom border-light ml-auto">
       <a className="navbar-brand" href="/">
         <img src={VideoStarLogo} alt="logo" style={{ width: 100 }} />
       </a>
