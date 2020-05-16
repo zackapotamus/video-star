@@ -22,10 +22,10 @@ const BorrowTable = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.videosToDisplay.map((video, index) => {
+            {props.borrowedVideos.map((video, index) => {
               return (
                 <tr key={index}>
-                  <td><img src={video.poster_path} alt="video poster" /></td>
+                  <td><img src={`https://image.tmdb.org/t/p/w92${video.poster_path || "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"}`} alt="video poster" /></td>
                   <td>{video.title}</td>
                   <td>{video.vote_average}</td>
                   <td>{video.release_date}</td>

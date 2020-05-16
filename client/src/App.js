@@ -153,7 +153,7 @@ class App extends Component {
           <PrivateRoute exact path="/lentborrowed" component={LentBorrow} />
           <PrivateRoute exact path="/lend" component={Lend} />
           <PrivateRoute exact path="/borrow" component={Borrow} />
-          <PrivateRoute exact path="/details" component={Details} />
+          <PrivateRoute exact path="/details/:id" component={Details} />
           <PrivateRoute exact path="/contact" component={Contact} />
           <PrivateRoute exact path="/add" component={Add} />
         </Switch>
