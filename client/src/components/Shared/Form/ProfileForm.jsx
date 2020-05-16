@@ -24,12 +24,12 @@ const ProfileForm = (props) => {
             </div>
             <div className="form-group">
                 <label>Password</label> 
-                <input type="password" className="form-control">
+                <input type="password" className="form-control" placeholder='********'>
                 </input>
             </div>
             <div className="form-group">
                 <label>Confirm Password</label>
-                <input type="password" className="form-control">
+                <input type="password" className="form-control" placeholder='********'>
                 </input>
             </div>
             

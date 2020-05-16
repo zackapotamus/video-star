@@ -48,6 +48,7 @@ class Add extends Component {
     event.preventDefault();
     let results = await API.searchMovies(this.state.token, this.state.query);
     this.setState({ results: results.data, addedState: results.data.map(result => ({"DVD": false, "Blu-ray": false, "Digital": false})) });
+    console.log(results);
   }
 
   render() {
