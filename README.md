@@ -40,50 +40,126 @@ This app contains React components, helper/util functions, and uses React lifecy
 ## GitHub Repository
 
 [VideoStar in GitHub](https://github.com/zackapotamus/video-star)
-- - -
-## App Screenshots
 
-__Login Page__
-
-![Login Page](./client/src/img/1-login.png)
 - - -
-__Signup Page__
 
-![Signup Page](./client/src/img/2-signup.png)
-- - -
-__My Library Page__
+## App Mockup Screenshots
 
-![Signup Page](./client/src/img/3-mylibrary.png)
-- - -
-__Lent/Borrowed Page__
+__Login and Signup Pages__           
 
-![Lent/Borrowed Page](./client/src/img/4-lent-borrowed.png)
-- - -
-__Add To Library Page__
+<img src="./client/src/img/1-login.png" alt="login page" width=200 height=300>
+<img src="./client/src/img/2-signup.png" alt="signup page" width=200 height=300>
 
-![Add To Library Page](./client/src/img/5-add-to-library.png)
-- - -
-__Lend Page__
+__My Library and Lent/Borrowed Pages__
 
-![Lend Page](./client/src/img/6-lend.png)
-- - -
-__Borrow Page__
+<img src="./client/src/img/3-mylibrary.png" alt="my video library page" width=200 height=300>
+<img src="./client/src/img/4-lent-borrowed.png" alt="lent-borrowed page" width=200 height=300>
 
-![Borrow Page](./client/src/img/7-borrow.png)
-- - -
-__Details Page__
+__Add To Library and Details Page__
 
-![Details Page](./client/src/img/8-details.png)
-- - -
+<img src="./client/src/img/5-add-to-library.png" alt="add to library page" width=200 height=300>
+<img src="./client/src/img/8-details.png" alt="details page" width=200 height=300>
+
+__Lend and Borrow Pages__
+
+<img src="./client/src/img/6-lend.png" alt="lend page" width=200 height=300>
+<img src="./client/src/img/7-borrow.png" alt="borrow page" width=200 height=300>
+
 __Account Page__
 
-![Account Page](./client/src/img/9-profile.png)
+<img src="./client/src/img/9-profile.png" alt="account page" width=200 height=300>
 - - -
-__User Experience Flow__
+
+__User Experience Flow Mockup__
 
 ![User Experience Flow Page](./client/src/img/10-user-experience-flow.png)
-- - -
 
+__Relational Database Design Mockup__
+
+![Database Design](client/src/img/db_diagram.png)
+
+- - -
+## Real App Screenshots
+
+__Login and Signup Pages__           
+
+<img src="client/src/img/1-LoginNewPortrait.png" alt="login page" width=200 height=300>
+<img src="client/src/img/2-SignUpNewPortrait.png" alt="signup page" width=200 height=300>
+
+__My Library and Lent/Borrowed Pages__
+
+<img src="client/src/img/3-MyLibraryNewPortrait.png" alt="my video library page" width=200 height=300>
+<img src="client/src/img/4-LentBorrowedNewPortrait.png" alt="lent-borrowed page" width=200 height=300>
+
+__Add To Library and Details Page__
+
+<img src="client/src/img/5-AddToLibraryNewPortrait.png" alt="add to library page" width=200 height=300>
+<img src="client/src/img/8-DetailsPortrait.png" alt="details page" width=200 height=300>
+
+__Lend and Borrow Pages__
+
+<img src="client/src/img/6-LendNewPortrait.png" alt="lend page" width=200 height=300>
+<img src="client/src/img/7-BorrowNewPortrait.png" alt="borrow page" width=200 height=300>
+
+__Account Page__
+
+<img src="client/src/img/9-AccountPortrait.png" alt="account page" width=200 height=300>
+
+- - -
+## Technologies Used in VideoStar
+
+* [Nodejs](https://nodejs.org/en/)
+* [npm Packages](https://www.npmjs.com/)
+    * [Expressjs](https://www.npmjs.com/package/express). As a web server.
+    * [Mysql](https://www.npmjs.com/package/mysql). As a driver for mysql. 
+    * [Axios](https://www.npmjs.com/package/axios). Promise based HTTP client for the browser and node.js
+    * [Bcryptjs](https://www.npmjs.com/package/bcrypt). A library to help hash passwords.
+    * [Dotenv](https://www.npmjs.com/package/dotenv). Loads environment variables from a `.env` file into `process.env`. Storing configuration in the environment separate from code is based on The [Twelve-Factor App methodology](https://12factor.net/).
+    * [If-env](https://www.npmjs.com/package/if-env). To simplify npm scripts.
+    * [JSON Web Token](https://www.npmjs.com/package/jsonwebtoken). Open industry standard (RFC 7519) method for representing claims securely between two parties.
+    * [Sequelize](https://www.npmjs.com/package/sequelize). A promise-based Node.js [ORM (Object-Relational Mapping)](https://en.wikipedia.org/wiki/Object-relational_mapping) for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server. It features solid transaction support, relations, eager and lazy loading, read replication and more.
+    * [Concurrently](https://www.npmjs.com/package/concurrently). For development purposes only. Instead of running all commands in separate terminals, we can use concurrently, which allows to run multiple commands concurrently. 
+    * [Nodemon](https://www.npmjs.com/package/nodemon). For development purposes only. It automatically restarts the node application when file changes in the directory are detected.
+    * [Moment](https://www.npmjs.com/package/moment). Library for parsing, validating, manipulating, and formatting dates.
+    * [React](https://www.npmjs.com/package/react). A library for creating user interfaces.
+    * [React DOM](https://www.npmjs.com/package/react-dom). The entry point to the DOM and server renderers for React. 
+    * [React Icons](https://www.npmjs.com/package/react-icons). Utilizes ES6 imports that allows you to include only the icons that your project is using.
+    * [React Router DOM](https://www.npmjs.com/package/react-router-dom). DOM bindings for React Router.
+    * [React Scripts](https://www.npmjs.com/package/react-scripts). Configuration and scritps for Create React App
+    * [React Toast Notifications](https://www.npmjs.com/package/react-toast-notifications). A configurable, composable, toast notification system for react.
+    * [Read More React](https://www.npmjs.com/package/read-more-react). It "intelligently" truncates text at the appropriate point given a min, an ideal, and max text length. 
+
+* [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction). 
+<img src="client/src/img/moviedb-logo.png" alt="the movie database logo" width=100 height=50>
+
+* [Create React App](https://create-react-app.dev/). Sets up a modern React web app by running one command.
+
+* [Full CRUD Operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). Create, read, update, and delete are the 4 basic functions of persistent storage.
+
+* [Heroku](https://heroku.com). A cloud application platform to host web apps. It is a Platform as a Service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
+
+* [Bootstrap](https://getbootstrap.com/). The world’s most popular front-end open source toolkit to quickly design and customize responsive mobile-first sites.
+
+* [MVC (Model-View-Controller)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). This app follows the MVC paradigm, a software design pattern commonly used for developing user interfaces which divides the related program logic into 3 interconnected elements.
+
+* [Environment Variables](https://en.wikipedia.org/wiki/Environment_variable). An environment variable is a variable whose value is set outside the program, typically through functionality built into the operating system or microservice. An environment variable is made up of a name/value pair, and any number may be created and available for reference at a point in time.
+
+* [Adobe Illustrator](https://www.adobe.com/products/illustrator.html). The state of the art in illustration. A vector-based graphics software that scales down for mobile screens and up to billboard size. The results always look crisp and beautiful.
+
+* [Adobe Photoshop](https://www.adobe.com/products/photoshop.html). A photo editor to create and enhance photos, images, and designs.
+
+* [Trello](https://trello.com/). A visual tool for organizing your work and life. It is an excellent lightweight project management tool. It is easy on the eye and relatively straightforward to use.
+
+* [MySQL Workbench](https://www.mysql.com/products/workbench/). A unified visual tool for database architects, developers, and DBAs.
+
+* [Postman](https://www.postman.com/). The Collaboration Platform for API Development. Quickly and easily send REST, SOAP, and GraphQL requests directly within Postman.
+
+* [Slack](https://slack.com/). Slack brings the team together, wherever you are. With all of your communication and tools in one place, remote teams will stay productive no matter where you’re working from.
+
+* [Zoom](https://zoom.us/). Unifies cloud video conferencing, simple online meetings, and group messaging into one easy-to-use platform. 
+
+* [Google Meet](https://meet.google.com/). Premium video meetings in the browser.
+- - - 
 ## Coding Requirements
 
 This application has the following requirements:
