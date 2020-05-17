@@ -49,28 +49,28 @@ This app contains React components, helper/util functions, and uses React lifecy
 __Login and Signup Pages__           
 
 <img src="./client/src/img/1-login.png" alt="login page" width=200 height=300>
----> 
+
 <img src="./client/src/img/2-signup.png" alt="signup page" width=200 height=300>
 <hr>
 
 __My Library and Lent/Borrowed Pages__
 
 <img src="./client/src/img/3-mylibrary.png" alt="my video library page" width=200 height=300>
----> 
+
 <img src="./client/src/img/4-lent-borrowed.png" alt="lent-borrowed page" width=200 height=300>
 <hr>
 
 __Add To Library and Details Page__
 
 <img src="./client/src/img/5-add-to-library.png" alt="add to library page" width=200 height=300>
---- >
+
 <img src="./client/src/img/8-details.png" alt="details page" width=200 height=300>
 <hr>
 
 __Lend and Borrow Pages__
 
 <img src="./client/src/img/6-lend.png" alt="lend page" width=200 height=300>
---- >
+
 <img src="./client/src/img/7-borrow.png" alt="borrow page" width=200 height=300>
 <hr>
 
@@ -126,6 +126,12 @@ __Account Page__
 - - -
 ## Technologies Used in VideoStar
 
+* [HTML (Hypertext Markup Language)](https://en.wikipedia.org/wiki/HTML). The standard markup language for documents designed to be displayed in a web browser. 
+* [CSS (Cascading Style Sheets)](https://www.w3schools.com/css/css_intro.asp). CSS describes how HTML elements are to be displayed on screen, paper, or in other media.
+* [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript). A lightweight, interpreted, or just-in-time compiled programming language with first-class functions. It is the scripting language for Web pages, although many non-browser environments also use it (Node.js, Apache CouchDB and Adobe Acrobat). JavaScript is a prototype-based, multi-paradigm, single-threaded, dynamic language, supporting object-oriented, imperative, and declarative (e.g. functional programming) styles.
+* [jQuery](https://jquery.com/). It is a JavaScript library that makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
+* [Bootstrap](https://getbootstrap.com/). The world’s most popular front-end open source toolkit to quickly design and customize responsive mobile-first sites.
+
 * [Nodejs](https://nodejs.org/en/)
 * [npm Packages](https://www.npmjs.com/)
     * [Expressjs](https://www.npmjs.com/package/express). As a web server.
@@ -155,8 +161,6 @@ __Account Page__
 * [Full CRUD Operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). Create, read, update, and delete are the 4 basic functions of persistent storage.
 
 * [Heroku](https://heroku.com). A cloud application platform to host web apps. It is a Platform as a Service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
-
-* [Bootstrap](https://getbootstrap.com/). The world’s most popular front-end open source toolkit to quickly design and customize responsive mobile-first sites.
 
 * [MVC (Model-View-Controller)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). This app follows the MVC paradigm, a software design pattern commonly used for developing user interfaces which divides the related program logic into 3 interconnected elements.
 
