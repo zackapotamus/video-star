@@ -184,6 +184,7 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   try {
+    let result;
     const { is_lent, due_date, token, id, name } = req.body;
     if (!token) {
       return res.status(403).json({
@@ -193,25 +194,28 @@ router.put("/", async (req, res) => {
     }
     const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     if (is_lent) {
-      await db.Video.update(
+      result = await db.Video.update(
         {
           is_lent: true,
           is_borrowed: false,
-          lend_borrow_date: Date.now(),
+          lend_borrow_date: lend_borrow_date || new Date().toISOString(),
           lend_borrow_due_date: due_date,
           lend_borrow_name: name,
         },
         {
           where: {
             id,
+            user_id: user.id
           },
         }
       );
-    } else {
-      await db.Video.update(
+      console.log(result);
+      console.log("grr...");
+    } else { // borrowed
+      result = await db.Video.update(
         {
           is_lent: false,
-          is_borrowed: false,
+          is_borrowed: true,
           lend_borrow_date: null,
           lend_borrow_due_date: null,
           lend_borrow_name: null,
@@ -219,13 +223,16 @@ router.put("/", async (req, res) => {
         {
           where: {
             id,
+            user_id: user.id
           },
         }
       );
+      console.log("wtf");
     }
     res.json({
       success: true,
       message: "Video updated.",
+      data: result,
     });
   } catch (err) {
     console.log(err);
