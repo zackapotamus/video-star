@@ -45,7 +45,7 @@ function NavBar2() {
                   : "nav-link"
               }
             >
-              Lent/Borrowed
+              Lent Videos
             </Link>
           </li>
           <li className="nav-item">
@@ -58,7 +58,7 @@ function NavBar2() {
               Add to Library
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link
               to="/lend"
               className={
@@ -67,8 +67,8 @@ function NavBar2() {
             >
               Lend
             </Link>
-          </li>
-          <li className="nav-item">
+          </li> */}
+          {/* <li className="nav-item">
             <Link
               to="/borrow"
               className={
@@ -77,7 +77,7 @@ function NavBar2() {
             >
               Borrow
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link
               to="/account"
