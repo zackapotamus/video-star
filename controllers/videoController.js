@@ -126,7 +126,7 @@ router.delete("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { id: tmd_id, token, video_type } = req.body;
+    const { id: tmd_id, token, video_type, is_borrowed, lend_borrow_name, lend_borrow_due_date } = req.body;
     if (!token) {
       return res.status(403).json({
         success: false,
@@ -156,20 +156,16 @@ router.post("/", async (req, res) => {
       popularity: tmd_movie.popularity,
       release_date: tmd_movie.release_date,
       runtime: tmd_movie.runtime,
-      // is_borrowed: req.body.is_borrowed,
-      // is_lent: req.body.is_lent,
+      is_borrowed: is_borrowed || false,
+      lend_borrow_date: !!is_borrowed && Date.now(),
+      lend_borrow_due_date: lend_borrow_due_date || false,
+      lend_borrow_name: lend_borrow_name || null,
+      is_lent: false,
       tagline: tmd_movie.tagline,
       title: tmd_movie.title,
       vote_average: tmd_movie.vote_average,
       vote_count: tmd_movie.vote_count,
       video_type: video_type,
-      // foo: "bar",
-      // genres: tmd_movie.genres
-    }, {
-      // include: [{
-      //   model: db.Genre,
-      //   as: 'genres',
-      // }]
     });
     if (tmd_movie.genres) {
       await video.addGenres(tmd_movie.genres.map(genreObj => genreObj.id));
@@ -186,5 +182,56 @@ router.post("/", async (req, res) => {
     console.log(err);
   }
 });
+
+router.put("/", async (req, res) => {
+  try {
+    const { is_lent, due_date, token, id, name } = req.body;
+    if (!token) {
+      return res.status(403).json({
+        success: false,
+        message: "Missing token."
+      })
+    }
+    const user = jwt.verify(
+      token,
+      process.env.REACT_APP_SESSION_SECRET
+    );
+    if (is_lent) {
+      await db.Video.update({
+        is_lent: true,
+        is_borrowed: false,
+        lend_borrow_date: Date.now(),
+        lend_borrow_due_date: due_date,
+        lend_borrow_name: name,
+      }, {
+        where: {
+          id
+        }
+      });
+      res.json({
+        success: true,
+        message: "Video updated."
+      });
+    } else {
+      await db.Video.update({
+        is_lent: false,
+        is_borrowed: false,
+        lend_borrow_date: null,
+        lend_borrow_due_date: null,
+        lend_borrow_name: null,
+      }, {
+        where: {
+          id
+        }
+      })
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Unable to proccess request."
+    })
+  }
+})
 
 module.exports = router;
