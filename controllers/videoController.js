@@ -123,6 +123,7 @@ router.post("/", async (req, res) => {
       video_type,
       is_borrowed,
       lend_borrow_name,
+      lend_borrow_date,
       lend_borrow_due_date,
     } = req.body;
     if (!token) {
