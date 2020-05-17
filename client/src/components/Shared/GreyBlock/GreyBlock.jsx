@@ -10,7 +10,7 @@ const GreyBlock = () => {
         backgroundSize: 'cover',
         height: 200,
         marginTop: 5,
-        marginBottom: 65
+        marginBottom: 0
     }
 
     return (
