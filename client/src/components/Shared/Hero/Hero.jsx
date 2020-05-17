@@ -9,7 +9,7 @@ const Hero = (props) => {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             height: 400,
-            marginTop: 5,
+            marginTop: 130,
             marginBottom: 0
     }
 

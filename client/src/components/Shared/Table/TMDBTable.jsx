@@ -51,7 +51,7 @@ const TMDBTable = (props) => {
                       Details
                     </Link>
                   </td> */}
-                  <td style={{width: 200}}>
+                  <td style={{width: 140}}>
                     <div class="btn-group-vertical">
                     <button
                       disabled={!!props.addedState[index]["Blu-ray"]}

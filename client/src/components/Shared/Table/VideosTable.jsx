@@ -15,8 +15,8 @@ const VideosTable = (props) => {
               <th scope="col">Synopsis</th>
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
-              <th scope="col">Is It Lent?</th>
-              <th scope="col">Is It Borrowed?</th>
+              <th scope="col">Status</th>
+              {/* <th scope="col">Is It Borrowed?</th> */}
               <th scope="col">Type</th>
               <th scope="col">Details</th>
               <th scope="col">Delete</th>
@@ -33,7 +33,7 @@ const VideosTable = (props) => {
                 <td>{video.popularity}</td>
                 <td>{moment(video.release_date).format("MMMM Do, YYYY")}</td>
                 <td>{video.is_lent ? "Lent" : (video.is_borrowed ? "Borrowed" : "")}</td>
-                <td>{video.is_borrowed ? "Yes" : "No"}</td>
+                {/* <td>{video.is_borrowed}</td> */}
                 <td>{video.video_type}</td>
                 <td>
                   <Link
