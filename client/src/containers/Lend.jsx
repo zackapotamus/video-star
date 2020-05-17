@@ -1,4 +1,4 @@
-import React, { Component, useParams } from "react";
+import React, { Component } from "react";
 import NavBar2 from "../components/Shared/NavBar/NavBar2";
 import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
@@ -21,11 +21,12 @@ class Lend extends Component {
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   async handleSubmit(event) {
     event.preventDefault();
-    const { id, token, lend_borrow_name, lend_borrow_due_date, lend_borrow_date, video } = this.state;
+    const { id, token, lend_borrow_name, lend_borrow_due_date, lend_borrow_date } = this.state;
     let result = await API.updateVideo(id, token, {
       lend_borrow_due_date,
       lend_borrow_date,
@@ -74,7 +75,7 @@ class Lend extends Component {
                           Movie Title
                         </label>
                         <input
-                        dissabled={true}
+                        // disabled={true}
                         readOnly={true}
                           type="text"
                           name="title"
