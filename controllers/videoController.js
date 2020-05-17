@@ -156,20 +156,13 @@ router.post("/", async (req, res) => {
       popularity: tmd_movie.popularity,
       release_date: tmd_movie.release_date,
       runtime: tmd_movie.runtime,
-      // is_borrowed: req.body.is_borrowed,
-      // is_lent: req.body.is_lent,
+      is_borrowed: req.body.is_borrowed || false,
+      is_lent: req.body.is_lent || false,
       tagline: tmd_movie.tagline,
       title: tmd_movie.title,
       vote_average: tmd_movie.vote_average,
       vote_count: tmd_movie.vote_count,
       video_type: video_type,
-      // foo: "bar",
-      // genres: tmd_movie.genres
-    }, {
-      // include: [{
-      //   model: db.Genre,
-      //   as: 'genres',
-      // }]
     });
     if (tmd_movie.genres) {
       await video.addGenres(tmd_movie.genres.map(genreObj => genreObj.id));
