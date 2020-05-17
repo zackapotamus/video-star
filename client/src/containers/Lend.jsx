@@ -4,7 +4,7 @@ import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 
-import Cashier from "../img/Cash-min.png";
+import Cashier from "../img/Cash-min.jpg";
 
 class Lend extends Component {
   render() {

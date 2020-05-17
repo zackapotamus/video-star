@@ -4,7 +4,7 @@ import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from '../components/Shared/GreyBlockTop/GreyBlockTop';
 import GreyBlock from '../components/Shared/GreyBlock/GreyBlock';
 import ProfileCard from '../components/Shared/Card/ProfileCard';
-import MovieAction from "../img/movie-action.png";
+import MovieAction from "../img/movie-action.jpg";
 
 class Account extends Component {
     render() {
