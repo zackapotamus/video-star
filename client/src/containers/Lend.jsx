@@ -16,9 +16,9 @@ class Lend extends Component {
           <GreyBlockTop page="Lend" />
 
           <div className="container" style={{ marginBottom: 100 }}>
-            <div class="row">
-              <div class="col-sm-1"></div>
-              <div class="col-sm-10">
+            <div className="row">
+              <div className="col-sm-1"></div>
+              <div className="col-sm-10">
                 <div className="card shadow">
                   <div className="card-body">
                     <h2 className="card-title text-center">Lend a Video to Someone</h2>
@@ -27,7 +27,7 @@ class Lend extends Component {
                   <div>
                     <form>
                       <div className="form-group px-5">
-                        <label for="exampleFormControlInput1">
+                        <label htmlFor="exampleFormControlInput1">
                           Movie Title
                         </label>
                         <input
@@ -37,7 +37,7 @@ class Lend extends Component {
                           placeholder="Frozen"
                         ></input>
                         <div className="form-group">
-                          <label for="exampleFormControlInput1">
+                          <label htmlFor="exampleFormControlInput1">
                             Lendee's Name
                           </label>
                           <input
@@ -47,7 +47,7 @@ class Lend extends Component {
                             placeholder="John Smith"
                           ></input>
                           <div className="form-group">
-                            <label for="exampleFormControlInput1">
+                            <label htmlFor="exampleFormControlInput1">
                               Lending Date
                             </label>
                             <input
@@ -58,7 +58,7 @@ class Lend extends Component {
                             ></input>
                           </div>
                           <div className="form-group">
-                            <label for="exampleFormControlInput1">
+                            <label htmlFor="exampleFormControlInput1">
                               Return Date
                             </label>
                             <input

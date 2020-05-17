@@ -45,38 +45,48 @@ This app contains React components, helper/util functions, and uses React lifecy
 
 ## App Mockup Screenshots
 
+
 __Login and Signup Pages__           
 
 <img src="./client/src/img/1-login.png" alt="login page" width=200 height=300>
+---> 
 <img src="./client/src/img/2-signup.png" alt="signup page" width=200 height=300>
+<hr>
 
 __My Library and Lent/Borrowed Pages__
 
 <img src="./client/src/img/3-mylibrary.png" alt="my video library page" width=200 height=300>
+---> 
 <img src="./client/src/img/4-lent-borrowed.png" alt="lent-borrowed page" width=200 height=300>
+<hr>
 
 __Add To Library and Details Page__
 
 <img src="./client/src/img/5-add-to-library.png" alt="add to library page" width=200 height=300>
+--- >
 <img src="./client/src/img/8-details.png" alt="details page" width=200 height=300>
+<hr>
 
 __Lend and Borrow Pages__
 
 <img src="./client/src/img/6-lend.png" alt="lend page" width=200 height=300>
+--- >
 <img src="./client/src/img/7-borrow.png" alt="borrow page" width=200 height=300>
+<hr>
 
 __Account Page__
 
 <img src="./client/src/img/9-profile.png" alt="account page" width=200 height=300>
-- - -
+<hr>
 
 __User Experience Flow Mockup__
 
 ![User Experience Flow Page](./client/src/img/10-user-experience-flow.png)
+<hr>
 
 __Relational Database Design Mockup__
 
-![Database Design](client/src/img/db_diagram.png)
+![Database Design](./client/src/img/db-diagram.png)
 
 - - -
 ## Real App Screenshots
@@ -84,22 +94,30 @@ __Relational Database Design Mockup__
 __Login and Signup Pages__           
 
 <img src="client/src/img/1-LoginNewPortrait.png" alt="login page" width=200 height=300>
+--->
 <img src="client/src/img/2-SignUpNewPortrait.png" alt="signup page" width=200 height=300>
+<hr>
 
 __My Library and Lent/Borrowed Pages__
 
 <img src="client/src/img/3-MyLibraryNewPortrait.png" alt="my video library page" width=200 height=300>
+--->
 <img src="client/src/img/4-LentBorrowedNewPortrait.png" alt="lent-borrowed page" width=200 height=300>
+<hr>
 
 __Add To Library and Details Page__
 
 <img src="client/src/img/5-AddToLibraryNewPortrait.png" alt="add to library page" width=200 height=300>
+--->
 <img src="client/src/img/8-DetailsPortrait.png" alt="details page" width=200 height=300>
+<hr>
 
 __Lend and Borrow Pages__
 
 <img src="client/src/img/6-LendNewPortrait.png" alt="lend page" width=200 height=300>
+--->
 <img src="client/src/img/7-BorrowNewPortrait.png" alt="borrow page" width=200 height=300>
+<hr>
 
 __Account Page__
 
