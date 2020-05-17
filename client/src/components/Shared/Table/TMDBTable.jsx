@@ -17,13 +17,12 @@ const TMDBTable = (props) => {
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
               {/* <th scope="col">Run Time</th> */}
-              <th scope="col">Details</th>
+              {/* <th scope="col">Details</th> */}
               <th scope="col">Add To Library</th>
             </tr>
           </thead>
           <tbody>
-            {props.videosToDisplay.map((video, index) => {
-              return (
+            {props.videosToDisplay.map((video, index) => (
                 <tr key={index}>
                   <td>
                     <img
@@ -41,22 +40,19 @@ const TMDBTable = (props) => {
 
                   <td>{moment(video.release_date).format("MMMM Do, YYYY")}</td>
                   {/* <td>{video.runtime} mins</td> */}
-                  <td>
+                  {/* <td>
                     <Link
                       to={{
-                        pathname: "/details",
-                        state: {
-                          video: video,
-                        },
+                        pathname: `/details/${video.id}`
                       }}
-                      id={video.id}
                       className="btn btn-sm btn-outline-success my-2 my-sm-0"
                       role="button"
                     >
                       Details
                     </Link>
-                  </td>
+                  </td> */}
                   <td style={{width: 200}}>
+                    <div class="btn-group-vertical">
                     <button
                       disabled={!!props.addedState[index]["Blu-ray"]}
                       onClick={() => {
@@ -90,10 +86,10 @@ const TMDBTable = (props) => {
                     >
                       {props.addedState[index]["Digital"] ? "Added" : "Add Digital"}
                     </button>
+                    </div>
                   </td>
                 </tr>
-              );
-            })}
+              ))}
           </tbody>
         </table>
       </div>

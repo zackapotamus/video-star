@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from "moment";
 
 const BorrowTable = (props) => {
 
@@ -28,20 +29,12 @@ const BorrowTable = (props) => {
                   <td><img src={`https://image.tmdb.org/t/p/w92${video.poster_path || "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"}`} alt="video poster" /></td>
                   <td>{video.title}</td>
                   <td>{video.vote_average}</td>
-                  <td>{video.release_date}</td>
+                  <td>{moment(video.release_date).format("MMMM Do, YYYY")}</td>
                   <td>{video.runtime}</td>
                   <td>{video.lend_borrow_name}</td>
-                  <td>{video.lend_borrow_date}</td>
-                  <td>{video.lend_borrow_due_date}</td>
-                  <td>
-                    <Link to={{
-                      pathname: "/details",
-                      state: {
-                        video: video 
-                      }
-                    }} id={video.id} className="btn btn-outline-success my-2 my-sm-0" role="button">Details
-                    </Link>
-                  </td>
+                  <td>{moment(video.lend_borrow_date).format("MMMM Do, YYYY")}</td>
+                  <td>{moment(video.lend_borrow_due_date).format("MMMM Do, YYYY")}</td>
+                  <td>{video.video_type}</td>
                 </tr>
               )
             })}

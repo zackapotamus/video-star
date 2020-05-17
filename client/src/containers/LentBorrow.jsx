@@ -34,10 +34,10 @@ class LentBorrow extends Component {
         <NavBar2 />
         <Hero imageUrl={RetroCamera} />
         <GreyBlockTop page="Lent / Borrowed" />
-        <h6 style={{ textAlign: "center" }}>LENT VIDEOS</h6>
+        <h4 style={{ textAlign: "center" }}>LENT VIDEOS</h4>
         {/* TABLE OF LENT VIDEOS GOES HERE */}
         <LentTable lentVideos={this.state.lentVideos}></LentTable>
-        <h6 style={{ textAlign: "center" }}>BORROWED VIDEOS</h6>
+        <h4 style={{ textAlign: "center" }}>BORROWED VIDEOS</h4>
         {/* TABLE OF BORROWED VIDEOS GOES HERE */}
         <BorrowTable borrowedVideos={this.state.borrowedVideos}></BorrowTable>
         <GreyBlock />
