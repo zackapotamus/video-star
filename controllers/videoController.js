@@ -123,6 +123,7 @@ router.post("/", async (req, res) => {
       video_type,
       is_borrowed,
       lend_borrow_name,
+      lend_borrow_date,
       lend_borrow_due_date,
     } = req.body;
     if (!token) {
@@ -155,8 +156,8 @@ router.post("/", async (req, res) => {
       release_date: tmd_movie.release_date,
       runtime: tmd_movie.runtime,
       is_borrowed: is_borrowed || false,
-      lend_borrow_date: !!is_borrowed && Date.now(),
-      lend_borrow_due_date: lend_borrow_due_date || false,
+      lend_borrow_date: lend_borrow_date || null,
+      lend_borrow_due_date: lend_borrow_due_date || null,
       lend_borrow_name: lend_borrow_name || null,
       is_lent: false,
       tagline: tmd_movie.tagline,
