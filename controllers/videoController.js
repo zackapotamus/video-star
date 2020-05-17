@@ -156,7 +156,7 @@ router.post("/", async (req, res) => {
       runtime: tmd_movie.runtime,
       is_borrowed: is_borrowed || false,
       lend_borrow_date: lend_borrow_date || null,
-      lend_borrow_due_date: lend_borrow_due_date && Date.now() || null,
+      lend_borrow_due_date: lend_borrow_due_date || null,
       lend_borrow_name: lend_borrow_name || null,
       is_lent: false,
       tagline: tmd_movie.tagline,
