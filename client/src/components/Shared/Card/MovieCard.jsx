@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from 'react-router-dom';
-import API from '../../../utils/API';
-
+import React from "react";
+import { Link } from 'react-router-dom';
 import PlaceholderImage from "../../../img/videostar-placeholder.png";
 import moment from "moment";
 
@@ -45,7 +43,7 @@ const MovieCard = (props) => {
                         <hr/>
                         <div className='card_video__lend text-center'>
                         <Link
-                            to={`/lend/${video.id}`}
+                            to={`/lend/${props.video.id}`}
                         ><button className="btn btn-sm btn-outline-success my-2 my-sm-0">Lend Video</button></Link>
                         </div>
                         <hr/>
