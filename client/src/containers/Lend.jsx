@@ -21,7 +21,7 @@ class Lend extends Component {
               <div class="col-sm-10">
                 <div className="card">
                   <div className="card-body">
-                    <h2 className="card-title">Lend a Video to Someone</h2>
+                    <h2 className="card-title text-center">Lend a Video to Someone</h2>
                   </div>
 
                   <div>
