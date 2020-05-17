@@ -216,9 +216,9 @@ router.put("/", async (req, res) => {
         {
           is_lent: false,
           is_borrowed: true,
-          lend_borrow_date: null,
-          lend_borrow_due_date: null,
-          lend_borrow_name: null,
+          lend_borrow_date: lend_borrow_date || new Date().toISOString(),
+          lend_borrow_due_date: due_date,
+          lend_borrow_name: name,
         },
         {
           where: {
