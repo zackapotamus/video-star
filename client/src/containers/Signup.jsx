@@ -7,7 +7,7 @@ import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import FilmMakerImage from "../img/filmmaker.jpg";
 import axios from "axios";
 import jwt from "jsonwebtoken";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
 class Signup extends Component {
   constructor() {
@@ -39,7 +39,7 @@ class Signup extends Component {
       });
       console.log("signup submit response:", response);
       if (response.data.success) {
-        const decoded = jwt.verify(
+        jwt.verify(
           response.data.data,
           process.env.REACT_APP_SESSION_SECRET
         );
@@ -59,7 +59,7 @@ class Signup extends Component {
   }
 
   render() {
-    console.log("render signup");
+    // console.log("render signup");
     return (
       <>
         <NavBarLogin />

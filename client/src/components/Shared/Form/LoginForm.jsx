@@ -7,12 +7,12 @@ const LoginForm = ({ handleChange, handleSubmit, emailValue, passwordValue}) => 
                 <div className="col">
                     <form>
                         <div className="form-group">
-                            <label>Email</label>
+                            <label htmlFor="email">Email</label>
                             <input type="email" name="email" className="form-control" placeholder="example@gmail.com" onChange={handleChange} value={emailValue}>
                             </input>
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
+                            <label htmlFor="password">Password</label>
                             <input type="password" name="password" className="form-control" onChange={handleChange} value={passwordValue}>
                             </input>
                         </div>
