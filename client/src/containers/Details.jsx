@@ -7,8 +7,6 @@ import MovieCard from "../components/Shared/Card/MovieCard";
 import API from "../utils/API";
 import EmptyMovieSeats from "../img/cinema-empty-seats.jpg";
 
-import React, { Component } from "react";
-
 class Details extends Component {
   constructor() {
     super();
@@ -21,7 +19,7 @@ class Details extends Component {
 
   async componentDidMount() {
     const token = localStorage.getItem("jwt");
-    let result = API.getVideo(this.props.match.params.id);
+    let result = await API.getVideo(this.props.match.params.id, token);
     this.setState({ token, video: result.data });
   }
 
