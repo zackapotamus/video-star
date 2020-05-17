@@ -58,7 +58,7 @@ function NavBar2() {
               Add to Library
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link
               to="/lend"
               className={
@@ -67,7 +67,7 @@ function NavBar2() {
             >
               Lend
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link
               to="/borrow"
