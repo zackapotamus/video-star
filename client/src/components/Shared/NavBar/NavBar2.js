@@ -13,7 +13,7 @@ function NavBar2() {
 
   const logOutUser = () => {
     localStorage.setItem("jwt", "");
-    this.props.history.push("/");
+    // this.props.history.push("/login");
   };
 
   return (
@@ -96,6 +96,7 @@ function NavBar2() {
               className={
                 location.pathname === "/login" ? "nav-link active" : "nav-link"
               }
+              onClick={logOutUser}
             >
               Logout
             </Link>

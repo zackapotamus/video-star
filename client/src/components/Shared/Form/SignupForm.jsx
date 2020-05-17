@@ -7,22 +7,22 @@ const SignupForm = (props) => {
                 <div className="col">
                     <form>
                         <div className="form-group">
-                            <label>Name</label>
+                            <label htmlFor="name">Name</label>
                             <input type="name" name="name" className="form-control" placeholder="John Smith" onChange={props.handleChange} value={props.nameValue}>
                             </input>
                         </div>
                         <div className="form-group">
-                            <label>Email</label>
+                            <label htmlFor="email">Email</label>
                             <input type="email" name="email" className="form-control" placeholder="example@gmail.com" onChange={props.handleChange} value={props.emailValue}>
                             </input>
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
+                            <label htmlFor="password">Password</label>
                             <input type="password" name="password" className="form-control" onChange={props.handleChange} value={props.passwordValue}>
                             </input>
                         </div>
                         <div className="form-group">
-                            <label>Confirm Password</label>
+                            <label htmlFor="confirm">Confirm Password</label>
                             <input type="password" name="confirm" className="form-control" onChange={props.handleChange} vallue={props.confirmValue}>
                             </input>
                         </div>

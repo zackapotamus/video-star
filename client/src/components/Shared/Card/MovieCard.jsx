@@ -6,7 +6,7 @@ const MovieCard = (props) => {
 
     return (
         <>
-            <div className='card'>
+            <div className='card shadow'>
                 <div className='card_top_image'>
                     <img src={
                         props.video.poster_path

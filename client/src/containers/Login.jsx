@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import axios from "axios";
+// import { Redirect } from "react-router-dom";
+// import axios from "axios";
 import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
 import LoginForm from "../components/Shared/Form/LoginForm";
 import Hero from "../components/Shared/Hero/Hero";
@@ -46,7 +46,7 @@ class Login extends Component {
       });
       console.log("login submit response:", response);
       if (response.data.success) {
-        const decoded = jwt.verify(
+        jwt.verify(
           response.data.data,
           process.env.REACT_APP_SESSION_SECRET
         );

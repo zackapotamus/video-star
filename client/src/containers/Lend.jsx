@@ -62,7 +62,7 @@ class Lend extends Component {
             <div class="row">
               <div class="col-sm-1"></div>
               <div class="col-sm-10">
-                <div className="card">
+                <div className="card shadow">
                   <div className="card-body">
                     <h2 className="card-title text-center">Lend a Video to Someone</h2>
                   </div>
