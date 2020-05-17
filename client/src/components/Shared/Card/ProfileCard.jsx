@@ -28,7 +28,7 @@ const ProfileCard = (props) => {
             <div className="container-fluid bg-light py-3">
                 <div className="row">
                     <div className="col-md-6 mx-auto" style={centerBlockBackground}>
-                        <div className="card card-body">
+                        <div className="card card-body shadow">
                             <img src={UserImage} className="card-img-top" alt="user avatar" style={centerBlockAvatar} />
 
                             <ProfileForm />
