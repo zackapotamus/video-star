@@ -126,7 +126,7 @@ router.delete("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { id: tmd_id, token, video_type } = req.body;
+    const { id: tmd_id, token, video_type, is_borrowed, lend_borrow_name, lend_borrow_date, lend_borrow_due_date } = req.body;
     if (!token) {
       return res.status(403).json({
         success: false,
@@ -156,8 +156,10 @@ router.post("/", async (req, res) => {
       popularity: tmd_movie.popularity,
       release_date: tmd_movie.release_date,
       runtime: tmd_movie.runtime,
-      is_borrowed: req.body.is_borrowed || false,
-      is_lent: req.body.is_lent || false,
+      is_borrowed: is_borrowed || false,
+      lend_borrow_date: !!is_borrowed && Date.now(),
+      lend_borrow_due_date: lend_borrow_date,
+      is_lent: false,
       tagline: tmd_movie.tagline,
       title: tmd_movie.title,
       vote_average: tmd_movie.vote_average,
@@ -179,5 +181,83 @@ router.post("/", async (req, res) => {
     console.log(err);
   }
 });
+
+router.put("/", async (req, res) => {
+  try {
+    const { is_lent, is_borrowed, due_date, token, tmd_id, id, name, video_type } = req.body;
+    if (!token) {
+      return res.status(403).json({
+        success: false,
+        message: "Missing token."
+      })
+    }
+    const user = jwt.verify(
+      token,
+      process.env.REACT_APP_SESSION_SECRET
+    );
+    if (is_lent) {
+      await db.Video.update({
+        is_lent: true,
+        is_borrowed: false,
+        lend_borrow_date: Date.now(),
+        lend_borrow_due_date: due_date,
+        lend_borrow_name: name,
+      }, {
+        where: {
+          id: id
+        }
+      });
+      res.json({
+        success: true,
+        message: "Video updated."
+      });
+    }
+    else if (is_borrowed) {
+      let result = await axios.get(`https://api.themoviedb.org/3/movie/${tmd_id}`, {
+        params: {
+          language: "en-US",
+          api_key: process.env.API_KEY,
+        },
+      });
+      let tmd_movie = result.data;
+      let video = await db.Video.create({
+        user_id: user.id,
+        adult: tmd_movie.adult,
+        backdrop_path: tmd_movie.backdrop_path,
+        poster_path: tmd_movie.poster_path,
+        tmd_id: tmd_movie.id,
+        imdb_id: tmd_movie.imdb_id,
+        original_title: tmd_movie.original_title,
+        overview: tmd_movie.overview,
+        popularity: tmd_movie.popularity,
+        release_date: tmd_movie.release_date,
+        runtime: tmd_movie.runtime,
+        is_borrowed: true,
+        is_lent: false,
+        lend_borrow_date: Date.now(),
+        lend_borrow_due_date: due_date,
+        lend_borrow_name: name,
+        tagline: tmd_movie.tagline,
+        title: tmd_movie.title,
+        vote_average: tmd_movie.vote_average,
+        vote_count: tmd_movie.vote_count,
+        video_type: video_type,
+      });
+      if (tmd_movie.genres) {
+        await video.addGenres(tmd_movie.genres.map(genreObj => genreObj.id));
+      }
+      res.json({
+        success: true,
+        data: video.id
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Unable to proccess request."
+    })
+  }
+})
 
 module.exports = router;

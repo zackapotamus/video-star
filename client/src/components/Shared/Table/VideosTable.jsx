@@ -32,8 +32,8 @@ const VideosTable = (props) => {
                 <td>{video.overview}</td>
                 <td>{video.popularity}</td>
                 <td>{moment(video.release_date).format("MMMM Do, YYYY")}</td>
-                <td>{video.is_lent}</td>
-                <td>{video.is_borrowed}</td>
+                <td>{video.is_lent ? "Lent" : (video.is_borrowed ? "Borrowed" : "")}</td>
+                <td>{video.is_borrowed ? "Yes" : "No"}</td>
                 <td>{video.video_type}</td>
                 <td>
                   <Link

@@ -36,7 +36,11 @@ class Add extends Component {
 
   async handleAddToLibrary(index, videoType) {
     try {
-      await API.addVideo(this.state.results[index].id, videoType, this.state.token);
+      await API.addVideo(
+        this.state.results[index].id,
+        videoType,
+        this.state.token
+      );
       this.state.addedState[index][videoType] = true;
       this.setState({ addedState: this.state.addedState });
     } catch (err) {
@@ -47,7 +51,14 @@ class Add extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     let results = await API.searchMovies(this.state.token, this.state.query);
-    this.setState({ results: results.data, addedState: results.data.map(result => ({"DVD": false, "Blu-ray": false, "Digital": false})) });
+    this.setState({
+      results: results.data,
+      addedState: results.data.map((result) => ({
+        DVD: false,
+        "Blu-ray": false,
+        Digital: false,
+      })),
+    });
     console.log(results);
   }
 
@@ -62,25 +73,32 @@ class Add extends Component {
           <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
-              <div className="card">
-                <div className="card-body">
+              <div className="card shadow">
+                <div className="card-body text-center">
                   <h2 className="card-title">Add a Video to your Library</h2>
                 </div>
                 <form>
                   <div className="form-group px-5">
                     <label>Movie Title</label>
-                    <input
-                      name="query"
-                      type="title"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="Search for a Movie"
-                      value={this.props.queryValue}
-                      onChange={this.handleChange}
-                    />
-                    <button className="btn-primary" onClick={this.handleSubmit}>
-                      Search
-                    </button>
+                    <div class="input-group">
+                      <div class="input-group-append">
+                        <button
+                          className="btn-primary"
+                          onClick={this.handleSubmit}
+                        >
+                          Search
+                        </button>
+                      </div>
+                      <input
+                        name="query"
+                        type="title"
+                        className="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Search for a Movie"
+                        value={this.props.queryValue}
+                        onChange={this.handleChange}
+                      />
+                    </div>
                   </div>
                 </form>
               </div>
@@ -88,7 +106,11 @@ class Add extends Component {
           </div>
         </div>
         <div className="container">
-          <TMDBTable addedState={this.state.addedState} handleAddToLibrary={this.handleAddToLibrary} videosToDisplay={this.state.results} />
+          <TMDBTable
+            addedState={this.state.addedState}
+            handleAddToLibrary={this.handleAddToLibrary}
+            videosToDisplay={this.state.results}
+          />
         </div>
         <GreyBlock />
       </>
