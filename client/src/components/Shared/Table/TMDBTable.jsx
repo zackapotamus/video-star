@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import moment from "moment";
 import PlaceholderImage from "../../../img/videostar-placeholder.png";
-import GreyBlockTop from "../GreyBlockTop/GreyBlockTop";
+// import GreyBlockTop from "../GreyBlockTop/GreyBlockTop";
 
 const TMDBTable = (props) => {
   return (
@@ -60,7 +60,7 @@ const TMDBTable = (props) => {
                       }}
                       id={video.id}
                       className="btn btn-sm btn-outline-success my-2 my-sm-0"
-                      role="button"
+                      // role="button"
                     >
                       {props.addedState[index]["Blu-ray"] ? "Added" : "Add Blu-ray"}
                     </button>
@@ -71,7 +71,7 @@ const TMDBTable = (props) => {
                       }}
                       id={video.id}
                       className="btn btn-sm btn-outline-success my-2 my-sm-0"
-                      role="button"
+                      // role="button"
                     >
                       {props.addedState[index]["DVD"] ? "Added" : "Add DVD"}
                     </button>
@@ -82,7 +82,7 @@ const TMDBTable = (props) => {
                       }}
                       id={video.id}
                       className="btn btn-sm btn-outline-success my-2 my-sm-0"
-                      role="button"
+                      // role="button"
                     >
                       {props.addedState[index]["Digital"] ? "Added" : "Add Digital"}
                     </button>

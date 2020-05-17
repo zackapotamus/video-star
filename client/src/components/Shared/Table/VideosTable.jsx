@@ -50,7 +50,7 @@ const VideosTable = (props) => {
                 <td>
                   <button
                     className="btn btn-outline-danger my-2 my-sm-0"
-                    role="button"
+                    // role="button"
                     id={video.id}
                     onClick={() => {props.handleDelete(index)}}
                   >

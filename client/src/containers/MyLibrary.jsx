@@ -4,7 +4,7 @@ import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import WatchingMovieImage from "../img/watching-movie.jpg";
 import VideosTable from "../components/Shared/Table/VideosTable";
 

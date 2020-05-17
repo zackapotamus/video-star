@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("App.js did mount");
+    // console.log("App.js did mount");
     this.checkForToken();
   }
 

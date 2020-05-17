@@ -7,29 +7,29 @@ const ProfileForm = (props) => {
     return (
         <form>
             <div className="form-group">
-                <label>Username: </label>
-                <input type="username" className="form-control" placeholder='Sara Buckingham'>
+                <label htmlFor='username'>Username: </label>
+                <input type="text" name="username" className="form-control" placeholder='Sara Buckingham'>
                 </input>
                 
             </div>
             <div className="form-group">
-                <label>Biography: </label> 
-                <input type="text" className="form-control" placeholder='Aristocrat, actress and billionaire.'>
+                <label htmlFor='bio'>Biography: </label> 
+                <input type="text" name='bio' className="form-control" placeholder='Aristocrat, actress and billionaire.'>
                 </input>
             </div>
             <div className="form-group">
-                <label>Email</label> 
-                <input type="email" className="form-control" placeholder='sara@example.com'>
+                <label htmlFor='email'>Email</label> 
+                <input type="email" name='email' className="form-control" placeholder='sara@example.com'>
                 </input>
             </div>
             <div className="form-group">
-                <label>Password</label> 
-                <input type="password" className="form-control" placeholder='********'>
+                <label htmlFor='password'>Password</label> 
+                <input type="text" name='password' className="form-control" placeholder='********'>
                 </input>
             </div>
             <div className="form-group">
-                <label>Confirm Password</label>
-                <input type="password" className="form-control" placeholder='********'>
+                <label htmlFor='confirmpassword'>Confirm Password</label>
+                <input type="text" name="confirmpassword" className="form-control" placeholder='********'>
                 </input>
             </div>
             
