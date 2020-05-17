@@ -8,18 +8,18 @@ const ProfileForm = (props) => {
         <form>
             <div className="form-group">
                 <label>Username: </label>
-                <input type="username" className="form-control" placeholder={props.username}>
+                <input type="username" className="form-control" placeholder='Sara Buckingham'>
                 </input>
                 
             </div>
             <div className="form-group">
                 <label>Biography: </label> 
-                <input type="text" className="form-control" placeholder={props.bio}>
+                <input type="text" className="form-control" placeholder='Aristocrat, actress and billionaire.'>
                 </input>
             </div>
             <div className="form-group">
                 <label>Email</label> 
-                <input type="email" className="form-control" placeholder={props.email}>
+                <input type="email" className="form-control" placeholder='sara@example.com'>
                 </input>
             </div>
             <div className="form-group">

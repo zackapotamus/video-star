@@ -21,7 +21,7 @@ class Borrow extends Component {
               <div class="col-sm-10">
                 <div className="card">
                   <div className="card-body">
-                    <h2 className="card-title">Borrow a Video from Someone</h2>
+                    <h2 className="card-title text-center">Borrow a Video from Someone</h2>
                   </div>
 
                   <div>
