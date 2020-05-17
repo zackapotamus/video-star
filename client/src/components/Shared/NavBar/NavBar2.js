@@ -45,7 +45,7 @@ function NavBar2() {
                   : "nav-link"
               }
             >
-              Lent/Borrowed
+              Lent Videos
             </Link>
           </li>
           <li className="nav-item">
