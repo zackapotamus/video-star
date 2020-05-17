@@ -12,18 +12,15 @@ router.get("/", async (req, res) => {
     const { id, token } = req.query;
     let user;
     if (req.query.genres) {
-      genres = req.query.genres.split(",").map(genre => +genre);
+      genres = req.query.genres.split(",").map((genre) => +genre);
     }
     if (!token) {
       return res.status(403).json({
         success: false,
-        message: "Missing token."
-      })
+        message: "Missing token.",
+      });
     }
-    user = jwt.verify(
-      token,
-      process.env.REACT_APP_SESSION_SECRET
-    );
+    user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     if (id) {
       let video = await db.Video.findOne({
         include: {
@@ -35,12 +32,11 @@ router.get("/", async (req, res) => {
         },
         where: {
           id: id,
-          user_id: user.id
+          user_id: user.id,
         },
       });
       res.status(200).json(video);
-    }
-    else if (genres) {
+    } else if (genres) {
       let videos = await db.Video.findAll({
         include: [
           {
@@ -67,9 +63,7 @@ router.get("/", async (req, res) => {
         },
       });
       res.status(200).json(videos);
-
-    }
-    else {
+    } else {
       let video = await db.Video.findAll({
         include: {
           model: db.Genre,
@@ -79,19 +73,19 @@ router.get("/", async (req, res) => {
           },
         },
         where: {
-          user_id: user.id
+          user_id: user.id,
         },
       });
-      res.status(200).json(video);    }
-  
+      res.status(200).json(video);
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({
       success: false,
-      message: "Unable to process request."
-    })
+      message: "Unable to process request.",
+    });
   }
-})
+});
 
 // Matches "/api/videos"
 router.delete("/", async (req, res) => {
@@ -99,50 +93,54 @@ router.delete("/", async (req, res) => {
   if (!token) {
     return res.status(403).json({
       success: false,
-      message: "Missing token."
-    })
+      message: "Missing token.",
+    });
   }
-  user = jwt.verify(
-    token,
-    process.env.REACT_APP_SESSION_SECRET
-  );
+  user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
   let response = await db.Video.destroy({
     where: {
       id: id,
-      user_id: user.id
-    }
+      user_id: user.id,
+    },
   });
   if (response > 0) {
     return res.json({
       success: true,
-      message: "Movie deleted."
+      message: "Movie deleted.",
     });
   } else {
     return res.status(404).send();
   }
 });
 
-// Matches 
+// Matches
 
 router.post("/", async (req, res) => {
   try {
-    const { id: tmd_id, token, video_type, is_borrowed, lend_borrow_name, lend_borrow_due_date } = req.body;
+    const {
+      id: tmd_id,
+      token,
+      video_type,
+      is_borrowed,
+      lend_borrow_name,
+      lend_borrow_due_date,
+    } = req.body;
     if (!token) {
       return res.status(403).json({
         success: false,
-        message: "Missing token."
-      })
+        message: "Missing token.",
+      });
     }
-    const user = jwt.verify(
-      token,
-      process.env.REACT_APP_SESSION_SECRET
+    const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    let result = await axios.get(
+      `https://api.themoviedb.org/3/movie/${tmd_id}`,
+      {
+        params: {
+          language: "en-US",
+          api_key: process.env.API_KEY,
+        },
+      }
     );
-    let result = await axios.get(`https://api.themoviedb.org/3/movie/${tmd_id}`, {
-      params: {
-        language: "en-US",
-        api_key: process.env.API_KEY,
-      },
-    });
     let tmd_movie = result.data;
     let video = await db.Video.create({
       user_id: user.id,
@@ -168,16 +166,16 @@ router.post("/", async (req, res) => {
       video_type: video_type,
     });
     if (tmd_movie.genres) {
-      await video.addGenres(tmd_movie.genres.map(genreObj => genreObj.id));
+      await video.addGenres(tmd_movie.genres.map((genreObj) => genreObj.id));
     }
     res.json({
       success: true,
-      data: video.id
+      data: video.id,
     });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Unable to process request."
+      message: "Unable to process request.",
     });
     console.log(err);
   }
@@ -189,49 +187,52 @@ router.put("/", async (req, res) => {
     if (!token) {
       return res.status(403).json({
         success: false,
-        message: "Missing token."
-      })
+        message: "Missing token.",
+      });
     }
-    const user = jwt.verify(
-      token,
-      process.env.REACT_APP_SESSION_SECRET
-    );
+    const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     if (is_lent) {
-      await db.Video.update({
-        is_lent: true,
-        is_borrowed: false,
-        lend_borrow_date: Date.now(),
-        lend_borrow_due_date: due_date,
-        lend_borrow_name: name,
-      }, {
-        where: {
-          id
+      await db.Video.update(
+        {
+          is_lent: true,
+          is_borrowed: false,
+          lend_borrow_date: Date.now(),
+          lend_borrow_due_date: due_date,
+          lend_borrow_name: name,
+        },
+        {
+          where: {
+            id,
+          },
         }
-      });
-      res.json({
-        success: true,
-        message: "Video updated."
-      });
+      );
     } else {
-      await db.Video.update({
-        is_lent: false,
-        is_borrowed: false,
-        lend_borrow_date: null,
-        lend_borrow_due_date: null,
-        lend_borrow_name: null,
-      }, {
-        where: {
-          id
+      await db.Video.update(
+        {
+          is_lent: false,
+          is_borrowed: false,
+          lend_borrow_date: null,
+          lend_borrow_due_date: null,
+          lend_borrow_name: null,
+        },
+        {
+          where: {
+            id,
+          },
         }
-      })
+      );
     }
+    res.json({
+      success: true,
+      message: "Video updated.",
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
       success: false,
-      message: "Unable to proccess request."
-    })
+      message: "Unable to proccess request.",
+    });
   }
-})
+});
 
 module.exports = router;
