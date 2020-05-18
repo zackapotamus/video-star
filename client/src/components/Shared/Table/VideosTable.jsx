@@ -6,6 +6,19 @@ import { FcDvdLogo } from "react-icons/fc";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 
 const VideosTable = (props) => {
+  // const [genreFilters, setGenreFilters] = useState([]);
+
+  // // useEffect(() => {
+
+  // // },[])
+  // function handleGenreClick(id) {
+  //   if (genreFilters.includes(id)) {
+  //     setGenreFilters(genreFilters.filter(g => g !== id));
+  //   } else {
+  //     setGenreFilters([...genreFilters, id]);
+  //   }
+  // }
+
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -18,15 +31,28 @@ const VideosTable = (props) => {
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
               <th scope="col">Status</th>
-              {/* <th scope="col">Is It Borrowed?</th> */}
+              <th scope="col">Genres</th>
               <th scope="col">Type</th>
               <th scope="col">Details</th>
               <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
-            {props.videosToDisplay.map((video, index) => (
-              <tr key={index}>
+            {props.videosToDisplay.filter((video) => {
+              console.log(video);
+              if (props.genreFilters.length === 0) {
+                return true;
+              } else {
+                let genreIdsArray = video.genres.map(genre => genre.id);
+                for (let i=0; i < props.genreFilters.length; i++) {
+                  if (!genreIdsArray.includes(props.genreFilters[i])) {
+                    return false;
+                  }
+                }
+                return true;
+              }
+            }).map((video, index) => (
+              <tr key={video.id}>
                 <td>
                   <img
                     src={`https://image.tmdb.org/t/p/w92${
@@ -42,8 +68,9 @@ const VideosTable = (props) => {
                 <td>
                   {video.is_lent ? "Lent" : video.is_borrowed ? "Borrowed" : ""}
                 </td>
-                {/* <td>{video.is_borrowed}</td> */}
-                {/* <td>{video.video_type}</td> */}
+                <td>{video.genres.map(genre => (
+                  <span key={genre.id} onClick={() => props.handleGenreClick(genre.id)} className={props.genreFilters.includes(genre.id) ? "badge badge-pill badge-primary" : "badge badge-pill badge-secondary"}>{genre.name}</span>
+                ))}</td>
                 <td>{video.video_type === "Blu-ray" ? <FaCompactDisc style={{fontSize: "30px", color: "blue"}}/> : (video.video_type === "DVD" ? <FcDvdLogo style={{fontSize: "41px"}}/> : <AiOutlineCloudDownload style={{fontSize: "34px"}}/>)}</td>
                 <td>
                   <Link
