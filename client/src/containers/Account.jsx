@@ -27,6 +27,7 @@ class Account extends Component {
   }
 
   handleEditClick() {
+      this.preventDefault();
       this.setState({ editing: !this.state.editing });
   }
 
