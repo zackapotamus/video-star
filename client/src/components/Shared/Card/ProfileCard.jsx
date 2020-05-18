@@ -31,7 +31,7 @@ const ProfileCard = (props) => {
                         <div className="card card-body shadow">
                             <img src={UserImage} className="card-img-top" alt="user avatar" style={centerBlockAvatar} />
 
-                            <ProfileForm emailValue={props.emailValue} nameValue={props.nameValue} bioValue={props.bioValue} handleFormSubmit={props.handleFormSubmit} handleChange={props.handleChange} savedState={props.savedState}/>
+                            <ProfileForm editing={props.editing} handleEditClick={props.handleEditClick} emailValue={props.emailValue} nameValue={props.nameValue} bioValue={props.bioValue} handleFormSubmit={props.handleFormSubmit} handleChange={props.handleChange} savedState={props.savedState}/>
 
                         </div>
                     </div>

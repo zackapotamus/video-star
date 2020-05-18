@@ -9,7 +9,6 @@ import API from "../utils/API";
 import jwt from "jsonwebtoken";
 
 class Account extends Component {
-<<<<<<< HEAD
   constructor() {
     super();
     this.state = {
@@ -18,11 +17,17 @@ class Account extends Component {
       name: "",
       email: "",
       bio: "",
-      savedState: false
+      savedState: false,
+      editing: false
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleEditClick = this
+  }
+
+  handleEditClick() {
+      this.setState({ editing: !this.state.editing });
   }
 
   async handleFormSubmit(event) {
@@ -64,19 +69,8 @@ class Account extends Component {
         <Hero imageUrl={MovieAction} />
         <GreyBlockTop page="Account" />
 
-        <ProfileCard handleChange={this.handleChange} handleFormSubmit={this.handleFormSubmit} emailValue={this.state.email} nameValue={this.state.name} bioValue={this.state.bio} savedState={this.state.savedState}/>
+        <ProfileCard editing={this.state.editing} handleEditClick={this.handleEditClick} handleChange={this.handleChange} handleFormSubmit={this.handleFormSubmit} emailValue={this.state.email} nameValue={this.state.name} bioValue={this.state.bio} savedState={this.state.savedState}/>
 
-=======
-  render() {
-    return (
-      <>
-        <NavBar2 />
-        <Hero imageUrl={MovieAction} />
-        <GreyBlockTop page="Account" />
-
-        <ProfileCard />
-
->>>>>>> 9d2bfb8faac5171cfeb431ce9eb0b802903a2b7c
         <GreyBlock />
       </>
     );

@@ -8,6 +8,7 @@ const ProfileForm = (props) => {
       <div className="form-group">
         <label htmlFor="username">Name: </label>
         <input
+          readonly={props.editing}
           type="text"
           name="name"
           className="form-control"
@@ -19,6 +20,7 @@ const ProfileForm = (props) => {
       <div className="form-group">
         <label htmlFor="bio">Biography: </label>
         <input
+        readonly={props.editing}
           type="text"
           name="bio"
           className="form-control"
@@ -30,6 +32,7 @@ const ProfileForm = (props) => {
       <div className="form-group">
         <label htmlFor="email">Email:</label>
         <input
+        readonly={props.editing}
           type="email"
           name="email"
           className="form-control"
@@ -38,7 +41,7 @@ const ProfileForm = (props) => {
           onChange={props.handleChange}
         ></input>
       </div>
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="password">Password</label>
         <input
           type="text"
@@ -53,18 +56,19 @@ const ProfileForm = (props) => {
           name="confirmpassword"
           className="form-control"
         ></input>
-      </div>
+      </div> */}
 
       <button type="submit" className="btn btn-primary" onClick={props.handleFormSubmit}>
         {props.savedState ? "Profile Saved" : "Save Profile"} <GiSaveArrow />
       </button>
 
       <button
-        href="/edit"
+        // href="/edit"
         className="btn btn-primary"
         style={{ float: "right" }}
+        onClick={props.handleEditClick}
       >
-        Edit Profile <FiEdit2 />
+        {props.editing ? "Editing Profile" : "Edit Profile"} <FiEdit2 />
       </button>
     </form>
   );
