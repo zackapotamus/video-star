@@ -70,11 +70,11 @@ class Add extends Component {
                 <div className="card-body">
                   <h2 className="card-title text-center">Add a Video to your Library</h2>
                 </div>
-                <form>
+                <form className="mb-4">
                   <div className="form-group px-5">
                     <label>Movie Title</label>
-                    <div class="input-group">
-                      <div class="input-group-append">
+                    <div className="input-group">
+                      <div className="input-group-append">
                         <button
                           className="btn-primary"
                           onClick={this.handleSubmit}

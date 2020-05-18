@@ -44,6 +44,50 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    let token = req.query.token;
+    let authenitcatedUser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    let user = await db.User.findOne({
+      where: {
+        id: authenitcatedUser.id
+      }
+    });
+    res.json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      bio: user.bio
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Unable to process request"
+    })
+  }
+});
+
+router.put("/", async (req, res) => {
+  let { name, email, bio } = req.body;
+  let token = req.query.token;
+  let authenticateduser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+  let result = await db.User.update({
+    name,
+    email,
+    bio
+  }, {
+    where: {
+      id: authenticateduser.id
+    }
+  });
+  res.json({
+    success: true,
+    message: "User updated.",
+    data: result
+  })
+})
+
 router.post("/signup", async (req, res) => {
   try {
     // let { name, email, password } = req.body;
