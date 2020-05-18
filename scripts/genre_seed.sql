@@ -21,3 +21,5 @@ VALUES
 (53, 'Thriller'),
 (10752, 'War'),
 (37, 'Western');
+
+SELECT * FROM Genre;
