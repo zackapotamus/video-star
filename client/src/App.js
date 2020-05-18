@@ -12,7 +12,6 @@ import LentBorrow from "./containers/LentBorrow";
 import Lend from "./containers/Lend";
 import Borrow from "./containers/Borrow";
 import Details from "./containers/Details";
-import Contact from "./containers/Contact";
 import Add from "./containers/Add";
 import PrivateRoute from "./components/App/PrivateRoute";
 import Footer from "./components/Shared/Footer/Footer";
@@ -154,7 +153,6 @@ class App extends Component {
           <PrivateRoute exact path="/lend/:id" component={Lend} />
           <PrivateRoute exact path="/borrow" component={Borrow} />
           <PrivateRoute exact path="/details/:id" component={Details} />
-          <PrivateRoute exact path="/contact" component={Contact} />
           <PrivateRoute exact path="/add" component={Add} />
         </Switch>
         <Footer />

@@ -9,6 +9,7 @@ import API from "../utils/API";
 import jwt from "jsonwebtoken";
 
 class Account extends Component {
+<<<<<<< HEAD
   constructor() {
     super();
     this.state = {
@@ -65,6 +66,17 @@ class Account extends Component {
 
         <ProfileCard handleChange={this.handleChange} handleFormSubmit={this.handleFormSubmit} emailValue={this.state.email} nameValue={this.state.name} bioValue={this.state.bio} savedState={this.state.savedState}/>
 
+=======
+  render() {
+    return (
+      <>
+        <NavBar2 />
+        <Hero imageUrl={MovieAction} />
+        <GreyBlockTop page="Account" />
+
+        <ProfileCard />
+
+>>>>>>> 9d2bfb8faac5171cfeb431ce9eb0b802903a2b7c
         <GreyBlock />
       </>
     );

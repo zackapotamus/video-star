@@ -51,7 +51,14 @@ class Add extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     let results = await API.searchMovies(this.state.token, this.state.query);
-    this.setState({ results: results.data, addedState: results.data.map(result => ({"DVD": false, "Blu-ray": false, "Digital": false})) });
+    this.setState({
+      results: results.data,
+      addedState: results.data.map((result) => ({
+        DVD: false,
+        "Blu-ray": false,
+        Digital: false,
+      })),
+    });
     console.log(results.data);
   }
 
@@ -68,7 +75,9 @@ class Add extends Component {
             <div className="col-sm-10">
               <div className="card shadow">
                 <div className="card-body">
-                  <h2 className="card-title text-center">Add a Video to your Library</h2>
+                  <h2 className="card-title text-center">
+                    Add a Video to your Library
+                  </h2>
                 </div>
                 <form className="mb-4">
                   <div className="form-group px-5">
