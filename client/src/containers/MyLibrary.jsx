@@ -15,15 +15,31 @@ class MyLibrary extends Component {
     this.state = {
       token: "",
       results: [],
+      genreFilters: [],
     };
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.blah = this.blah.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+
   }
   async componentDidMount() {
     let token = localStorage.getItem("jwt");
     let results = await API.getVideos(token);
     this.setState({ results: results.data, token: token });
   }
+
+  blah(genre_id) {
+    if (this.state.genreFilters.includes(genre_id)) {
+      this.setState({
+        genreFilters: this.state.genreFilters.filter(g => g !== genre_id)
+      });
+    } else {
+      this.setState({
+        genreFilters: [...this.state.genreFilters, genre_id]
+      });
+    }
+  }
+
   async handleDelete(index) {
     try {
         let idToDelete = this.state.results[index].id;
@@ -44,7 +60,7 @@ class MyLibrary extends Component {
         <GreyBlockTop page="My Library" />
 
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
-        <VideosTable videosToDisplay={this.state.results} handleDelete={this.handleDelete} />
+        <VideosTable videosToDisplay={this.state.results} handleDelete={this.handleDelete} genreFilters={this.state.genreFilters} handleGenreClick={this.blah}/>
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
 
