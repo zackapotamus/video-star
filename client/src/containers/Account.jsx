@@ -23,7 +23,7 @@ class Account extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleEditClick = this
+    this.handleEditClick = this.handleEditClick.bind(this);
   }
 
   handleEditClick() {

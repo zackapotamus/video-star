@@ -8,7 +8,7 @@ const ProfileForm = (props) => {
       <div className="form-group">
         <label htmlFor="username">Name: </label>
         <input
-          readonly={props.editing}
+          readOnly={!props.editing}
           type="text"
           name="name"
           className="form-control"
@@ -20,7 +20,7 @@ const ProfileForm = (props) => {
       <div className="form-group">
         <label htmlFor="bio">Biography: </label>
         <input
-        readonly={props.editing}
+        readOnly={!props.editing}
           type="text"
           name="bio"
           className="form-control"
@@ -32,7 +32,7 @@ const ProfileForm = (props) => {
       <div className="form-group">
         <label htmlFor="email">Email:</label>
         <input
-        readonly={props.editing}
+        readOnly={!props.editing}
           type="email"
           name="email"
           className="form-control"
@@ -62,14 +62,14 @@ const ProfileForm = (props) => {
         {props.savedState ? "Profile Saved" : "Save Profile"} <GiSaveArrow />
       </button>
 
-      <button
+      <a
         // href="/edit"
         className="btn btn-primary"
-        style={{ float: "right" }}
+        style={{ float: "right", color: "white"}}
         onClick={props.handleEditClick}
       >
         {props.editing ? "Editing Profile" : "Edit Profile"} <FiEdit2 />
-      </button>
+      </a>
     </form>
   );
 };
