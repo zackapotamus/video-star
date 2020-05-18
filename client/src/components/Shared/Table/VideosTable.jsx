@@ -18,7 +18,7 @@ const VideosTable = (props) => {
               <th scope="col">Popularity</th>
               <th scope="col">Release Date</th>
               <th scope="col">Status</th>
-              {/* <th scope="col">Is It Borrowed?</th> */}
+              <th scope="col">Genres</th>
               <th scope="col">Type</th>
               <th scope="col">Details</th>
               <th scope="col">Delete</th>
@@ -42,8 +42,9 @@ const VideosTable = (props) => {
                 <td>
                   {video.is_lent ? "Lent" : video.is_borrowed ? "Borrowed" : ""}
                 </td>
-                {/* <td>{video.is_borrowed}</td> */}
-                {/* <td>{video.video_type}</td> */}
+                <td>{video.genres.map(genre => (
+                  <span class="badge badge-pill badge-secondary">{genre.name}</span>
+                ))}</td>
                 <td>{video.video_type === "Blu-ray" ? <FaCompactDisc style={{fontSize: "30px", color: "blue"}}/> : (video.video_type === "DVD" ? <FcDvdLogo style={{fontSize: "41px"}}/> : <AiOutlineCloudDownload style={{fontSize: "34px"}}/>)}</td>
                 <td>
                   <Link
