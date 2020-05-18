@@ -144,6 +144,7 @@ router.post("/", async (req, res) => {
     );
     let tmd_movie = result.data;
     let video = await db.Video.create({
+      budget: tmd_movie.budget,
       user_id: user.id,
       adult: tmd_movie.adult,
       backdrop_path: tmd_movie.backdrop_path,

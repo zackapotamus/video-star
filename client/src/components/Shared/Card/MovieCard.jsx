@@ -5,6 +5,14 @@ import moment from "moment";
 
 const MovieCard = (props) => {
 
+    function numberWithCommas(x) {
+        if (!x) {
+            return "";
+        }
+        console.log(x);
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     return (
         <>
             <div className='card shadow'>
@@ -26,7 +34,7 @@ const MovieCard = (props) => {
                             <ul style={{listStyleType:'none'}}>
                             
                                 <li><strong>Release Date:</strong> {moment(props.video.release_date).format("MMMM Do, YYYY")}</li>
-                                <li><strong>Budget:</strong> {props.video.budget}</li>
+                                <li><strong>Budget:</strong> {`$${numberWithCommas(props.video.budget)}`}</li>
                                 <li><strong>Runtime:</strong> {props.video.runtime}</li>
                                 {/* <li>{props.genres.name}</li> */}
                                 
