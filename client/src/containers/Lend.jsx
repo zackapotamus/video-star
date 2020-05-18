@@ -30,14 +30,14 @@ class Lend extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const { id, token, lend_borrow_name, lend_borrow_due_date, lend_borrow_date } = this.state;
-    let result = await API.updateVideo(id, token, {
+    await API.updateVideo(id, token, {
       lend_borrow_due_date,
       lend_borrow_date,
       id,
       lend_borrow_name,
       is_lent: true,
     });
-    this.setState({ video: result.data.data });
+    await this.props.history.push('/lentborrowed');
   }
 
   async componentDidMount() {
