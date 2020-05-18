@@ -33,7 +33,7 @@ export default {
   },
   // Updates a video with the given id
   updateVideo: function(id, token, videoData) {
-    return axios.put("/api/videos", { id, token, data: videoData });
+    return axios.put("/api/videos", { id, token, ...videoData });
   },
   // Search for movie
   searchMovies: function(token, query) {
