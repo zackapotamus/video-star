@@ -1,5 +1,17 @@
 # VideoStar - A Full Stack React App
 
+## Table Of Contents
+
+* [Description](#description)
+* [Deployed App in Heroku](#deployed-app-in-heroku)
+* [GitHub Repository](#github-repository)
+* [App Mockup Screenshots](#app-mockup-screenshots)
+* [Real App Screenshots](#real-app-screenshots)
+* [Technologies Used in VideoStar](#technologies-used-in-videostar)
+* [Coding Requirements](#coding-requirements)
+
+## Description
+
 This application is specially designed for video collectors and keep track of all the videos in their collection. 
 
 * The user can search for movies in [TMDB (The Movie Database)](https://www.themoviedb.org/?language=en-US) and add them to their collection. 
@@ -32,6 +44,7 @@ This is a Full Stack application that follows the [MVC (Model View Controller)](
 This app contains React components, helper/util functions, and uses React lifecycle methods to query and display books based on user searches. Node, Express and MongoDB are used in the backend so that users can save books to review or purchase later.
 
 - - -
+
 ## Deployed App in Heroku
 
 [VideoStar in Heroku](https://video-star.herokuapp.com/)
