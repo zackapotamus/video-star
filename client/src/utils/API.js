@@ -48,4 +48,14 @@ export default {
   login: function(loginData) {
     return axios.post("/api/auth", loginData);
   },
+  getUser: function(token) {
+    return axios.get("/api/auth", {
+      params: {
+        token
+      }
+    });
+  },
+  updateUser: function(token, userData) {
+    return axios.put(`/api/auth?token=${token}`, userData);
+  }
 };
