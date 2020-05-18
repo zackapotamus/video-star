@@ -152,6 +152,7 @@ __Account Page__
     * [React Scripts](https://www.npmjs.com/package/react-scripts). Configuration and scritps for Create React App
     * [React Toast Notifications](https://www.npmjs.com/package/react-toast-notifications). A configurable, composable, toast notification system for react.
     * [Read More React](https://www.npmjs.com/package/read-more-react). It "intelligently" truncates text at the appropriate point given a min, an ideal, and max text length. 
+    * [React Date Picker](https://www.npmjs.com/package/react-date-picker). Allows a user to use a calendar to pick up a date when filling an input form. A date picker for the React app, where the user can pick days, months, years, or even decades. Supports virtually any language. No moment.js is needed.
 
 * [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction). 
 <img src="client/src/img/moviedb-logo.png" alt="the movie database logo" width=100 height=50>

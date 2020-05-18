@@ -44,7 +44,7 @@ const VideosTable = (props) => {
                 </td>
                 {/* <td>{video.is_borrowed}</td> */}
                 {/* <td>{video.video_type}</td> */}
-                <td>{video.video_type === "Blu-ray" ? <FaCompactDisc style={{fontSize: "30px", color: "blue"}}/> : (video.video_type === "DVD" ? <FcDvdLogo style={{fontSize: "41px"}}/> : <AiOutlineCloudDownload style={{fontSize: "34px"}}/>)}</td>
+                <td>{video.video_type === "Blu-Ray" ? <FaCompactDisc style={{fontSize: "30px", color: "blue"}}/> : (video.video_type === "DVD" ? <FcDvdLogo style={{fontSize: "41px"}}/> : <AiOutlineCloudDownload style={{fontSize: "34px"}}/>)}</td>
                 <td>
                   <Link
                     to={{
