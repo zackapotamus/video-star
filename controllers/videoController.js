@@ -185,7 +185,7 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   try {
     let result;
-    const { is_lent, due_date, token, id, name } = req.body;
+    const { is_lent, is_borrowed, token, id, lend_borrow_name, lend_borrow_date, lend_borrow_due_date } = req.body;
     if (!token) {
       return res.status(403).json({
         success: false,
@@ -199,8 +199,8 @@ router.put("/", async (req, res) => {
           is_lent: true,
           is_borrowed: false,
           lend_borrow_date: lend_borrow_date || new Date().toISOString(),
-          lend_borrow_due_date: due_date,
-          lend_borrow_name: name,
+          lend_borrow_due_date: lend_borrow_due_date,
+          lend_borrow_name: lend_borrow_name,
         },
         {
           where: {

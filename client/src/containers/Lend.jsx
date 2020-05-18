@@ -6,6 +6,7 @@ import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 import Cashier from "../img/Cash-min.jpg";
 import moment from "moment";
+import DatePicker from "react-date-picker";
 
 class Lend extends Component {
   constructor() {
@@ -15,26 +16,28 @@ class Lend extends Component {
       video: {},
       title: "",
       lend_borrow_name: "",
-      lend_borrow_due_date: "",
-      lend_borrow_date: "",
+      lend_borrow_due_date: new Date(),
+      lend_borrow_date: new Date(),
       id: null
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReturnDateChange = this.handleReturnDateChange.bind(this);
+    this.handleLendDateChange = this.handleLendDateChange.bind(this);
   }
   
   async handleSubmit(event) {
     event.preventDefault();
     const { id, token, lend_borrow_name, lend_borrow_due_date, lend_borrow_date } = this.state;
-    let result = await API.updateVideo(id, token, {
+    await API.updateVideo(id, token, {
       lend_borrow_due_date,
       lend_borrow_date,
       id,
       lend_borrow_name,
       is_lent: true,
     });
-    this.setState({ video: result.data.data });
+    await this.props.history.push('/lentborrowed');
   }
 
   async componentDidMount() {
@@ -51,6 +54,15 @@ class Lend extends Component {
     // }
     this.setState({ [name]: value });
   }
+
+  handleLendDateChange(date) {
+    this.setState({ lend_borrow_date: date });
+  }
+
+  handleReturnDateChange(date) {
+    this.setState({ lend_borrow_due_date: date });
+  }
+
   render() {
     return (
       <>
@@ -101,21 +113,13 @@ class Lend extends Component {
                             <label htmlFor="exampleFormControlInput1">
                               Lending Date
                             </label>
-                            <input
-                              name="lend_borrow_date"
-                              type="text"
-                              className="form-control mb-3"
-                              id="exampleFormControlInput3"
-                              placeholder="mm/dd/yyyy"
-                              value={this.state.lend_borrow_date}
-                              onChange={this.handleChange}
-                            ></input>
+                            <DatePicker value={this.state.lend_borrow_date} onChange={this.handleLendDateChange} />
                           </div>
                           <div className="form-group">
                             <label htmlFor="exampleFormControlInput1">
                               Return Date
                             </label>
-                            <input
+                            {/* <input
                               type="text"
                               name="lend_borrow_due_date"
                               className="form-control mb-3"
@@ -123,7 +127,8 @@ class Lend extends Component {
                               placeholder="mm/dd/yyyy"
                               value={this.state.lend_borrow_due_date}
                               onChange={this.handleChange}
-                            ></input>
+                            ></input> */}
+                            <DatePicker value={this.state.lend_borrow_due_date} onChange={this.handleReturnDateChange} />
                           </div>
                           <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>
                             Lend Video
