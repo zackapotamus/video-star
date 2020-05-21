@@ -58,6 +58,11 @@ module.exports = function(sequelize, DataTypes) {
       foreignKey: "video_id",
       as: 'genres'
     });
+    Video.belongsToMany(models.Cast, {
+      through: models.Video_Cast,
+      foreignKey: "video_id",
+      as: 'cast'
+    });
     Video.belongsToMany(models.Genre, {
       through: models.Video_Genre,
       foreignKey: "video_id",
