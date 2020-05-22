@@ -17,6 +17,7 @@ class MyLibrary extends Component {
       results: [],
       genreFilters: [],
       castFilters: [],
+      // castMap: new Set(),
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleGenreClick = this.handleGenreClick.bind(this);
@@ -26,7 +27,9 @@ class MyLibrary extends Component {
   async componentDidMount() {
     let token = localStorage.getItem("jwt");
     let results = await API.getVideos(token);
-    this.setState({ results: results.data, token: token });
+    // let allCast
+    
+    this.setState({ results: results.data, token: token,  });
   }
 
   handleCastClick(cast_id) {
