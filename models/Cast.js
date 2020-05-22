@@ -1,10 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
   var Cast = sequelize.define("Cast", {
-    id: { // cast id
+    id: { // person_id
       type: DataTypes.INTEGER,
       allowNull: false,
-      autoIncrement: false,
+      autoIncrement: true,
       primaryKey: true,
+    },
+    person_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     character: {
       type: DataTypes.STRING,
@@ -17,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    person_id: {
+    cast_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -34,11 +38,11 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true
   });
 
-  Genre.associate = function(models) {
-    Genre.belongsToMany(models.Video, {
+  Cast.associate = function(models) {
+    Cast.belongsToMany(models.Video, {
       through: models.Video_Cast,
       foreignKey: "cast_id"
     });
   };
-  return Genre;
+  return Cast;
 };

@@ -20,7 +20,7 @@ const VideosTable = (props) => {
   // }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row justify-content-center">
         <table className="table table-striped">
           <thead>
@@ -28,7 +28,7 @@ const VideosTable = (props) => {
               <th scope="col">Poster</th>
               <th scope="col">Title</th>
               <th scope="col">Tagline</th>
-              <th scope="col">Popularity</th>
+              <th scope="col">Cast</th>
               <th scope="col">Release Date</th>
               <th scope="col">Status</th>
               <th scope="col">Genres</th>
@@ -38,8 +38,8 @@ const VideosTable = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.videosToDisplay.filter((video) => {
-              console.log(video);
+            {props.videosToDisplay
+            .filter((video) => {
               if (props.genreFilters.length === 0) {
                 return true;
               } else {
@@ -51,7 +51,21 @@ const VideosTable = (props) => {
                 }
                 return true;
               }
-            }).map((video, index) => (
+            })
+            .filter((video) => {
+              if (props.castFilters.length === 0) {
+                return true;
+              } else {
+                let castIdsArray = video.cast.map(cast => cast.person_id);
+                for (let i=0; i < props.castFilters.length; i++) {
+                  if (!castIdsArray.includes(props.castFilters[i])) {
+                    return false;
+                  }
+                }
+                return true;
+              }
+            })
+            .map((video, index) => (
               <tr key={video.id}>
                 <td>
                   <img
@@ -63,13 +77,15 @@ const VideosTable = (props) => {
                 </td>
                 <td>{video.original_title}</td>
                 <td>{video.tagline}</td>
-                <td>{video.popularity}</td>
+                <td>{video.cast.map((cast, index) => (
+                  <a title={cast.character} key={cast.person_id} onClick={() => props.handleCastClick(cast.person_id)} className={`badge badge-pill filter-badge${props.castFilters.includes(cast.person_id) ? " badge-primary" : " badge-secondary"}`} style={{display: `${index < 7 ? "inline-block" : "none"}`, color: "white", fontSize: 10}}>{cast.name}</a>
+                ))}</td>
                 <td>{moment(video.release_date).format("MMMM Do, YYYY")}</td>
                 <td>
                   {video.is_lent ? "Lent" : video.is_borrowed ? "Borrowed" : ""}
                 </td>
-                <td>{video.genres.map(genre => (
-                  <span key={genre.id} onClick={() => props.handleGenreClick(genre.id)} className={props.genreFilters.includes(genre.id) ? "badge badge-pill badge-primary" : "badge badge-pill badge-secondary"}>{genre.name}</span>
+                <td>{video.genres.map((genre, index) => (
+                  <a key={genre.id} onClick={() => props.handleGenreClick(genre.id)} className={`badge badge-pill filter-badge${props.genreFilters.includes(genre.id) ? " badge-primary" : " badge-secondary"}`} style={{color: "white"}}>{genre.name}</a>
                 ))}</td>
                 <td>{video.video_type === "Blu-ray" ? <FaCompactDisc style={{fontSize: "30px", color: "blue"}}/> : (video.video_type === "DVD" ? <FcDvdLogo style={{fontSize: "41px"}}/> : <AiOutlineCloudDownload style={{fontSize: "34px"}}/>)}</td>
                 <td>

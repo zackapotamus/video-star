@@ -16,11 +16,12 @@ class MyLibrary extends Component {
       token: "",
       results: [],
       genreFilters: [],
+      castFilters: [],
     };
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.blah = this.blah.bind(this);
+    this.handleGenreClick = this.handleGenreClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-
+    this.handleCastClick = this.handleCastClick.bind(this);
   }
   async componentDidMount() {
     let token = localStorage.getItem("jwt");
@@ -28,7 +29,19 @@ class MyLibrary extends Component {
     this.setState({ results: results.data, token: token });
   }
 
-  blah(genre_id) {
+  handleCastClick(cast_id) {
+    if (this.state.castFilters.includes(cast_id)) {
+      this.setState({
+        castFilters: this.state.castFilters.filter(c => c !== cast_id)
+      });
+    } else {
+      this.setState({
+        castFilters: [...this.state.castFilters, cast_id]
+      });
+    }
+  }
+
+  handleGenreClick(genre_id) {
     if (this.state.genreFilters.includes(genre_id)) {
       this.setState({
         genreFilters: this.state.genreFilters.filter(g => g !== genre_id)
@@ -60,7 +73,7 @@ class MyLibrary extends Component {
         <GreyBlockTop page="My Library" />
 
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
-        <VideosTable videosToDisplay={this.state.results} handleDelete={this.handleDelete} genreFilters={this.state.genreFilters} handleGenreClick={this.blah}/>
+        <VideosTable castFilters={this.state.castFilters} handleCastClick={this.handleCastClick} videosToDisplay={this.state.results} handleDelete={this.handleDelete} genreFilters={this.state.genreFilters} handleGenreClick={this.handleGenreClick}/>
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
 

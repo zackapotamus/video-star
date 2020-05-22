@@ -1,6 +1,6 @@
 USE videostar_db;
 
-INSERT INTO Genre (id, name) 
+INSERT INTO videostar_db.Genre (id, name) 
 VALUES
 (28, 'Action'),
 (12, 'Adventure'),

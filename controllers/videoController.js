@@ -8,12 +8,8 @@ const axios = require("axios");
 // Matches "/api/videos"
 router.get("/", async (req, res) => {
   try {
-    let genres;
     const { id, token } = req.query;
     let user;
-    if (req.query.genres) {
-      genres = req.query.genres.split(",").map((genre) => +genre);
-    }
     if (!token) {
       return res.status(403).json({
         success: false,
@@ -36,45 +32,26 @@ router.get("/", async (req, res) => {
         },
       });
       res.status(200).json(video);
-    } else if (genres) {
-      let videos = await db.Video.findAll({
-        include: [
-          {
-            model: db.Genre,
-            as: "genres",
-            through: {
-              attributes: [],
-            },
-          },
-          {
-            model: db.Genre,
-            as: "filter_genres",
-            through: {
-              attributes: [],
-            },
-            attributes: [],
-          },
-        ],
-        where: {
-          user_id: user.id,
-          "$filter_genres.id$": {
-            [Op.in]: genres,
-          },
-        },
-      });
-      res.status(200).json(videos);
     } else {
       let video = await db.Video.findAll({
-        include: {
+        include: [{
           model: db.Genre,
           as: "genres",
           through: {
             attributes: [],
           },
-        },
+        }, {
+          model: db.Cast,
+          as: "cast",
+          through: {
+            attributes: [],
+          },
+          // order: ['order', 'asc'],
+        }],
         where: {
           user_id: user.id,
         },
+        order: [[db.Sequelize.literal('cast.order'), 'ASC']]
       });
       res.status(200).json(video);
     }
@@ -133,7 +110,7 @@ router.post("/", async (req, res) => {
       });
     }
     const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
-    let result = await axios.get(
+    let movieResult = await axios.get(
       `https://api.themoviedb.org/3/movie/${tmd_id}`,
       {
         params: {
@@ -142,7 +119,25 @@ router.post("/", async (req, res) => {
         },
       }
     );
-    let tmd_movie = result.data;
+    let castResult = await axios.get(
+      `https://api.themoviedb.org/3/movie/${tmd_id}/credits`,
+      {
+        params: {
+          api_key: process.env.API_KEY
+        }
+      }
+    );
+    let tmd_cast = castResult.data.cast.map(cast => ({
+      person_id: cast.id,
+      character: cast.character,
+      credit_id: cast.credit_id,
+      gender: cast.gender,
+      cast_id: cast.cast_id,
+      name: cast.name,
+      order: cast.order,
+      profile_path: cast.profile_path
+    }));
+    let tmd_movie = movieResult.data;
     let video = await db.Video.create({
       budget: tmd_movie.budget,
       user_id: user.id,
@@ -170,6 +165,10 @@ router.post("/", async (req, res) => {
     if (tmd_movie.genres) {
       await video.addGenres(tmd_movie.genres.map((genreObj) => genreObj.id));
     }
+    let results = await db.Cast.bulkCreate(tmd_cast, {
+      return: true,
+    });
+    video.addCast(results.map((result) => result.dataValues.id));
     res.json({
       success: true,
       data: video.id,

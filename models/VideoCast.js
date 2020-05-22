@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
     freezeTableName: true
   });
-  VideoGenre.associate = (models) => {
+  VideoCast.associate = (models) => {
     VideoCast.belongsTo(models.Video, {foreignKey: "video_id", targetKey: "id"});
     VideoCast.belongsTo(models.Cast, {foreignKey: "cast_id", targetKey: "id"});
   };
-  return VideoGenre;
+  return VideoCast;
 };
