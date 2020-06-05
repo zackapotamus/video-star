@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const jwt = require("jsonwebtoken");
+const withAuth = require("../middleware");
 
 /**
  * Root POST route to validate user credentials.
@@ -24,10 +25,10 @@ router.post("/", async (req, res) => {
         },
         process.env.REACT_APP_SESSION_SECRET
       );
-      console.log(token);
-      res.json({
+      // issue token
+      res.status(200).cookie('token', token, { httpOnly: true }).json({
         success: true,
-        data: token,
+        data: token
       });
     } else {
       res.status(403).json({
@@ -44,13 +45,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
-    let token = req.query.token;
-    let authenitcatedUser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    // let token = req.query.token;
+    // let authenitcatedUser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     let user = await db.User.findOne({
       where: {
-        id: authenitcatedUser.id
+        id: req.id
       }
     });
     res.json({
@@ -68,17 +69,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", withAuth, async (req, res) => {
   let { name, email, bio } = req.body;
-  let token = req.query.token;
-  let authenticateduser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+  // let token = req.query.token;
+  // let authenticateduser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
   let result = await db.User.update({
     name,
     email,
     bio
   }, {
     where: {
-      id: authenticateduser.id
+      id: req.id
     }
   });
   res.json({
@@ -108,14 +109,15 @@ router.post("/signup", async (req, res) => {
           name: user.name,
           email: user.email,
           id: user.id,
-          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+          // exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+          expiresIn: "7d",
         },
         process.env.REACT_APP_SESSION_SECRET
       );
-      console.log(token);
-      return res.json({
+      // console.log(token);
+      return res.status(200).cookie('token', token, { httpOnly: true }).json({
         success: true,
-        data: token,
+        data: token
       });
     } else {
       return res.status(409).json({

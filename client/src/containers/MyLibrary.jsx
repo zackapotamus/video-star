@@ -7,17 +7,18 @@ import API from "../utils/API";
 // import { Redirect } from "react-router-dom";
 import WatchingMovieImage from "../img/watching-movie.jpg";
 import VideosTable from "../components/Shared/Table/VideosTable";
-
+import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 
 class MyLibrary extends Component {
   constructor() {
     super();
     this.state = {
-      token: "",
       results: [],
       genreFilters: [],
       castFilters: [],
-      // castMap: new Set(),
+      castMap: new Map(),
+      countMap: new Map(),
+      crewMap: new Map(),
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleGenreClick = this.handleGenreClick.bind(this);
@@ -25,21 +26,42 @@ class MyLibrary extends Component {
     this.handleCastClick = this.handleCastClick.bind(this);
   }
   async componentDidMount() {
-    let token = localStorage.getItem("jwt");
-    let results = await API.getVideos(token);
-    // let allCast
-    
-    this.setState({ results: results.data, token: token,  });
+    let results = await API.getVideos();
+    let countMap = new Map();
+    this.setState({
+      results: results.data,
+      castMap: new Map(
+        results.data.reduce((acc, curr) => {
+          let mapped = curr.cast.map((current, index, array) => {
+            let personNumber = countMap.get(current.person_id);
+            if (personNumber !== undefined) {
+              countMap.set(current.person_id, ++personNumber);
+            } else {
+              countMap.set(current.person_id, 0);
+            }
+            return [current.person_id, current.name];
+          });
+          return [...acc, ...mapped];
+        }, [])
+      ),
+      countMap
+    });
+    for (let k of countMap.keys()) {
+      if (!countMap.get(k)) {
+        countMap.delete(k);
+      }
+    }
+    console.log(this.state.countMap);
   }
 
   handleCastClick(cast_id) {
     if (this.state.castFilters.includes(cast_id)) {
       this.setState({
-        castFilters: this.state.castFilters.filter(c => c !== cast_id)
+        castFilters: this.state.castFilters.filter((c) => c !== cast_id),
       });
     } else {
       this.setState({
-        castFilters: [...this.state.castFilters, cast_id]
+        castFilters: [...this.state.castFilters, cast_id],
       });
     }
   }
@@ -47,36 +69,47 @@ class MyLibrary extends Component {
   handleGenreClick(genre_id) {
     if (this.state.genreFilters.includes(genre_id)) {
       this.setState({
-        genreFilters: this.state.genreFilters.filter(g => g !== genre_id)
+        genreFilters: this.state.genreFilters.filter((g) => g !== genre_id),
       });
     } else {
       this.setState({
-        genreFilters: [...this.state.genreFilters, genre_id]
+        genreFilters: [...this.state.genreFilters, genre_id],
       });
     }
   }
 
   async handleDelete(index) {
     try {
-        let idToDelete = this.state.results[index].id;
-        let result = await API.deleteVideo(idToDelete, this.state.token);
-        if (result.data.success) {
-          this.setState({ results: this.state.results.filter(r => r.id !== idToDelete) });
-        }
-      } catch (err) {
+      let idToDelete = this.state.results[index].id;
+      let result = await API.deleteVideo(idToDelete /*, this.state.token*/);
+      if (result.data.success) {
+        this.setState({
+          results: this.state.results.filter((r) => r.id !== idToDelete),
+        });
+      }
+    } catch (err) {
       console.log(err);
     }
-  };
+  }
 
   render() {
     return (
       <>
-        <NavBar2 />
-        <Hero imageUrl={WatchingMovieImage} />
-        <GreyBlockTop page="My Library" />
+        {/* <NavBar2 /> */}
+        <NavBarNew />
+        {/* <Hero imageUrl={WatchingMovieImage} /> */}
+        {/* <GreyBlockTop page="My Library" /> */}
 
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
-        <VideosTable castFilters={this.state.castFilters} handleCastClick={this.handleCastClick} videosToDisplay={this.state.results} handleDelete={this.handleDelete} genreFilters={this.state.genreFilters} handleGenreClick={this.handleGenreClick}/>
+        <VideosTable
+          castFilters={this.state.castFilters}
+          handleCastClick={this.handleCastClick}
+          videosToDisplay={this.state.results}
+          handleDelete={this.handleDelete}
+          genreFilters={this.state.genreFilters}
+          handleGenreClick={this.handleGenreClick}
+          countMap={this.state.countMap}
+        />
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
 

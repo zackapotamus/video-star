@@ -7,7 +7,7 @@ import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import FilmMakerImage from "../img/filmmaker.jpg";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import API from "../utils/API";
 
 class Login extends Component {
@@ -25,7 +25,7 @@ class Login extends Component {
   async componentDidMount() {
     console.log("login component did mount");
     if (this.props.isAuthenticated()) {
-      await this.props.history.push("/mylibrary");
+      await this.props.history.push("/library");
     } else {
       console.log("not logged in");
     }
@@ -44,16 +44,16 @@ class Login extends Component {
         email: this.state.email,
         password: this.state.password,
       });
-      console.log("login submit response:", response);
+      // console.log("login submit response:", response);
       if (response.data.success) {
-        jwt.verify(
-          response.data.data,
-          process.env.REACT_APP_SESSION_SECRET
-        );
+        localStorage.setItem("jwt", response.data.data);
+      } else {
+        // error
+        console.log(response.data);
+        return false;
       }
-      localStorage.setItem("jwt", response.data.data);
-      this.props.checkForToken();
-      await this.props.history.push("/mylibrary");
+      // this.props.checkForToken();
+      await this.props.history.push("/library");
     } catch (err) {
       console.log(err);
     }

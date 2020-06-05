@@ -1,10 +1,14 @@
 import React from "react";
+import { FaUser } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import { MdMovieFilter } from "react-icons/md";
 
 const NavBarNew = () => {
+  const location = useLocation();
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <a className="navbar-brand" href="#">
-        Navbar
+        <MdMovieFilter style={{fontSize: 27}}/>
       </a>
       <button
         className="navbar-toggler"
@@ -19,16 +23,40 @@ const NavBarNew = () => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Home <span className="sr-only">(current)</span>
-            </a>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link
+              to="/library"
+              className={
+                location.pathname === "/library"
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              Library
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
+            <Link
+              to="/lentborrowed"
+              className={
+                location.pathname === "/lentborrowed"
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              Lent/Borrowed
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/add"
+              className={
+                location.pathname === "/add" ? "nav-link active" : "nav-link"
+              }
+            >
+              Add to Library
+            </Link>
           </li>
           <li className="nav-item dropdown">
             <a
@@ -40,22 +68,27 @@ const NavBarNew = () => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Dropdown
+              {/* Account */}
+              <FaUser />
             </a>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a className="dropdown-item" href="#">
-                Action
-              </a>
-              <a className="dropdown-item" href="#">
-                Another action
-              </a>
+            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <Link
+              to="/account"
+              className={
+                location.pathname === "/account"
+                  ? "dropdown-item active"
+                  : "dropdown-item"
+              }
+            >
+              Account
+            </Link>
               <div className="dropdown-divider"></div>
               <a className="dropdown-item" href="#">
-                Something else here
+                Log Out
               </a>
             </div>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a
               className="nav-link disabled"
               href="#"
@@ -64,7 +97,7 @@ const NavBarNew = () => {
             >
               Disabled
             </a>
-          </li>
+          </li> */}
         </ul>
         {/* <form className="form-inline my-2 my-lg-0">
           <input

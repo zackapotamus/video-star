@@ -4,31 +4,40 @@ const db = require("../models");
 const jwt = require("jsonwebtoken");
 const { Op } = db.Sequelize;
 const axios = require("axios");
+const withAuth = require("../middleware");
 
 // Matches "/api/videos"
-router.get("/", async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
-    const { id, token } = req.query;
-    let user;
-    if (!token) {
-      return res.status(403).json({
-        success: false,
-        message: "Missing token.",
-      });
-    }
-    user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    const { id } = req.query;
+    // let user;
+    // if (!token) {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: "Missing token.",
+    //   });
+    // }
+    // user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     if (id) {
       let video = await db.Video.findOne({
-        include: {
+        include: [{
           model: db.Genre,
           as: "genres",
           through: {
             attributes: [],
           },
-        },
+        }, {
+          model: db.Cast,
+          as: "cast",
+          through: {
+            attributes: [],
+          },
+          attributes: ["id", "name", "person_id", "character"],
+          // order: ['order', 'asc'],
+        }],
         where: {
           id: id,
-          user_id: user.id,
+          user_id: req.id,
         },
       });
       res.status(200).json(video);
@@ -46,10 +55,11 @@ router.get("/", async (req, res) => {
           through: {
             attributes: [],
           },
+          attributes: ["id", "name", "person_id", "character"],
           // order: ['order', 'asc'],
         }],
         where: {
-          user_id: user.id,
+          user_id: req.id,
         },
         order: [[db.Sequelize.literal('cast.order'), 'ASC']]
       });
@@ -65,7 +75,7 @@ router.get("/", async (req, res) => {
 });
 
 // Matches "/api/videos"
-router.delete("/", async (req, res) => {
+router.delete("/", withAuth, async (req, res) => {
   const { id, token } = req.query;
   if (!token) {
     return res.status(403).json({
@@ -92,24 +102,24 @@ router.delete("/", async (req, res) => {
 
 // Matches
 
-router.post("/", async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   try {
     const {
       id: tmd_id,
-      token,
+      // token,
       video_type,
       is_borrowed,
       lend_borrow_name,
       lend_borrow_date,
       lend_borrow_due_date,
     } = req.body;
-    if (!token) {
-      return res.status(403).json({
-        success: false,
-        message: "Missing token.",
-      });
-    }
-    const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    // if (!token) {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: "Missing token.",
+    //   });
+    // }
+    // const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     let movieResult = await axios.get(
       `https://api.themoviedb.org/3/movie/${tmd_id}`,
       {
@@ -140,7 +150,7 @@ router.post("/", async (req, res) => {
     let tmd_movie = movieResult.data;
     let video = await db.Video.create({
       budget: tmd_movie.budget,
-      user_id: user.id,
+      user_id: req.id,
       adult: tmd_movie.adult,
       backdrop_path: tmd_movie.backdrop_path,
       poster_path: tmd_movie.poster_path,
@@ -182,17 +192,17 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", withAuth, async (req, res) => {
   try {
     let result;
-    const { is_lent, is_borrowed, token, id, lend_borrow_name, lend_borrow_date, lend_borrow_due_date } = req.body;
+    const { is_lent, is_borrowed, /*token,*/ id, lend_borrow_name, lend_borrow_date, lend_borrow_due_date } = req.body;
     if (!token) {
       return res.status(403).json({
         success: false,
         message: "Missing token.",
       });
     }
-    const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    // const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     if (is_lent) {
       result = await db.Video.update(
         {
@@ -205,7 +215,7 @@ router.put("/", async (req, res) => {
         {
           where: {
             id,
-            user_id: user.id
+            user_id: req.id
           },
         }
       );
@@ -223,7 +233,7 @@ router.put("/", async (req, res) => {
         {
           where: {
             id,
-            user_id: user.id
+            user_id: req.id
           },
         }
       );

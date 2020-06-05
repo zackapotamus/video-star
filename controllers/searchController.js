@@ -6,17 +6,7 @@ const genreMap = require("../json/genres.json");
 
 router.get("/", async (req, res) => {
   try {
-    const { query, token } = req.query;
-    const user = jwt.verify(
-      token,
-      process.env.REACT_APP_SESSION_SECRET
-    );
-    if (!(user && user.email)) {
-      return res.status(403).json({
-        success: false,
-        message: "Invalid authentication."
-      });
-    }
+    const { query } = req.query;
     const page = req.query.page || 1;
     if (!query) {
       return res.status(404).json({

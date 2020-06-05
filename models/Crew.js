@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Cast = sequelize.define("Cast", {
+  var Crew = sequelize.define("Crew", {
     id: { // person_id
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    character: {
+    department: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -19,14 +19,6 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    cast_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    order: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
     },
     profile_path: {
       type: DataTypes.STRING,
@@ -37,11 +29,11 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true
   });
 
-  Cast.associate = function(models) {
-    Cast.belongsToMany(models.Video, {
-      through: models.Video_Cast,
-      foreignKey: "cast_id"
+  Crew.associate = function(models) {
+    Crew.belongsToMany(models.Video, {
+      through: models.Video_Crew,
+      foreignKey: "crew_id"
     });
   };
-  return Cast;
+  return Crew;
 };

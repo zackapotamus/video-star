@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import NavBar2 from "../components/Shared/NavBar/NavBar2";
+// import NavBar2 from "../components/Shared/NavBar/NavBar2";
+import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
@@ -11,7 +12,6 @@ class Add extends Component {
   constructor() {
     super();
     this.state = {
-      token: "",
       query: "",
       results: [],
       message: "",
@@ -19,14 +19,14 @@ class Add extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
+    // this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
   }
 
-  componentDidMount() {
-    const token = localStorage.getItem("jwt");
-    this.setState({ token });
-  }
+  // componentDidMount() {
+  //   // const token = localStorage.getItem("jwt");
+  //   // this.setState({ token });
+  // }
 
   handleChange(event) {
     this.setState({
@@ -39,7 +39,6 @@ class Add extends Component {
       await API.addVideo(
         this.state.results[index].id,
         videoType,
-        this.state.token
       );
       this.state.addedState[index][videoType] = true;
       this.setState({ addedState: this.state.addedState });
@@ -50,7 +49,7 @@ class Add extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    let results = await API.searchMovies(this.state.token, this.state.query);
+    let results = await API.searchMovies(this.state.query);
     this.setState({
       results: results.data,
       addedState: results.data.map((result) => ({
@@ -65,9 +64,10 @@ class Add extends Component {
   render() {
     return (
       <>
-        <NavBar2 />
-        <Hero imageUrl={AddMovie} />
-        <GreyBlockTop page="Add" />
+        {/* <NavBar2 /> */}
+        <NavBarNew />
+        {/* <Hero imageUrl={AddMovie} /> */}
+        {/* <GreyBlockTop page="Add" /> */}
 
         <div className="container" style={{ marginBottom: 100 }}>
           <div className="row">
@@ -85,6 +85,7 @@ class Add extends Component {
                     <div className="input-group">
                       <div className="input-group-append">
                         <button
+                          // type="button"
                           className="btn-primary"
                           onClick={this.handleSubmit}
                         >

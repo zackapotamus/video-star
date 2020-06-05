@@ -6,19 +6,17 @@ import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import ProfileCard from "../components/Shared/Card/ProfileCard";
 import MovieAction from "../img/movie-action.jpg";
 import API from "../utils/API";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 
 class Account extends Component {
   constructor() {
     super();
     this.state = {
-      token: "",
-    //   user: {} ,
       name: "",
       email: "",
       bio: "",
       savedState: false,
-      editing: false
+      editing: false,
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -27,38 +25,34 @@ class Account extends Component {
   }
 
   handleEditClick() {
-      this.setState({ editing: !this.state.editing });
+    this.setState({ editing: !this.state.editing, savedState: false });
   }
 
   async handleFormSubmit(event) {
-      event.preventDefault();
-    let token = this.state.token;
-    await API.updateUser(token, {
-        name: this.state.name,
-        email: this.state.email,
-        bio: this.state.bio
+    event.preventDefault();
+    await API.updateUser({
+      name: this.state.name,
+      email: this.state.email,
+      bio: this.state.bio,
     });
     this.setState({
-        savedState: true
+      savedState: true,
     });
   }
 
   async handleChange(event) {
     let { name, value } = event.target;
     this.setState({
-        [name]: value
+      [name]: value,
     });
   }
 
   async componentDidMount() {
-    let token = localStorage.getItem("jwt");
-    let result = await API.getUser(token);
+    let result = await API.getUser();
     this.setState({
-        token,
-        // user: result.data
-        name: result.data.name,
-        email: result.data.email,
-        bio: result.data.bio
+      name: result.data.name,
+      email: result.data.email,
+      bio: result.data.bio,
     });
   }
 
@@ -69,7 +63,16 @@ class Account extends Component {
         <Hero imageUrl={MovieAction} />
         <GreyBlockTop page="Account" />
 
-        <ProfileCard editing={this.state.editing} handleEditClick={this.handleEditClick} handleChange={this.handleChange} handleFormSubmit={this.handleFormSubmit} emailValue={this.state.email} nameValue={this.state.name} bioValue={this.state.bio} savedState={this.state.savedState}/>
+        <ProfileCard
+          editing={this.state.editing}
+          handleEditClick={this.handleEditClick}
+          handleChange={this.handleChange}
+          handleFormSubmit={this.handleFormSubmit}
+          emailValue={this.state.email}
+          nameValue={this.state.name}
+          bioValue={this.state.bio}
+          savedState={this.state.savedState}
+        />
 
         <GreyBlock />
       </>

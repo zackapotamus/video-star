@@ -28,7 +28,8 @@ router.post("/", async (req, res) => {
           name: user.name,
           email: user.email,
           id: user.id,
-          exp: Math.floor(Date.now() / 1000) + 60 /*//-- * 60 --//*/,
+          // exp: Math.floor(Date.now() / 1000) + 60 /*//-- * 60 --//*/,
+          expiresIn: "7d",
         },
         process.env.REACT_APP_SESSION_SECRET
       );

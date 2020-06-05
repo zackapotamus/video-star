@@ -14,4 +14,88 @@ h1, h2, h3, h4, h5, h6 {
     monospace;
 } */
 
+.centered {
+  vertical-align: middle;
+  text-align: center;
+  font-family: 'Roboto Slab', serif;
+}
+.centered img {
+  display: block;
+  margin: 0 auto;
+}
+
+.cast-cell {
+  height: 162
+}
+
+#more-about .ImageWrapper img {
+  margin-bottom: 10px
+}
+
+#more-info .info-descr {
+  font: 16px 'Roboto', sans-serif;
+  margin-bottom: 20px;
+  line-height: 23px
+}
+
+#more-info .info-tbl {
+  display: table;
+  border-collapse: collapse
+}
+
+#more-info .info-tbl .tbl-row {
+  display: table-row;
+  margin-bottom: 24px;
+  border-bottom: solid 1px #191919!important
+}
+
+#more-info .info-tbl .tbl-row .tbl-cell-ttl {
+  display: table-cell;
+  min-width: 160px;
+  font-weight: 300;
+  padding: 10px 0;
+}
+
+#more-info .info-tbl .tbl-row .tbl-cell-descr {
+  display: table-cell;
+  padding-bottom: 19px;
+  line-height: 19px;
+  padding: 10px 0
+}
+
+#more-info .info-tbl .tbl-row .tbl-cell-descr.formats span,#more-info .info-tbl .tbl-row .tbl-cell-descr.formats img {
+  margin-right: 10px;
+  vertical-align: baseline
+}
+
+#more-info .text-content {
+  line-height: 19px;
+  margin-bottom: 19px
+}
+
+#more-info .formats span {
+  font: 16px exo,helvetica neue,helvetica,arial,serif!important;
+  font-weight: 700
+}
+
+#more-info h4.ttl {
+  font-family: exo,helvetica neue,helvetica,arial,serif!important;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+}
+
+#more-info h2.more-info-header {
+  font-size: 22px;
+}
+
+.img-responsive.poster {
+  width: 100%
+}
+
+/* @media(max-width: 767px) {
+  .cast-cell {
+
+  }
+} */
 

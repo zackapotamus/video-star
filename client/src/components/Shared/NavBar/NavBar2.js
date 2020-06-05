@@ -26,9 +26,9 @@ function NavBar2() {
         <ul className="nav navbar-nav nav-flex-icons ml-auto">
           <li className="nav-item">
             <Link
-              to="/mylibrary"
+              to="/library"
               className={
-                location.pathname === "/mylibrary"
+                location.pathname === "/library"
                   ? "nav-link active"
                   : "nav-link"
               }

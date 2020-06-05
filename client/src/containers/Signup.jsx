@@ -46,7 +46,7 @@ class Signup extends Component {
       }
       localStorage.setItem("jwt", response.data.data);
       this.props.checkForToken();
-      await this.props.history.push("/mylibrary");
+      await this.props.history.push("/library");
     } catch (err) {
       console.log(err);
     }
@@ -54,7 +54,7 @@ class Signup extends Component {
 
   async componentDidMount() {
     if (this.props.isAuthenticated()) {
-      await this.props.history.push("/mylibrary");
+      await this.props.history.push("/library");
     }
   }
 

@@ -148,7 +148,7 @@ class App extends Component {
             )}
           />
           <PrivateRoute exact path="/account" component={Profile} />
-          <PrivateRoute exact path="/mylibrary" component={MyLibrary} />
+          <PrivateRoute exact path="/library" component={MyLibrary} />
           <PrivateRoute exact path="/lentborrowed" component={LentBorrow} />
           <PrivateRoute exact path="/lend/:id" component={Lend} />
           <PrivateRoute exact path="/borrow" component={Borrow} />
