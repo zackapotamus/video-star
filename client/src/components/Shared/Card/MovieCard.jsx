@@ -95,7 +95,7 @@ const MovieCard = (props) => {
             </Link>
           </div>
           <hr />
-          {/* <div class='card_watch_trailer__button'>
+          {/* <div className='card_watch_trailer__button'>
                             <a href='https://www.youtube.com/watch?v=ot6C1ZKyiME' target='_blank'>WATCH TRAILER</a>
                         </div> */}
         </div>

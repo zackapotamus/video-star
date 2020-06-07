@@ -16,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     credit_id: DataTypes.STRING,
     gender: DataTypes.INTEGER,
+    job: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false

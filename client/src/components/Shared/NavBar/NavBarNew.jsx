@@ -55,7 +55,7 @@ const NavBarNew = () => {
                 location.pathname === "/add" ? "nav-link active" : "nav-link"
               }
             >
-              Add to Library
+              Add
             </Link>
           </li>
           <li className="nav-item dropdown">

@@ -34,9 +34,9 @@ router.post("/", async (req, res) => {
         process.env.REACT_APP_SESSION_SECRET
       );
       console.log(token);
-      return res.json({
+      res.status(200).cookie('token', token, { httpOnly: true }).json({
         success: true,
-        data: token,
+        data: token
       });
     } else {
       return res.status(409).json({

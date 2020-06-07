@@ -13,7 +13,7 @@ class Details extends Component {
   constructor() {
     super();
     this.state = {
-      video: { genres: [], cast: [], runtime: 0},
+      video: { genres: [], cast: [], runtime: 0, directors: [], release_date: new Date()},
     };
     this.componentDidMount = this.componentDidMount.bind(this);
   }

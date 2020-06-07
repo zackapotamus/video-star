@@ -18,7 +18,7 @@ const DetailsCard = (props) => {
     if (hours) {
       if (minutes) {
         return `${hours} ${hours === 1 ? "hr" : "hrs"} ${mins} ${
-          mins == 1 ? "min" : "mins"
+          mins === 1 ? "min" : "mins"
         }`;
       } else {
         return `${hours} ${hours === 1 ? "hr" : "hrs"}`;
@@ -49,7 +49,7 @@ const DetailsCard = (props) => {
                 <p className="info-descr">{props.video.runtime} minutes</p>
               </div>
             </div>
-            <div class="row">
+            <div className="row">
               <div className="col-12">
                 <p className="text-content">
                   {props.video.overview}
@@ -71,7 +71,7 @@ const DetailsCard = (props) => {
               </div>
               <div className="tbl-row movie-info">
                 <dt className="tbl-cell-ttl ttl">Director:</dt>
-                <dd>Director here</dd>
+                <dd>{props.video.directors.map(d=>d.name).join(", ")}</dd>
               </div>
               <div className="tbl-row movie-info">
                 <dt className="tbl-cell-ttl ttl">Budget:</dt>

@@ -4,7 +4,7 @@ var express = require("express");
 var path = require("path");
 const cookieParser = require('cookie-parser');
 const AuthController = require("./controllers/authController");
-// const UserController = require("./controllers/usersController");
+const UserController = require("./controllers/usersController");
 const SearchController = require("./controllers/searchController");
 const VideoController = require("./controllers/videoController");
 
@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === "production") {
 // Requiring our routes
 // require("./routes/api-routes.js")(app);
 app.use("/api/auth", AuthController);
-// app.use("/api/user", UserController);
+app.use("/api/user", UserController);
 app.use("/api/search", SearchController);
 app.use("/api/videos", VideoController);
 
