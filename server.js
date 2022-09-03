@@ -2,9 +2,7 @@
 require("dotenv").config();
 var express = require("express");
 var path = require("path");
-// var session = require("express-session");
-// Requiring passport as we've configured it
-// var passport = require("./config/passport");
+const cookieParser = require('cookie-parser');
 const AuthController = require("./controllers/authController");
 const UserController = require("./controllers/usersController");
 const SearchController = require("./controllers/searchController");
@@ -16,6 +14,7 @@ const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
 var app = express();
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {

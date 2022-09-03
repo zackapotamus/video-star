@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
     poster_path: DataTypes.STRING,
     tmd_id: DataTypes.INTEGER,
     imdb_id: DataTypes.STRING,
+    notes: DataTypes.TEXT,
     original_language: DataTypes.STRING,
     original_title: DataTypes.STRING,
     overview: DataTypes.TEXT,
@@ -57,6 +58,26 @@ module.exports = function(sequelize, DataTypes) {
       through: models.Video_Genre,
       foreignKey: "video_id",
       as: 'genres'
+    });
+    Video.belongsToMany(models.Cast, {
+      through: models.Video_Cast,
+      foreignKey: "video_id",
+      as: 'cast'
+    });
+    Video.belongsToMany(models.Crew, {
+      through: models.Video_Crew,
+      foreignKey: "video_id",
+      as: 'crew'
+    });
+    Video.belongsToMany(models.Crew, {
+      through: models.Video_Crew,
+      foreignKey: "video_id",
+      as: 'directors'
+    });
+    Video.belongsToMany(models.Review, {
+      through: models.Video_Review,
+      foreignKey: "video_id",
+      as: 'reviews'
     });
     Video.belongsToMany(models.Genre, {
       through: models.Video_Genre,

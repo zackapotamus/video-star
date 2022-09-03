@@ -12,18 +12,14 @@ class LentBorrow extends Component {
   constructor() {
     super();
     this.state = {
-      token: "",
       lentVideos: [],
       borrowedVideos: []
     };
     this.componentDidMount = this.componentDidMount.bind(this);
-    // this.handleReturned = this.handleReturned.bind(this);
   }
   async componentDidMount() {
-    let token = localStorage.getItem("jwt");
-    let results = await API.getVideos(token);
+    let results = await API.getVideos();
     this.setState({ 
-        token: token,
         lentVideos: results.data.filter(result => result.is_lent),
         borrowedVideos: results.data.filter(result => result.is_borrowed)
     });

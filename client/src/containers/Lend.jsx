@@ -12,7 +12,6 @@ class Lend extends Component {
   constructor() {
     super();
     this.state = {
-      token: "",
       video: {},
       title: "",
       lend_borrow_name: "",
@@ -29,8 +28,8 @@ class Lend extends Component {
   
   async handleSubmit(event) {
     event.preventDefault();
-    const { id, token, lend_borrow_name, lend_borrow_due_date, lend_borrow_date } = this.state;
-    await API.updateVideo(id, token, {
+    const { id, lend_borrow_name, lend_borrow_due_date, lend_borrow_date } = this.state;
+    await API.updateVideo(id, {
       lend_borrow_due_date,
       lend_borrow_date,
       id,
@@ -41,17 +40,13 @@ class Lend extends Component {
   }
 
   async componentDidMount() {
-    const token = localStorage.getItem("jwt");
     const id = this.props.match.params.id;
-    const result = await API.getVideo(id, token);
-    this.setState({ video: result.data, token, id, title: result.data.title });
+    const result = await API.getVideo(id);
+    this.setState({ video: result.data, id, title: result.data.title });
   }
 
   handleChange(event) {
     const { name, value } = event.target;
-    // if (name.indexOf("_date") > 0) {
-      
-    // }
     this.setState({ [name]: value });
   }
 

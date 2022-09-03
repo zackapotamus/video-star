@@ -4,40 +4,22 @@ const db = require("../models");
 const jwt = require("jsonwebtoken");
 const { Op } = db.Sequelize;
 const axios = require("axios");
+const withAuth = require("../middleware");
 
 // Matches "/api/videos"
-router.get("/", async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
-    let genres;
-    const { id, token } = req.query;
-    let user;
-    if (req.query.genres) {
-      genres = req.query.genres.split(",").map((genre) => +genre);
-    }
-    if (!token) {
-      return res.status(403).json({
-        success: false,
-        message: "Missing token.",
-      });
-    }
-    user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    const { id } = req.query;
+    // let user;
+    // if (!token) {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: "Missing token.",
+    //   });
+    // }
+    // user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     if (id) {
       let video = await db.Video.findOne({
-        include: {
-          model: db.Genre,
-          as: "genres",
-          through: {
-            attributes: [],
-          },
-        },
-        where: {
-          id: id,
-          user_id: user.id,
-        },
-      });
-      res.status(200).json(video);
-    } else if (genres) {
-      let videos = await db.Video.findAll({
         include: [
           {
             model: db.Genre,
@@ -47,34 +29,56 @@ router.get("/", async (req, res) => {
             },
           },
           {
-            model: db.Genre,
-            as: "filter_genres",
+            model: db.Cast,
+            as: "cast",
             through: {
               attributes: [],
             },
-            attributes: [],
+            attributes: ["id", "name", "person_id", "character"],
+            // order: ['order', 'asc'],
+          },
+          {
+            model: db.Crew,
+            as: "directors",
+            through: {
+              attributes: [],
+            },
+            attributes: ["id", "name"],
+            where: {
+              job: "Director",
+            }
           },
         ],
         where: {
-          user_id: user.id,
-          "$filter_genres.id$": {
-            [Op.in]: genres,
-          },
+          id: id,
+          user_id: req.id,
         },
       });
-      res.status(200).json(videos);
+      res.status(200).json(video);
     } else {
       let video = await db.Video.findAll({
-        include: {
-          model: db.Genre,
-          as: "genres",
-          through: {
-            attributes: [],
+        include: [
+          {
+            model: db.Genre,
+            as: "genres",
+            through: {
+              attributes: [],
+            },
           },
-        },
+          {
+            model: db.Cast,
+            as: "cast",
+            through: {
+              attributes: [],
+            },
+            attributes: ["id", "name", "person_id", "character"],
+            // order: ['order', 'asc'],
+          },
+        ],
         where: {
-          user_id: user.id,
+          user_id: req.id,
         },
+        order: [[db.Sequelize.literal("cast.order"), "ASC"]],
       });
       res.status(200).json(video);
     }
@@ -88,7 +92,7 @@ router.get("/", async (req, res) => {
 });
 
 // Matches "/api/videos"
-router.delete("/", async (req, res) => {
+router.delete("/", withAuth, async (req, res) => {
   const { id, token } = req.query;
   if (!token) {
     return res.status(403).json({
@@ -115,25 +119,25 @@ router.delete("/", async (req, res) => {
 
 // Matches
 
-router.post("/", async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   try {
     const {
       id: tmd_id,
-      token,
+      // token,
       video_type,
       is_borrowed,
       lend_borrow_name,
       lend_borrow_date,
       lend_borrow_due_date,
     } = req.body;
-    if (!token) {
-      return res.status(403).json({
-        success: false,
-        message: "Missing token.",
-      });
-    }
-    const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
-    let result = await axios.get(
+    // if (!token) {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: "Missing token.",
+    //   });
+    // }
+    // const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    let movieResult = await axios.get(
       `https://api.themoviedb.org/3/movie/${tmd_id}`,
       {
         params: {
@@ -142,10 +146,37 @@ router.post("/", async (req, res) => {
         },
       }
     );
-    let tmd_movie = result.data;
+    let castResult = await axios.get(
+      `https://api.themoviedb.org/3/movie/${tmd_id}/credits`,
+      {
+        params: {
+          api_key: process.env.API_KEY,
+        },
+      }
+    );
+    let tmd_cast = castResult.data.cast.map((cast) => ({
+      person_id: cast.id,
+      character: cast.character,
+      credit_id: cast.credit_id,
+      gender: cast.gender,
+      cast_id: cast.cast_id,
+      name: cast.name,
+      order: cast.order,
+      profile_path: cast.profile_path,
+    }));
+    let tmd_crew = castResult.data.crew.map((crew) => ({
+      person_id: crew.id,
+      department: crew.department,
+      credit_id: crew.credit_id,
+      gender: crew.gender,
+      job: crew.job,
+      name: crew.name,
+      profile_path: crew.profile_path,
+    }));
+    let tmd_movie = movieResult.data;
     let video = await db.Video.create({
       budget: tmd_movie.budget,
-      user_id: user.id,
+      user_id: req.id,
       adult: tmd_movie.adult,
       backdrop_path: tmd_movie.backdrop_path,
       poster_path: tmd_movie.poster_path,
@@ -170,6 +201,14 @@ router.post("/", async (req, res) => {
     if (tmd_movie.genres) {
       await video.addGenres(tmd_movie.genres.map((genreObj) => genreObj.id));
     }
+    let results = await db.Cast.bulkCreate(tmd_cast, {
+      return: true,
+    });
+    video.addCast(results.map((result) => result.dataValues.id));
+    results = await db.Crew.bulkCreate(tmd_crew, {
+      return: true,
+    });
+    video.addCrew(results.map((result) => result.dataValues.id));
     res.json({
       success: true,
       data: video.id,
@@ -183,17 +222,24 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", withAuth, async (req, res) => {
   try {
     let result;
-    const { is_lent, is_borrowed, token, id, lend_borrow_name, lend_borrow_date, lend_borrow_due_date } = req.body;
+    const {
+      is_lent,
+      is_borrowed,
+      /*token,*/ id,
+      lend_borrow_name,
+      lend_borrow_date,
+      lend_borrow_due_date,
+    } = req.body;
     if (!token) {
       return res.status(403).json({
         success: false,
         message: "Missing token.",
       });
     }
-    const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+    // const user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
     if (is_lent) {
       result = await db.Video.update(
         {
@@ -206,13 +252,14 @@ router.put("/", async (req, res) => {
         {
           where: {
             id,
-            user_id: user.id
+            user_id: req.id,
           },
         }
       );
       console.log(result);
       console.log("grr...");
-    } else { // borrowed
+    } else {
+      // borrowed
       result = await db.Video.update(
         {
           is_lent: false,
@@ -224,7 +271,7 @@ router.put("/", async (req, res) => {
         {
           where: {
             id,
-            user_id: user.id
+            user_id: req.id,
           },
         }
       );
