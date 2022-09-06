@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NavBar2 from "../components/Shared/NavBar/NavBar2";
+import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
@@ -62,7 +62,7 @@ class Lend extends Component {
     return (
       <>
         <div>
-          <NavBar2 />
+          <NavBarNew />
           <Hero imageUrl={Cashier}/>
           <GreyBlockTop page="Lend" />
 

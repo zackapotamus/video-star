@@ -5,6 +5,9 @@ import { MdMovieFilter } from "react-icons/md";
 
 const NavBarNew = () => {
   const location = useLocation();
+  const logOutUser = () => {
+    localStorage.setItem("jwt", "");
+  }
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <a className="navbar-brand" href="#">
@@ -83,9 +86,9 @@ const NavBarNew = () => {
               Account
             </Link>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="#">
-                Log Out
-              </a>
+              <Link to="/login" className={"dropdown-item"} onClick={logOutUser}>
+                Logout
+              </Link>
             </div>
           </li>
           {/* <li className="nav-item">

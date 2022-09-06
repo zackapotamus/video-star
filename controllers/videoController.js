@@ -78,7 +78,7 @@ router.get("/", withAuth, async (req, res) => {
         where: {
           user_id: req.id,
         },
-        order: [[db.Sequelize.literal("cast.order"), "ASC"]],
+        order: [[db.Sequelize.literal("REGEXP_REPLACE(Video.title, '^(A |The )', '')"), "ASC"]],
       });
       res.status(200).json(video);
     }

@@ -7,6 +7,7 @@ import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import FilmMakerImage from "../img/filmmaker.jpg";
 import axios from "axios";
 import jwt from "jsonwebtoken";
+import API from "../utils/API";
 // import { Redirect } from "react-router-dom";
 
 class Signup extends Component {
@@ -32,7 +33,7 @@ class Signup extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      let response = await axios.post("/api/user/", {
+      let response = await API.logIn({
         email: this.state.email,
         password: this.state.password,
         name: this.state.name,
@@ -63,7 +64,7 @@ class Signup extends Component {
     return (
       <>
         <NavBarLogin />
-        <Hero imageUrl={FilmMakerImage} />
+        {/* <Hero imageUrl={FilmMakerImage} /> */}
         <GreyBlockTop page="Signup" />
 
         <div className="container" style={{ marginBottom: 80 }}>
