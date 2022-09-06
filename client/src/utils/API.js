@@ -38,8 +38,11 @@ export default {
     });
   },
   // Log in
-  login: function(loginData) {
-    return axios.post("/api/auth", loginData);
+  logIn: function(logInData) {
+    return axios.post("/api/auth", logInData);
+  },
+  signUp: function(signUpData) {
+    return axios.post("/api/user/", signUpData);
   },
   getUser: function() {
     return axios.get("/api/auth");

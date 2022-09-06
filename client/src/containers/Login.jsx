@@ -40,7 +40,7 @@ class Login extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      let response = await API.login({
+      let response = await API.logIn({
         email: this.state.email,
         password: this.state.password,
       });
@@ -64,7 +64,7 @@ class Login extends Component {
       <>
         <NavBarLogin />
 
-        <Hero imageUrl={FilmMakerImage} />
+        {/* <Hero imageUrl={FilmMakerImage} /> */}
 
         <GreyBlockTop page="Login" />
 

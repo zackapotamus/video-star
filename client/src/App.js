@@ -51,7 +51,7 @@ class App extends Component {
       let ret = false;
       const tokenFromStorage = localStorage.getItem("jwt");
       if (tokenFromStorage) {
-        this.setState({ isLoggedIn: true });
+        // this.setState({ isLoggedIn: true });
         const decoded = jwt.verify(
           tokenFromStorage,
           process.env.REACT_APP_SESSION_SECRET

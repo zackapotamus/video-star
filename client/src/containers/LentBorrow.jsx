@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NavBar2 from "../components/Shared/NavBar/NavBar2";
+import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
@@ -27,8 +27,8 @@ class LentBorrow extends Component {
   render() {
     return (
       <>
-        <NavBar2 />
-        <Hero imageUrl={RetroCamera} />
+        <NavBarNew />
+        {/* <Hero imageUrl={RetroCamera} /> */}
         <GreyBlockTop page="Lent / Borrowed" />
         <h4 style={{ textAlign: "center" }}>LENT VIDEOS</h4>
         {/* TABLE OF LENT VIDEOS GOES HERE */}
