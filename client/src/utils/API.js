@@ -41,6 +41,9 @@ export default {
   logIn: function(logInData) {
     return axios.post("/api/auth", logInData);
   },
+  logOut: function() {
+    return axios.get("/api/auth/logout");
+  },
   signUp: function(signUpData) {
     return axios.post("/api/user/", signUpData);
   },

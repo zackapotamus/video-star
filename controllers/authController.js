@@ -66,7 +66,22 @@ router.get("/", withAuth, async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Unable to process request"
-    })
+    });
+  }
+});
+
+// let's go ahead and remove the cookie on logout too, right?
+router.get("/logout", async (req, res) => {
+  try {
+    res.status(200).clearCookie('token', { httpOnly: true }).json({
+      success: true
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Unable to process request."
+    });
   }
 });
 
@@ -87,8 +102,8 @@ router.put("/", withAuth, async (req, res) => {
     success: true,
     message: "User updated.",
     data: result
-  })
-})
+  });
+});
 
 router.post("/signup", async (req, res) => {
   try {
