@@ -2,11 +2,23 @@ import React from "react";
 import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { MdMovieFilter } from "react-icons/md";
+import API from "../../../utils/API";
 
 const NavBarNew = () => {
   const location = useLocation();
-  const logOutUser = () => {
-    localStorage.setItem("jwt", "");
+  const logOutUser = async () => {
+    try {
+      // console.log("GRRRRR");
+      let response = await API.logOut();
+      if (response.data.success) {
+        localStorage.setItem("jwt", "");
+        return true;
+      } else {
+        return false;
+      }
+      } catch (err) {
+      console.log(err);
+    }
   }
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
