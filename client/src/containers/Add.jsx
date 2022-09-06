@@ -34,6 +34,12 @@ class Add extends Component {
     });
   }
 
+  selectInputText = () => {
+    const movieSearchInput = document.getElementById("movieSearchInput");
+    movieSearchInput.focus();
+    movieSearchInput.select();
+  }
+
   async handleAddToLibrary(index, videoType) {
     try {
       await API.addVideo(
@@ -96,10 +102,11 @@ class Add extends Component {
                         name="query"
                         type="title"
                         className="form-control"
-                        id="exampleFormControlInput1"
+                        id="movieSearchInput"
                         placeholder="Search for a Movie"
                         value={this.props.queryValue}
                         onChange={this.handleChange}
+                        onClick={this.selectInputText}
                       />
                     </div>
                   </div>
