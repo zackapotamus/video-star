@@ -29,10 +29,10 @@ const DetailsCard = (props) => {
   }
   return (
     <section id="more-info">
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-12">
-            <h2 className="more-info-header">More information about</h2>
+            <h2 className="more-info-header">More information about <b>{props.video.title}</b></h2>
           </div>
         </div>
         <div className="row">
@@ -62,7 +62,7 @@ const DetailsCard = (props) => {
                 <dd>{props.video.original_title}</dd>
               </div>
               <div className="tbl-row movie-info">
-                <dt className="tbl-cell-ttl ttl">Movie genre:</dt>
+                <dt className="tbl-cell-ttl ttl">Movie genre{props.video.genres.length !== 1 ? 's' : ''}:</dt>
                 <dd>{props.video.genres.map(g=>g.name).join(", ")}</dd>
               </div>
               <div className="tbl-row movie-info">
@@ -70,7 +70,7 @@ const DetailsCard = (props) => {
                 <dd>{props.video.cast.map(c=>c.name).splice(0,8).join(", ")}</dd>
               </div>
               <div className="tbl-row movie-info">
-                <dt className="tbl-cell-ttl ttl">Director:</dt>
+                <dt className="tbl-cell-ttl ttl">Director{props.video.directors.length !== 1 ? "s" : ""}:</dt>
                 <dd>{props.video.directors.map(d=>d.name).join(", ")}</dd>
               </div>
               <div className="tbl-row movie-info">

@@ -17,7 +17,7 @@ class MyLibrary extends Component {
       genreFilters: [],
       castFilters: [],
       castMap: new Map(),
-      countMap: new Map(),
+      castCountMap: new Map(),
       crewMap: new Map(),
     };
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -27,15 +27,15 @@ class MyLibrary extends Component {
   }
   async componentDidMount() {
     let results = await API.getVideos();
-    let countMap = new Map();
+    let castCountMap = new Map();
     this.setState({
       results: results.data,
       castMap: new Map(
         results.data.reduce((acc, curr) => {
           let mapped = curr.cast.map((current, index, array) => {
-            let personNumber = countMap.get(current.person_id);
+            let personNumber = castCountMap.get(current.person_id);
             if (personNumber !== undefined) {
-              countMap.set(current.person_id, ++personNumber);
+              castCountMap.set(current.person_id, ++personNumber);
             } else {
               countMap.set(current.person_id, 0);
             }
@@ -44,14 +44,14 @@ class MyLibrary extends Component {
           return [...acc, ...mapped];
         }, [])
       ),
-      countMap
+      castCountMap: castCountMap
     });
-    for (let k of countMap.keys()) {
-      if (!countMap.get(k)) {
-        countMap.delete(k);
+    for (let k of castCountMap.keys()) {
+      if (!castCountMap.get(k)) {
+        castCountMap.delete(k);
       }
     }
-    console.log(this.state.countMap);
+    // console.log(this.state.results);
   }
 
   handleCastClick(cast_id) {
@@ -108,7 +108,7 @@ class MyLibrary extends Component {
           handleDelete={this.handleDelete}
           genreFilters={this.state.genreFilters}
           handleGenreClick={this.handleGenreClick}
-          countMap={this.state.countMap}
+          castCountMap={this.state.castCountMap}
         />
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
