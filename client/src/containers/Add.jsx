@@ -115,7 +115,7 @@ class Add extends Component {
             </div>
           </div>
         </div>
-        <div className="container">
+        <div className="container-fluid">
           <TMDBTable
             addedState={this.state.addedState}
             handleAddToLibrary={this.handleAddToLibrary}

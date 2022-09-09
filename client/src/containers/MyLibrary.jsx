@@ -33,24 +33,22 @@ class MyLibrary extends Component {
       castMap: new Map(
         results.data.reduce((acc, curr) => {
           let mapped = curr.cast.map((current, index, array) => {
-            let personNumber = castCountMap.get(current.person_id);
-            if (personNumber !== undefined) {
-              castCountMap.set(current.person_id, ++personNumber);
-            } else {
-              countMap.set(current.person_id, 0);
-            }
+            castCountMap.set(
+              current.person_id,
+              (castCountMap.get(current.person_id) ?? -1) + 1
+            );
             return [current.person_id, current.name];
           });
           return [...acc, ...mapped];
         }, [])
       ),
-      castCountMap: castCountMap
+      castCountMap: castCountMap,
     });
-    for (let k of castCountMap.keys()) {
-      if (!castCountMap.get(k)) {
-        castCountMap.delete(k);
-      }
-    }
+    // for (let k of castCountMap.keys()) {
+    //   if (!castCountMap.get(k)) {
+    //     castCountMap.delete(k);
+    //   }
+    // }
     // console.log(this.state.results);
   }
 
