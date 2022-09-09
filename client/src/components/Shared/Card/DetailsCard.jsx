@@ -8,7 +8,6 @@ const DetailsCard = (props) => {
     if (!number) {
       return "";
     }
-    console.log(number);
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
@@ -67,7 +66,7 @@ const DetailsCard = (props) => {
               </div>
               <div className="tbl-row movie-info">
                 <dt className="tbl-cell-ttl ttl">Cast:</dt>
-                <dd>{props.video.cast.map(c=>c.name).splice(0,8).join(", ")}</dd>
+                <dd>{props.video.cast.map(c=>c.name).splice(0,9).join(", ")}</dd>
               </div>
               <div className="tbl-row movie-info">
                 <dt className="tbl-cell-ttl ttl">Director{props.video.directors.length !== 1 ? "s" : ""}:</dt>
