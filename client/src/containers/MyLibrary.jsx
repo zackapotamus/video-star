@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 // import NavBar2 from "../components/Shared/NavBar/NavBar2";
-import Hero from "../components/Shared/Hero/Hero";
-import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
+// import Hero from "../components/Shared/Hero/Hero";
+// import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 // import { Redirect } from "react-router-dom";
-import WatchingMovieImage from "../img/watching-movie.jpg";
+// import WatchingMovieImage from "../img/watching-movie.jpg";
 import VideosTable from "../components/Shared/Table/VideosTable";
 import NavBarNew from "../components/Shared/NavBar/NavBarNew";
+// import CastSelect from "../components/Shared/Select/CastSelect";
 
 class MyLibrary extends Component {
   constructor() {
@@ -57,12 +58,13 @@ class MyLibrary extends Component {
   handleCastClick(person_id) {
     if (this.state.castFilters.includes(person_id)) {
       // remove a filter
-      let newCastFilters = this.state.castFilters.filter((c) => c !== person_id);
+      let newCastFilters = this.state.castFilters.filter(
+        (c) => c !== person_id
+      );
       this.setState({
         castFilters: newCastFilters,
         filteredVideos:
-          this.state.genreFilters.length === 0 &&
-          newCastFilters.length === 0
+          this.state.genreFilters.length === 0 && newCastFilters.length === 0
             ? this.state.results
             : this.state.results
                 .filter((video) => {
@@ -92,9 +94,7 @@ class MyLibrary extends Component {
                       (cast) => cast.person_id
                     );
                     for (let i = 0; i < newCastFilters.length; i++) {
-                      if (
-                        !videoCastIdsArray.includes(newCastFilters[i])
-                      ) {
+                      if (!videoCastIdsArray.includes(newCastFilters[i])) {
                         return false;
                       }
                     }
@@ -116,12 +116,13 @@ class MyLibrary extends Component {
   handleGenreClick(genre_id) {
     if (this.state.genreFilters.includes(genre_id)) {
       // remove a filter
-      let newGenreFilters = this.state.genreFilters.filter((g) => g !== genre_id);
+      let newGenreFilters = this.state.genreFilters.filter(
+        (g) => g !== genre_id
+      );
       this.setState({
         genreFilters: newGenreFilters,
         filteredVideos:
-          newGenreFilters.length === 0 &&
-          this.state.castFilters.length === 0
+          newGenreFilters.length === 0 && this.state.castFilters.length === 0
             ? this.state.results
             : this.state.results
                 .filter((video) => {
@@ -133,9 +134,7 @@ class MyLibrary extends Component {
                       (genre) => genre.id
                     );
                     for (let i = 0; i < newGenreFilters.length; i++) {
-                      if (
-                        !videoGenresIdArray.includes(newGenreFilters[i])
-                      ) {
+                      if (!videoGenresIdArray.includes(newGenreFilters[i])) {
                         return false;
                       }
                     }
@@ -193,7 +192,6 @@ class MyLibrary extends Component {
         <NavBarNew />
         {/* <Hero imageUrl={WatchingMovieImage} /> */}
         {/* <GreyBlockTop page="My Library" /> */}
-
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
         <VideosTable
           castFilters={this.state.castFilters}
