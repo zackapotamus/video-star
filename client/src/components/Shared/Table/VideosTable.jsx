@@ -19,57 +19,132 @@ const VideosTable = (props) => {
   //   }
   // }
 
+  // console.log(filteredVideos);
+  const filteredGenres = Array.from(
+    new Map(
+      props.videosToDisplay.reduce((acc, curr) => {
+        let mapped = curr.genres.map((current, index, array) => {
+          return [current.id, { name: current.name, id: current.id }];
+        });
+        return [...acc, ...mapped];
+      }, [])
+    ).values()
+  ).sort((a, b) => {
+    return a.id - b.id;
+  });
+
+  // const filteredCast = Array.from(
+  //   new Map(
+  //     filteredVideos.reduce((acc, curr) => {
+  //       let mapped = curr.cast
+  //         .filter((c) => {
+  //           return c.order <= 10 || !!props.castCountMap.get(c.person_id);
+  //         })
+  //         .map((current, index, array) => {
+  //           return [
+  //             current.person_id,
+  //             { person_id: current.person_id, name: current.name },
+  //           ];
+  //         });
+  //       // console.log([...acc, ...mapped]);
+  //       return [...acc, ...mapped];
+  //     }, [])
+  //   ).values()
+  // ).sort((a, b) => {
+  //   return (
+  //     (props.castCountMap.get(b.person_id) ?? 0) -
+  //       (props.castCountMap.get(a.person_id) ?? 0) ||
+  //     a.order - b.order ||
+  //     a.name.localeCompare(b.name)
+  //   );
+  // });
+
+  const filteredCastMap = new Map();
+  props.videosToDisplay.forEach((vid) => {
+    vid.cast.forEach((c) => {
+      filteredCastMap.set(c.person_id, {
+        person_id: c.person_id,
+        name: c.name,
+      });
+    });
+  });
+  const filteredCast = Array.from(filteredCastMap.values()).sort((a, b) => {
+    return (
+      props.castCountMap.get(b.person_id) -
+        props.castCountMap.get(a.person_id) ||
+      a.order - b.order ||
+      a.name.localeCompare(b.name)
+    );
+  });
+  // console.log(filteredCast);
+
   return (
-    <div className="container-fluid">
-      <div className="row justify-content-center">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Poster</th>
-              {/* <th scope="col">Title</th> */}
-              <th scope="col" className="d-none d-sm-table-cell">
-                Tagline
-              </th>
-              <th scope="col">Cast</th>
-              <th scope="col">Year</th>
-              {/* <th scope="col">Status</th> */}
-              <th scope="col">Genres</th>
-              <th scope="col" className="d-none d-sm-table-cell">
-                Type
-              </th>
-              {/* <th scope="col">Details</th> */}
-              {/* <th scope="col">Delete</th> */}
-            </tr>
-          </thead>
-          <tbody>
-            {props.videosToDisplay
-              .filter((video) => {
-                if (props.genreFilters.length === 0) {
-                  return true;
-                } else {
-                  let genreIdsArray = video.genres.map((genre) => genre.id);
-                  for (let i = 0; i < props.genreFilters.length; i++) {
-                    if (!genreIdsArray.includes(props.genreFilters[i])) {
-                      return false;
-                    }
-                  }
-                  return true;
-                }
-              })
-              .filter((video) => {
-                if (props.castFilters.length === 0) {
-                  return true;
-                } else {
-                  let castIdsArray = video.cast.map((cast) => cast.person_id);
-                  for (let i = 0; i < props.castFilters.length; i++) {
-                    if (!castIdsArray.includes(props.castFilters[i])) {
-                      return false;
-                    }
-                  }
-                  return true;
-                }
-              })
-              .map((video, index) => (
+    <>
+      <div>
+        {filteredGenres.map((genre, index) => (
+          <a
+            key={genre.id}
+            onClick={() => props.handleGenreClick(genre.id)}
+            className={`badge badge-pill filter-badge${
+              props.genreFilters.includes(genre.id)
+                ? " badge-primary"
+                : " badge-secondary"
+            }`}
+            style={{ color: "white" }}
+          >
+            {genre.name}
+          </a>
+        ))}
+      </div>
+      <div>
+        {filteredCast.map((cast, index) => (
+          <a
+            title={`${props.castCountMap.get(cast.person_id) + 1} films`}
+            key={cast.person_id}
+            onClick={() => props.handleCastClick(cast.person_id)}
+            className={`badge badge-pill filter-badge${
+              props.castFilters.includes(cast.person_id)
+                ? " badge-primary text-white"
+                : " badge-secondary text-white"
+            }`}
+            style={{
+              display: `${
+                // index < 9 || !!props.castCountMap.get(cast.person_id)
+                //   ? "inline-block"
+                //   : "none"
+                "inline-block"
+              }`,
+              // color: `${cast.character.includes('uncredited') ? "black" : "white"}`,
+              fontSize: 10,
+            }}
+          >
+            {cast.name}
+          </a>
+        ))}
+      </div>
+      <div className="container-fluid">
+        <div className="row justify-content-center">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Poster</th>
+                {/* <th scope="col">Title</th> */}
+                <th scope="col" className="d-none d-sm-table-cell">
+                  Tagline
+                </th>
+                <th scope="col">Cast</th>
+                <th scope="col">Year</th>
+                {/* <th scope="col">Status</th> */}
+                <th scope="col">Genres</th>
+                <th scope="col" className="d-none d-sm-table-cell">
+                  Type
+                </th>
+                {/* <th scope="col">Details</th> */}
+                {/* <th scope="col">Delete</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {props.videosToDisplay.map((video, index) => (
                 <tr key={video.id}>
                   <td className="centered">
                     <span className="mb-2">{video.title}</span>
@@ -97,17 +172,24 @@ const VideosTable = (props) => {
                     >
                       {video.cast.map((cast, index) => (
                         <a
-                          title={cast.character}
+                          title={cast.character || "?"}
                           key={cast.id}
                           onClick={() => props.handleCastClick(cast.person_id)}
                           className={`badge badge-pill filter-badge${
                             props.castFilters.includes(cast.person_id)
-                              ? " badge-primary"
-                              : " badge-secondary"
+                              ? " badge-primary text-white"
+                              : cast.character.includes("uncredited")
+                              ? " badge-light text-black"
+                              : " badge-secondary text-white"
                           }`}
                           style={{
-                            display: `${(index < 8 || props.countMap.get(cast.person_id)) ? "inline-block" : "none"}`,
-                            color: "white",
+                            display: `${
+                              cast.order <= 10 ||
+                              !!props.castCountMap.get(cast.person_id)
+                                ? "inline-block"
+                                : "none"
+                            }`,
+                            // color: `${cast.character.includes('uncredited') ? "black" : "white"}`,
                             fontSize: 10,
                           }}
                         >
@@ -180,10 +262,11 @@ const VideosTable = (props) => {
                 </td> */}
                 </tr>
               ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

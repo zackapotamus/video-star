@@ -34,7 +34,7 @@ router.get("/", withAuth, async (req, res) => {
             through: {
               attributes: [],
             },
-            attributes: ["id", "name", "person_id", "character"],
+            attributes: ["id", "name", "person_id", "character", "order"],
             // order: ['order', 'asc'],
           },
           {
@@ -71,7 +71,7 @@ router.get("/", withAuth, async (req, res) => {
             through: {
               attributes: [],
             },
-            attributes: ["id", "name", "person_id", "character"],
+            attributes: ["id", "name", "person_id", "character", "order"],
             // order: ['order', 'asc'],
           },
         ],

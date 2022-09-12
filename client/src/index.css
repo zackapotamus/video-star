@@ -51,7 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #more-info .info-tbl .tbl-row .tbl-cell-ttl {
   display: table-cell;
-  min-width: 160px;
+  min-width: 115px;
   font-weight: 300;
   padding: 10px 0;
 }
@@ -90,7 +90,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .img-responsive.poster {
-  width: 100%
+  width: 100%;
+}
+
+.filter-badge {
+  cursor: pointer;
 }
 
 /* @media(max-width: 767px) {
