@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Select from "react-select";
 // import NavBar2 from "../components/Shared/NavBar/NavBar2";
 // import Hero from "../components/Shared/Hero/Hero";
 // import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
@@ -189,7 +188,6 @@ class MyLibrary extends Component {
   render() {
     return (
       <>
-        <Select />
         {/* <NavBar2 /> */}
         <NavBarNew />
         {/* <Hero imageUrl={WatchingMovieImage} /> */}
