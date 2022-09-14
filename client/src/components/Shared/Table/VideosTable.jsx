@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { GiCompactDisc } from "react-icons/gi";
 import { FcDvdLogo } from "react-icons/fc";
 import { AiOutlineCloudDownload } from "react-icons/ai";
+import Select from "react-select";
 
 const VideosTable = (props) => {
-  // const [genreFilters, setGenreFilters] = useState([]);
+  const [genreFilters, setGenreFilters] = useState(props.genreFilters);
+  const [displayVids, setDisplayVids] = useState(props.videosToDisplay);
 
-  // // useEffect(() => {
-
-  // // },[])
+  useEffect(() => {
+    console.log("VideosTable useEffects onMount");
+    // setGenreFilters(props.genreFilters);
+    // setDisplayVids(props.videosToDisplay);
+    console.log(props);
+  },[]);
   // function handleGenreClick(id) {
   //   if (genreFilters.includes(id)) {
   //     setGenreFilters(genreFilters.filter(g => g !== id));
@@ -78,6 +83,25 @@ const VideosTable = (props) => {
   });
   // console.log(filteredCast);
 
+  const selectOptions = Array.from(filteredCastMap.values())
+    .map((cast) => ({
+      value: cast.person_id,
+      label: cast.name,
+    }))
+    .sort(
+      (a, b) =>
+        props.castCountMap.get(b.value) - props.castCountMap.get(a.value)
+    );
+  console.log(selectOptions);
+  // console.log(props.castFilters);
+  const defaultValues = selectOptions.filter((o) => {
+    return props.castFilters.includes(o.value);
+  });
+  console.log(defaultValues);
+
+  const stupidOptions = [{value: 1, label: "one"}, {value: 2, label: "two"}, {value: 3, label: "three"}];
+  const stupidDefault = [stupidOptions[0], stupidOptions[1]]
+
   return (
     <>
       <div>
@@ -96,7 +120,33 @@ const VideosTable = (props) => {
           </a>
         ))}
       </div>
-      <div>
+      <Select
+        isMulti
+        name="cast"
+        // value={defaultValues}
+        value={defaultValues}
+        options={selectOptions}
+        onChange={(values, event) => {
+          switch (event.action) {
+            case "select-option":
+              console.log('event:', event);
+              props.handleCastClick(event.option.value);
+            break;
+            case "remove-value":
+              props.handleCastClick(event.removedValue.value);
+            break;
+            case "clear":
+              props.handleCastClear()
+            break;
+            default:
+              console.log("ERROR: ", event);
+            break;
+          }
+        }}
+        // onChange={(values, action)=>{console.log("values:",values, "action:", action)}}
+        // isOptionSelected={(o)=>props.castFilters.includes(o.value)}
+      />
+      {/* <div>
         {filteredCast.map((cast, index) => (
           <a
             title={`${props.castCountMap.get(cast.person_id) + 1} films`}
@@ -121,7 +171,7 @@ const VideosTable = (props) => {
             {cast.name}
           </a>
         ))}
-      </div>
+      </div> */}
       <div className="container-fluid">
         <div className="row justify-content-center">
           <table className="table table-striped">
