@@ -7,24 +7,25 @@ import { AiOutlineCloudDownload } from "react-icons/ai";
 import Select from "react-select";
 
 const VideosTable = (props) => {
-  const [genreFilters, setGenreFilters] = useState(props.genreFilters);
-  const [displayVids, setDisplayVids] = useState(props.videosToDisplay);
 
-  useEffect(() => {
-    console.log("VideosTable useEffects onMount");
-    // setGenreFilters(props.genreFilters);
-    // setDisplayVids(props.videosToDisplay);
-    console.log(props);
-  },[]);
-  // function handleGenreClick(id) {
-  //   if (genreFilters.includes(id)) {
-  //     setGenreFilters(genreFilters.filter(g => g !== id));
-  //   } else {
-  //     setGenreFilters([...genreFilters, id]);
-  //   }
-  // }
+  const handleSelectChange = (event) => {
+    switch (event.action) {
+      case "select-option":
+        // console.log('event:', event);
+        props.handleCastClick(event.option.value);
+      break;
+      case "remove-value":
+        props.handleCastClick(event.removedValue.value);
+      break;
+      case "clear":
+        props.handleCastClear()
+      break;
+      default:
+        console.log("ERROR: ", event);
+      break;
+    }
+  }
 
-  // console.log(filteredVideos);
   const filteredGenres = Array.from(
     new Map(
       props.videosToDisplay.reduce((acc, curr) => {
@@ -38,32 +39,6 @@ const VideosTable = (props) => {
     return a.id - b.id;
   });
 
-  // const filteredCast = Array.from(
-  //   new Map(
-  //     filteredVideos.reduce((acc, curr) => {
-  //       let mapped = curr.cast
-  //         .filter((c) => {
-  //           return c.order <= 10 || !!props.castCountMap.get(c.person_id);
-  //         })
-  //         .map((current, index, array) => {
-  //           return [
-  //             current.person_id,
-  //             { person_id: current.person_id, name: current.name },
-  //           ];
-  //         });
-  //       // console.log([...acc, ...mapped]);
-  //       return [...acc, ...mapped];
-  //     }, [])
-  //   ).values()
-  // ).sort((a, b) => {
-  //   return (
-  //     (props.castCountMap.get(b.person_id) ?? 0) -
-  //       (props.castCountMap.get(a.person_id) ?? 0) ||
-  //     a.order - b.order ||
-  //     a.name.localeCompare(b.name)
-  //   );
-  // });
-
   const filteredCastMap = new Map();
   props.videosToDisplay.forEach((vid) => {
     vid.cast.forEach((c) => {
@@ -73,15 +48,6 @@ const VideosTable = (props) => {
       });
     });
   });
-  const filteredCast = Array.from(filteredCastMap.values()).sort((a, b) => {
-    return (
-      props.castCountMap.get(b.person_id) -
-        props.castCountMap.get(a.person_id) ||
-      a.order - b.order ||
-      a.name.localeCompare(b.name)
-    );
-  });
-  // console.log(filteredCast);
 
   const selectOptions = Array.from(filteredCastMap.values())
     .map((cast) => ({
@@ -92,15 +58,10 @@ const VideosTable = (props) => {
       (a, b) =>
         props.castCountMap.get(b.value) - props.castCountMap.get(a.value)
     );
-  console.log(selectOptions);
-  // console.log(props.castFilters);
+
   const defaultValues = selectOptions.filter((o) => {
     return props.castFilters.includes(o.value);
   });
-  console.log(defaultValues);
-
-  const stupidOptions = [{value: 1, label: "one"}, {value: 2, label: "two"}, {value: 3, label: "three"}];
-  const stupidDefault = [stupidOptions[0], stupidOptions[1]]
 
   return (
     <>
@@ -126,52 +87,9 @@ const VideosTable = (props) => {
         // value={defaultValues}
         value={defaultValues}
         options={selectOptions}
-        onChange={(values, event) => {
-          switch (event.action) {
-            case "select-option":
-              console.log('event:', event);
-              props.handleCastClick(event.option.value);
-            break;
-            case "remove-value":
-              props.handleCastClick(event.removedValue.value);
-            break;
-            case "clear":
-              props.handleCastClear()
-            break;
-            default:
-              console.log("ERROR: ", event);
-            break;
-          }
-        }}
-        // onChange={(values, action)=>{console.log("values:",values, "action:", action)}}
-        // isOptionSelected={(o)=>props.castFilters.includes(o.value)}
+        placeholder={"Filter by cast..."}
+        onChange={(values, event) => {handleSelectChange(event)}}
       />
-      {/* <div>
-        {filteredCast.map((cast, index) => (
-          <a
-            title={`${props.castCountMap.get(cast.person_id) + 1} films`}
-            key={cast.person_id}
-            onClick={() => props.handleCastClick(cast.person_id)}
-            className={`badge badge-pill filter-badge${
-              props.castFilters.includes(cast.person_id)
-                ? " badge-primary text-white"
-                : " badge-secondary text-white"
-            }`}
-            style={{
-              display: `${
-                // index < 9 || !!props.castCountMap.get(cast.person_id)
-                //   ? "inline-block"
-                //   : "none"
-                "inline-block"
-              }`,
-              // color: `${cast.character.includes('uncredited') ? "black" : "white"}`,
-              fontSize: 10,
-            }}
-          >
-            {cast.name}
-          </a>
-        ))}
-      </div> */}
       <div className="container-fluid">
         <div className="row justify-content-center">
           <table className="table table-striped">
