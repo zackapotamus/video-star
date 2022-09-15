@@ -4,19 +4,21 @@ import PlaceholderImage from "../../../img/videostar-placeholder.png";
 import { GiCompactDisc } from "react-icons/gi";
 import { FcDvdLogo } from "react-icons/fc";
 import { AiOutlineCloudDownload } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 function VideoRow(props) {
   return (
-    <div class="row" key={props.video.id}>
-      <div class="col">
-        <div class="row">
-          <div class="h4 col-9 bg-primary">
+    <div className="row video-row">
+      <div className="col">
+        <div className="row">
+          <div className="h5 col-10">
             <Link to={{ pathname: `/details/${props.video.id}` }}>
-              `${props.video.title} ($
-              {moment(props.video.release_date).format("YYYY")})`
+              <h5 className="text-body mt-2 mb-0">{`${
+                props.video.title
+              } (${moment(props.video.release_date).format("YYYY")})`}</h5>
             </Link>
           </div>
-          <div class="col bg-secondary">
+          <div className="col-2 text-center pr-0 pl-0 mt-1">
             {props.video.video_type === "Blu-ray" ? (
               <GiCompactDisc
                 style={{
@@ -28,16 +30,20 @@ function VideoRow(props) {
                 }}
               />
             ) : props.video.video_type === "DVD" ? (
-              <FcDvdLogo style={{ fontSize: "41px" }} />
+              <FcDvdLogo style={{ fontSize: "30px" }} />
             ) : (
               <AiOutlineCloudDownload style={{ fontSize: "30px" }} />
             )}
           </div>
         </div>
-        <div class="row">
-          <div class="col-4 col-sm-3 col-md-2 bg-success">
+        <div className="row">
+          <div
+            className="col-3 col-sm-3 col-md-2 pl-0 pr-0"
+            style={{ marginLeft: "1px" }}
+          >
             <Link to={{ pathname: `/details/${props.video.id}` }}>
               <img
+                className="video-poster"
                 // src={`https://image.tmdb.org/t/p/w92${
                 //   video.poster_path || "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
                 // }`}
@@ -50,10 +56,13 @@ function VideoRow(props) {
               />
             </Link>
           </div>
-          <div class="col bg-warning">
-            <div class="row">
-              <div class="col-6 col-sm-8 bg-danger">
-                <div class="overflow-auto cast-cell" style="height: 138px;">
+          <div className="col">
+            <div className="row">
+              <div className="col-7 col-sm-8 pr-1 pl-2">
+                <div
+                  className="overflow-auto cast-cell"
+                  style={{ height: "138px" }}
+                >
                   {props.video.cast.map((cast) => (
                     <a
                       title={cast.character || "?"}
@@ -82,14 +91,17 @@ function VideoRow(props) {
                   ))}
                 </div>
               </div>
-              <div class="col-4">
+              <div
+                className="col-5 col-sm-4 pl-1 pr-2"
+                style={{ overflow: "hidden" }}
+              >
                 {props.video.genres.map((genre) => (
                   <a
                     key={genre.id}
                     onClick={() => props.handleGenreClick(genre.id)}
                     className={`badge badge-pill filter-badge${
                       props.genreFilters.includes(genre.id)
-                        ? " badge-primary"
+                        ? " badge-info"
                         : " badge-secondary"
                     }`}
                     style={{ color: "white" }}
@@ -101,9 +113,9 @@ function VideoRow(props) {
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col font-italic text-center bg-info">
-            ${`"${props.video.tagline}"`}
+        <div className="row">
+          <div className="col font-italic text-center">
+            <h6 className="text-secondary">{`"${props.video.tagline}"`}</h6>
           </div>
         </div>
       </div>

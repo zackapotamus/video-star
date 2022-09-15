@@ -118,6 +118,7 @@ class MyLibrary extends Component {
   handleCastClick(person_id) {
     if (this.state.castFilters.includes(person_id)) {
       // remove a filter
+      console.log('removing a cast filter');
       let newCastFilters = this.state.castFilters.filter(
         (c) => c !== person_id
       );
@@ -126,25 +127,7 @@ class MyLibrary extends Component {
         filteredVideos:
           this.state.genreFilters.length === 0 && newCastFilters.length === 0
             ? this.state.results
-            : this.state.results
-                .filter((video) => {
-                  // filter on genre first
-                  if (this.state.genreFilters.length === 0) {
-                    return true;
-                  } else {
-                    let videoGanresIdArray = video.genres.map(
-                      (genre) => genre.id
-                    );
-                    for (let i = 0; i < this.state.genreFilters.length; i++) {
-                      if (
-                        !videoGanresIdArray.includes(this.state.genreFilters[i])
-                      ) {
-                        return false;
-                      }
-                    }
-                    return true;
-                  }
-                })
+            : this.getAllVideosFilteredByGenre(this.state.genreFilters)
                 .filter((video) => {
                   // filter cast second
                   if (newCastFilters.length === 0) {
@@ -164,6 +147,7 @@ class MyLibrary extends Component {
       });
     } else {
       // filter further
+      console.log('adding cast filter');
       this.setState({
         castFilters: [...this.state.castFilters, person_id],
         filteredVideos: this.state.filteredVideos.filter((video) =>
@@ -176,6 +160,7 @@ class MyLibrary extends Component {
   handleGenreClick(genre_id) {
     if (this.state.genreFilters.includes(genre_id)) {
       // remove a filter
+      console.log('removing a genre filter');
       let newGenreFilters = this.state.genreFilters.filter(
         (g) => g !== genre_id
       );
@@ -184,23 +169,7 @@ class MyLibrary extends Component {
         filteredVideos:
           newGenreFilters.length === 0 && this.state.castFilters.length === 0
             ? this.state.results
-            : this.state.results
-                .filter((video) => {
-                  // filter on genre first
-                  if (newGenreFilters.length === 0) {
-                    return true;
-                  } else {
-                    let videoGenresIdArray = video.genres.map(
-                      (genre) => genre.id
-                    );
-                    for (let i = 0; i < newGenreFilters.length; i++) {
-                      if (!videoGenresIdArray.includes(newGenreFilters[i])) {
-                        return false;
-                      }
-                    }
-                    return true;
-                  }
-                })
+            : this.getAllVideosFilteredByGenre(newGenreFilters)
                 .filter((video) => {
                   // filter cast second
                   if (this.state.castFilters.length === 0) {
@@ -222,6 +191,7 @@ class MyLibrary extends Component {
       });
     } else {
       // filter further
+      console.log('adding a genre filter');
       this.setState({
         genreFilters: [...this.state.genreFilters, genre_id],
         filteredVideos: this.state.filteredVideos.filter((video) =>
