@@ -60,7 +60,7 @@ class Account extends Component {
   render() {
     return (
       <>
-        <NavBarNew />
+        {/* <NavBarNew /> */}
         {/* <Hero imageUrl={MovieAction} /> */}
         <GreyBlockTop page="Account" />
 

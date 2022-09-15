@@ -17,15 +17,19 @@ class MyLibrary extends Component {
       results: [],
       genreFilters: [],
       castFilters: [],
-      // castMap: new Map(),
       castCountMap: new Map(),
-      // crewMap: new Map(),
       filteredVideos: [],
+      filteredCast: [],
+      filteredGenres: [],
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleGenreClick = this.handleGenreClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleCastClick = this.handleCastClick.bind(this);
+    this.handleCastClear = this.handleCastClear.bind(this);
+    this.handleGenreClear = this.handleGenreClear.bind(this);
+    this.getAllVideosFilteredByCast = this.getAllVideosFilteredByCast.bind(this);
+    this.getAllVideosFilteredByGenre = this.getAllVideosFilteredByGenre.bind(this); // why again?
   }
 
   async componentDidMount() {
@@ -53,6 +57,62 @@ class MyLibrary extends Component {
       castCountMap: castCountMap,
       filteredVideos: results.data,
     });
+  }
+
+  handleCastClear() {
+    this.setState({
+      castFilters: [],
+      filteredVideos:
+        this.state.genreFilters.length === 0
+          ? this.state.results
+          : this.getAllVideosFilteredByGenre(this.state.genreFilters),
+    });
+  }
+
+  getAllVideosFilteredByCast(castIdsArray) {
+    if (castIdsArray.length === 0) {
+      return this.state.results;
+    } else {
+      return this.state.results.filter((video) => {
+        let videoCastIdsArray = video.cast.map((c) => c.person_id);
+        for (let i = 0; i < castIdsArray.length; i++) {
+          if (!videoCastIdsArray.includes(castIdsArray[i])) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
+  }
+
+  getAllVideosFilteredByGenre(genreIdsArray) {
+    if (genreIdsArray.length === 0) {
+      return this.state.results;
+    } else {
+      return this.state.results.filter((video) => {
+        let videoGenreIdsArray = video.genres.map((g) => g.id);
+        for (let i = 0; i < genreIdsArray.length; i++) {
+          if (!videoGenreIdsArray.includes(genreIdsArray[i])) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
+  }
+
+  handleGenreClear() {
+    if (this.state.castFilters.length === 0) {
+      this.setState({
+        genreFilters: [],
+        filteredVideos: this.state.results,
+      });
+    } else {
+      this.setState({
+        genreFilters: [],
+        filteredVideos: this.getAllVideosFilteredByCast(this.state.castFilters),
+      });
+    }
   }
 
   handleCastClick(person_id) {
@@ -189,13 +249,14 @@ class MyLibrary extends Component {
     return (
       <>
         {/* <NavBar2 /> */}
-        <NavBarNew />
+        {/* <NavBarNew /> */}
         {/* <Hero imageUrl={WatchingMovieImage} /> */}
         {/* <GreyBlockTop page="My Library" /> */}
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
         <VideosTable
           castFilters={this.state.castFilters}
           handleCastClick={this.handleCastClick}
+          handleCastClear={this.handleCastClear}
           videosToDisplay={this.state.filteredVideos}
           handleDelete={this.handleDelete}
           genreFilters={this.state.genreFilters}

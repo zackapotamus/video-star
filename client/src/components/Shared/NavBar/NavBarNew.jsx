@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { MdMovieFilter } from "react-icons/md";
 import API from "../../../utils/API";
 
 const NavBarNew = () => {
+  useEffect(() => {
+    console.log("NavBarNew loaded");
+  }, [])
   const location = useLocation();
   const logOutUser = async () => {
     try {

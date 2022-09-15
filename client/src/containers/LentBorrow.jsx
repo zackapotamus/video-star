@@ -27,7 +27,7 @@ class LentBorrow extends Component {
   render() {
     return (
       <>
-        <NavBarNew />
+        {/* <NavBarNew /> */}
         {/* <Hero imageUrl={RetroCamera} /> */}
         <GreyBlockTop page="Lent / Borrowed" />
         <h4 style={{ textAlign: "center" }}>LENT VIDEOS</h4>
