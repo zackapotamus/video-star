@@ -71,7 +71,7 @@ class Add extends Component {
     return (
       <>
         {/* <NavBar2 /> */}
-        <NavBarNew />
+        {/* <NavBarNew /> */}
         {/* <Hero imageUrl={AddMovie} /> */}
         {/* <GreyBlockTop page="Add" /> */}
 

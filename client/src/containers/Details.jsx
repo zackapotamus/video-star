@@ -27,7 +27,7 @@ class Details extends Component {
     return (
       <>
         {/* <NavBar2 /> */}
-        <NavBarNew />
+        {/* <NavBarNew /> */}
         {/* <Hero imageUrl={EmptyMovieSeats} /> */}
         {/* <GreyBlockTop page="Details" /> */}
         {/* <div className="container-fluid bg-light py-3"> */}

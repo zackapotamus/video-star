@@ -1,6 +1,7 @@
 import React from "react";
 import jwt from "jsonwebtoken";
 import { Route, Redirect } from "react-router-dom";
+import NavBarNew from "../Shared/NavBar/NavBarNew";
 
 const checkForToken = () => {
   const token = localStorage.getItem("jwt");
@@ -15,7 +16,7 @@ const checkForToken = () => {
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   if (checkForToken()) {
-    return <Route {...rest} render={(props) => <Component {...props} />} />;
+    return <Route {...rest} render={(props) => (<><NavBarNew /><Component {...props} /></>)} />;
   } else {
     return <Redirect to="/" />;
   }

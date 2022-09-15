@@ -62,7 +62,7 @@ class Lend extends Component {
     return (
       <>
         <div>
-          <NavBarNew />
+          {/* <NavBarNew /> */}
           <Hero imageUrl={Cashier}/>
           <GreyBlockTop page="Lend" />
 

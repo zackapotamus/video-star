@@ -11,7 +11,7 @@ class Borrow extends Component {
     return (
       <>
         <div>
-          <NavBarNew />
+          {/* <NavBarNew /> */}
           <Hero imageUrl={Blockbuster}/>
           <GreyBlockTop page="Borrow" />
 

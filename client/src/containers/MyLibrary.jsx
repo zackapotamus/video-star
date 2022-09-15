@@ -249,7 +249,7 @@ class MyLibrary extends Component {
     return (
       <>
         {/* <NavBar2 /> */}
-        <NavBarNew />
+        {/* <NavBarNew /> */}
         {/* <Hero imageUrl={WatchingMovieImage} /> */}
         {/* <GreyBlockTop page="My Library" /> */}
         {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
