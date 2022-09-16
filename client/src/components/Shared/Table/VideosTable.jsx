@@ -65,32 +65,40 @@ const VideosTable = (props) => {
 
   return (
     <>
-      <div>
-        {filteredGenres.map((genre, index) => (
-          <a
-            key={genre.id}
-            onClick={() => props.handleGenreClick(genre.id)}
-            className={`badge badge-pill filter-badge${
-              props.genreFilters.includes(genre.id)
-                ? " badge-info"
-                : " badge-secondary"
-            }`}
-            style={{ color: "white" }}
-          >
-            {genre.name}
-          </a>
-        ))}
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            {filteredGenres.map((genre, index) => (
+              <a
+                key={genre.id}
+                onClick={() => props.handleGenreClick(genre.id)}
+                className={`badge badge-pill filter-badge${
+                  props.genreFilters.includes(genre.id)
+                    ? " badge-info"
+                    : " badge-secondary"
+                }`}
+                style={{ color: "white" }}
+              >
+                {genre.name}
+              </a>
+            ))}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <Select
+              isMulti
+              name="cast"
+              value={defaultValues}
+              options={selectOptions}
+              placeholder={"Filter by cast..."}
+              onChange={(values, event) => {
+                handleSelectChange(event);
+              }}
+            />
+          </div>
+        </div>
       </div>
-      <Select
-        isMulti
-        name="cast"
-        value={defaultValues}
-        options={selectOptions}
-        placeholder={"Filter by cast..."}
-        onChange={(values, event) => {
-          handleSelectChange(event);
-        }}
-      />
       <div className="container">
         {props.videosToDisplay.map((video) => (
           <VideoRow
