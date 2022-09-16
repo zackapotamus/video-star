@@ -195,6 +195,7 @@ router.post("/", withAuth, async (req, res) => {
       is_lent: false,
       tagline: tmd_movie.tagline,
       title: tmd_movie.title,
+      sort_title: tmd_movie.title.replace(/^(An? |The )/, ''),
       vote_average: tmd_movie.vote_average,
       vote_count: tmd_movie.vote_count,
       video_type: video_type,
