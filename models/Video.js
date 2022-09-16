@@ -34,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     tagline: DataTypes.STRING,
     title: DataTypes.STRING,
+    sort_title: DataTypes.STRING,
     vote_average: DataTypes.FLOAT,
     vote_count: DataTypes.INTEGER,
     video_type: {

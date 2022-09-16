@@ -84,7 +84,6 @@ const VideosTable = (props) => {
       <Select
         isMulti
         name="cast"
-        // value={defaultValues}
         value={defaultValues}
         options={selectOptions}
         placeholder={"Filter by cast..."}

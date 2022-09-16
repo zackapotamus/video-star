@@ -36,6 +36,7 @@ router.get("/", async (req, res) => {
       original_title: r.original_title,
       genres: r.genre_ids.map(id => ({id: id, name: genreMap[id]})),
       title: r.title,
+      sort_title: r.title.replace(/^(An? |The )/, ''),
       vote_average: r.vote_average,
       overview: r.overview,
       release_date: r.release_date,
