@@ -7,6 +7,7 @@ import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 import AddMovie from "../img/add-movie.jpg";
 import TMDBTable from "../components/Shared/Table/TMDBTable";
+import TMDBRow from "../components/Shared/Table/TMDBRow";
 
 class Add extends Component {
   constructor() {
@@ -38,14 +39,11 @@ class Add extends Component {
     const movieSearchInput = document.getElementById("movieSearchInput");
     movieSearchInput.focus();
     movieSearchInput.select();
-  }
+  };
 
   async handleAddToLibrary(index, videoType) {
     try {
-      await API.addVideo(
-        this.state.results[index].id,
-        videoType,
-      );
+      await API.addVideo(this.state.results[index].id, videoType);
       this.state.addedState[index][videoType] = true;
       this.setState({ addedState: this.state.addedState });
     } catch (err) {
@@ -116,11 +114,20 @@ class Add extends Component {
           </div>
         </div>
         <div className="container-fluid">
-          <TMDBTable
+          {/* <TMDBTable
             addedState={this.state.addedState}
             handleAddToLibrary={this.handleAddToLibrary}
             videosToDisplay={this.state.results}
-          />
+          /> */}
+          {this.state.results.map((video, index) => (
+            <TMDBRow
+              key={video.id}
+              addedState={this.state.addedState}
+              handleAddToLibrary={this.handleAddToLibrary}
+              index={index}
+              video={video}
+            />
+          ))}
         </div>
         <GreyBlock />
       </>
