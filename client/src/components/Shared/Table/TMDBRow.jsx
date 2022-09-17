@@ -44,7 +44,7 @@ function TMDBRow(props) {
               props.video.title
             } (${moment(props.video.release_date).format("YYYY")})`}</h5>
           </div>
-          <div className="col-2 text-center pr-0 pl-0 mt-1">
+          <div className="col-2 text-left pr-0 pl-0 mt-2">
             {/* {props.video.video_type === "Blu-ray" ? (
               <GiCompactDisc
                 style={{
@@ -60,7 +60,7 @@ function TMDBRow(props) {
             ) : (
               <AiOutlineCloudDownload style={{ fontSize: "30px" }} />
             )} */}
-            {`${moment(props.video.release_date).format("MMM Do")} blah`}
+            {moment(props.video.release_date).format("MMM D")}
           </div>
         </div>
         <div className="row">
@@ -99,7 +99,7 @@ function TMDBRow(props) {
                       props.handleAddToLibrary(props.index, "Blu-ray");
                     }}
                     id={props.video.id}
-                    className="btn btn-sm btn-outline-success my-2 my-sm-0"
+                    className="btn btn-sm btn-outline-success my-1"
                     // role="button"
                   >
                     {props.addedState[props.index]["Blu-ray"]
@@ -112,7 +112,7 @@ function TMDBRow(props) {
                       props.handleAddToLibrary(props.index, "DVD");
                     }}
                     id={props.video.id}
-                    className="btn btn-sm btn-outline-success my-2 my-sm-0"
+                    className="btn btn-sm btn-outline-success my-1"
                     // role="button"
                   >
                     {props.addedState[props.index]["DVD"] ? "Added" : "Add DVD"}
@@ -123,7 +123,7 @@ function TMDBRow(props) {
                       props.handleAddToLibrary(props.index, "Digital");
                     }}
                     id={props.video.id}
-                    className="btn btn-sm btn-outline-success my-2 my-sm-0"
+                    className="btn btn-sm btn-outline-success my-1"
                     // role="button"
                   >
                     {props.addedState[props.index]["Digital"]
