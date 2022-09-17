@@ -139,13 +139,13 @@ function TMDBRow(props) {
           <div className="col text-center">
             {/* <h6 className="text-secondary">{`"${props.video.tagline}"`}</h6> */}
             {props.video.genres.map((genre) => (
-              <a
+              <span
                 key={genre.id}
-                className={"badge badge-pill filter-badge badge-info"}
+                className={"badge badge-pill filter-badge badge-secondary"}
                 style={{ color: "white" }}
               >
                 {genre.name}
-              </a>
+              </span>
             ))}
           </div>
         </div>
