@@ -18,7 +18,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   if (checkForToken()) {
     return <Route {...rest} render={(props) => (<><NavBarNew /><Component {...props} /></>)} />;
   } else {
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 };
 
