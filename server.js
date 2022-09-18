@@ -14,6 +14,7 @@ const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
 var app = express();
+app.disable("x-powered-by");
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

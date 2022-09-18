@@ -8,7 +8,7 @@ const withAuth = require("../middleware");
  * Root POST route to validate user credentials.
  */
 // Login
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     let user = await db.User.findOne({
       where: {
@@ -46,35 +46,36 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", withAuth, async (req, res) => {
-  try {
-    // let token = req.query.token;
-    // let authenitcatedUser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
-    let user = await db.User.findOne({
-      where: {
-        id: req.id
-      }
-    });
-    res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      bio: user.bio
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      success: false,
-      message: "Unable to process request"
-    });
-  }
-});
+// router.get("/", withAuth, async (req, res) => {
+//   try {
+//     // let token = req.query.token;
+//     // let authenitcatedUser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+//     let user = await db.User.findOne({
+//       where: {
+//         id: req.id
+//       }
+//     });
+//     res.json({
+//       id: user.id,
+//       name: user.name,
+//       email: user.email,
+//       bio: user.bio
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({
+//       success: false,
+//       message: "Unable to process request"
+//     });
+//   }
+// });
 
 // let's go ahead and remove the cookie on logout too, right?
-router.get("/logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
   try {
     res.status(200).clearCookie('token', { httpOnly: true }).json({
-      success: true
+      success: true,
+      message: "Logged out."
     });
   } catch (err) {
     console.log(err);
@@ -85,25 +86,25 @@ router.get("/logout", async (req, res) => {
   }
 });
 
-router.put("/", withAuth, async (req, res) => {
-  let { name, email, bio } = req.body;
-  // let token = req.query.token;
-  // let authenticateduser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
-  let result = await db.User.update({
-    name,
-    email,
-    bio
-  }, {
-    where: {
-      id: req.id
-    }
-  });
-  res.json({
-    success: true,
-    message: "User updated.",
-    data: result
-  });
-});
+// router.put("/", withAuth, async (req, res) => {
+//   let { name, email, bio } = req.body;
+//   // let token = req.query.token;
+//   // let authenticateduser = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+//   let result = await db.User.update({
+//     name,
+//     email,
+//     bio
+//   }, {
+//     where: {
+//       id: req.id
+//     }
+//   });
+//   res.json({
+//     success: true,
+//     message: "User updated.",
+//     data: result
+//   });
+// });
 
 router.post("/signup", async (req, res) => {
   try {

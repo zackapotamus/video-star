@@ -39,18 +39,18 @@ export default {
   },
   // Log in
   logIn: function(logInData) {
-    return axios.post("/api/auth", logInData);
+    return axios.post("/api/auth/login", logInData);
   },
   logOut: function() {
-    return axios.get("/api/auth/logout");
+    return axios.post("/api/auth/logout");
   },
   signUp: function(signUpData) {
-    return axios.post("/api/user/", signUpData);
+    return axios.post("/api/user/signup", signUpData);
   },
   getUser: function() {
-    return axios.get("/api/auth");
+    return axios.get("/api/user");
   },
   updateUser: function(userData) {
-    return axios.put("/api/auth", userData);
+    return axios.put("/api/user", userData);
   }
 };
