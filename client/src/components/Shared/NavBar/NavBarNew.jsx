@@ -5,12 +5,14 @@ import { MdMovieFilter } from "react-icons/md";
 import API from "../../../utils/API";
 
 const NavBarNew = (props) => {
-  let history = useHistory();
+  // let history = useHistory();
+  const history = props.history;
   useEffect(() => {
     console.log("NavBarNew loaded");
     console.log(props);
   }, [])
-  const location = useLocation();
+  // const location = useLocation();
+  const location = props.location;
   const logOutUser = async () => {
     try {
       // console.log("GRRRRR");

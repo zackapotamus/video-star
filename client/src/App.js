@@ -15,7 +15,6 @@ import Details from "./containers/Details";
 import Add from "./containers/Add";
 import PrivateRoute from "./components/App/PrivateRoute";
 import Footer from "./components/Shared/Footer/Footer";
-import Landing from "./containers/Landing";
 
 class App extends Component {
   constructor() {
