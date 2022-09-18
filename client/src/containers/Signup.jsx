@@ -18,6 +18,7 @@ class Signup extends Component {
       password: "",
       name: "",
       confirm: "",
+      error: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -44,6 +45,8 @@ class Signup extends Component {
           response.data.data,
           process.env.REACT_APP_SESSION_SECRET
         );
+      } else {
+        // TODO: display error message
       }
       localStorage.setItem("jwt", response.data.data);
       this.props.checkForToken();
@@ -84,6 +87,7 @@ class Signup extends Component {
                     passwordValue={this.state.password}
                     nameValue={this.state.name}
                     confirmValue={this.state.confirm}
+                    error={this.state.error}
                   />
                 </div>
               </div>

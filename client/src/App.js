@@ -25,6 +25,7 @@ class App extends Component {
     };
     this.checkForToken = this.checkForToken.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.isAuthenticated = this.isAuthenticated.bind(this);
   }
 
   isAuthenticated() {
@@ -68,6 +69,7 @@ class App extends Component {
       }
       return ret;
     } catch (err) {
+      console.log(err);
       this.setState({ isLoggedIn: false, userObject: {} });
       localStorage.setItem("jwt", "");
       return false;
@@ -87,28 +89,28 @@ class App extends Component {
     localStorage.setItem("jwt", "");
   }
 
-  getUser() {
-    axios.get("/api/user_data").then((response) => {
-      console.log("Get user response: ");
-      console.log(response.data);
-      if (response.data.user) {
-        console.log("Get User: There is a user saved in the server session: ");
+  // getUser() {
+  //   axios.get("/api/user_data").then((response) => {
+  //     console.log("Get user response: ");
+  //     console.log(response.data);
+  //     if (response.data.user) {
+  //       console.log("Get User: There is a user saved in the server session: ");
 
-        this.setState({
-          isLoggedIn: true,
-          email: response.data.user.email,
-          name: response.data.user.name,
-        });
-      } else {
-        console.log("Get user: no user");
-        this.setState({
-          isLoggedIn: false,
-          email: null,
-          name: null,
-        });
-      }
-    });
-  }
+  //       this.setState({
+  //         isLoggedIn: true,
+  //         email: response.data.user.email,
+  //         name: response.data.user.name,
+  //       });
+  //     } else {
+  //       console.log("Get user: no user");
+  //       this.setState({
+  //         isLoggedIn: false,
+  //         email: null,
+  //         name: null,
+  //       });
+  //     }
+  //   });
+  // }
   render() {
     return (
       <Router>
@@ -117,7 +119,7 @@ class App extends Component {
             exact
             path="/"
             render={(props) => (
-              <Signup
+              <Login
                 {...props}
                 isAuthenticated={this.isAuthenticated}
                 checkForToken={this.checkForToken}

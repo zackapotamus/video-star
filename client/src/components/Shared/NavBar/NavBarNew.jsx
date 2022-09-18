@@ -1,20 +1,25 @@
 import React, { useEffect } from "react";
 import { FaUser } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { MdMovieFilter } from "react-icons/md";
 import API from "../../../utils/API";
 
-const NavBarNew = () => {
+const NavBarNew = (props) => {
+  // let history = useHistory();
+  const history = props.history;
   useEffect(() => {
     console.log("NavBarNew loaded");
+    console.log(props);
   }, [])
-  const location = useLocation();
+  // const location = useLocation();
+  const location = props.location;
   const logOutUser = async () => {
     try {
       // console.log("GRRRRR");
       let response = await API.logOut();
       if (response.data.success) {
         localStorage.setItem("jwt", "");
+        history.push('/login');
         return true;
       } else {
         return false;
@@ -101,9 +106,9 @@ const NavBarNew = () => {
               Account
             </Link>
               <div className="dropdown-divider"></div>
-              <Link to="/login" className={"dropdown-item"} onClick={logOutUser}>
+              <a className={"dropdown-item"} onClick={logOutUser}>
                 Logout
-              </Link>
+              </a>
             </div>
           </li>
           {/* <li className="nav-item">
