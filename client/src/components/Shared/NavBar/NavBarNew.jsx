@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FaUser } from "react-icons/fa";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { MdMovieFilter } from "react-icons/md";
@@ -6,11 +6,38 @@ import API from "../../../utils/API";
 
 const NavBarNew = (props) => {
   // let history = useHistory();
+  const autohideEl = useRef(null);
+  let [lastScrollTop, setLastScrollTop] = useState(0);
+  const handleScroll = () => {
+    let scrollTop = window.scrollY;
+    if (scrollTop < lastScrollTop) {
+      autohideEl.current.classList.remove("scrolled-down");
+      autohideEl.current.classList.add("scrolled-up");
+    } else {
+      if (lastScrollTop >= 0) {
+        autohideEl.current.classList.remove("scrolled-up");
+        autohideEl.current.classList.add("scrolled-down");
+      }
+    }
+    lastScrollTop = scrollTop;
+
+    // window.addEventListener
+  };
+
   const history = props.history;
   useEffect(() => {
-    console.log("NavBarNew loaded");
-    console.log(props);
-  }, [])
+
+
+    if (autohideEl.current) {
+      // var last_scroll_top = 0;
+      window.addEventListener("scroll", handleScroll);
+      // window.addEventListener
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   // const location = useLocation();
   const location = props.location;
   const logOutUser = async () => {
@@ -19,19 +46,22 @@ const NavBarNew = (props) => {
       let response = await API.logOut();
       if (response.data.success) {
         localStorage.setItem("jwt", "");
-        history.push('/login');
+        history.push("/login");
         return true;
       } else {
         return false;
       }
-      } catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav
+      ref={autohideEl}
+      className="navbar fixed-top navbar-expand-sm navbar-dark bg-dark autohide"
+    >
       <a className="navbar-brand" href="#">
-        <MdMovieFilter style={{fontSize: 27}}/>
+        <MdMovieFilter style={{ fontSize: 27 }} />
       </a>
       <button
         className="navbar-toggler"
@@ -41,6 +71,7 @@ const NavBarNew = (props) => {
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        onClick={() => {}}
       >
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -68,7 +99,7 @@ const NavBarNew = (props) => {
                   : "nav-link"
               }
             >
-              Lent/Borrowed
+              Lending
             </Link>
           </li>
           <li className="nav-item">
@@ -94,17 +125,20 @@ const NavBarNew = (props) => {
               {/* Account */}
               <FaUser />
             </a>
-            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <Link
-              to="/account"
-              className={
-                location.pathname === "/account"
-                  ? "dropdown-item active"
-                  : "dropdown-item"
-              }
+            <div
+              className="dropdown-menu dropdown-menu-right"
+              aria-labelledby="navbarDropdown"
             >
-              Account
-            </Link>
+              <Link
+                to="/account"
+                className={
+                  location.pathname === "/account"
+                    ? "dropdown-item active"
+                    : "dropdown-item"
+                }
+              >
+                Account
+              </Link>
               <div className="dropdown-divider"></div>
               <a className={"dropdown-item"} onClick={logOutUser}>
                 Logout

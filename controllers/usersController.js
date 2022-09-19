@@ -63,7 +63,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.put("/", withAuth, (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { name, email, password, bio } = req.body;
   // const { id } = req.params;
   db.User.update({ name, email, password, bio }, { where: { id: 1 } }) // **** temporarily hard coded ***

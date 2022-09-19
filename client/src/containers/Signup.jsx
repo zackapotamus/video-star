@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
 import SignupForm from "../components/Shared/Form/SignupForm";
 import Hero from "../components/Shared/Hero/Hero";
@@ -39,7 +40,7 @@ class Signup extends Component {
         password: this.state.password,
         name: this.state.name,
       });
-      console.log("signup submit response:", response);
+      // console.log("signup submit response:", response);
       if (response.data.success) {
         jwt.verify(
           response.data.data,
@@ -68,15 +69,16 @@ class Signup extends Component {
       <>
         <NavBarLogin />
         {/* <Hero imageUrl={FilmMakerImage} /> */}
-        <GreyBlockTop page="Signup" />
+        {/* <GreyBlockTop page="Signup" /> */}
 
-        <div className="container" style={{ marginBottom: 80 }}>
+        {/* <div className="container" style={{ marginBottom: "80px", marginTop: "75px" }}> */}
+        <div className="container" style={{ marginTop: "75px" }}>
           <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
               <div className="card">
                 <div className="card-body">
-                  <h2 className="card-title">Sign Up. It's Free.</h2>
+                  <h4 className="card-title text-center">Sign Up <span className="h6">or <Link to='/login' style={{textDecoration: "underline"}}>Log In</Link></span></h4>
                 </div>
 
                 <div>
@@ -95,7 +97,7 @@ class Signup extends Component {
           </div>
         </div>
 
-        <GreyBlock />
+        {/* <div style={{ height: "180px"}}/> */}
       </>
     );
   }

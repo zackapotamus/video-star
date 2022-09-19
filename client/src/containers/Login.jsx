@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import axios from "axios";
 import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
 import LoginForm from "../components/Shared/Form/LoginForm";
@@ -23,11 +23,9 @@ class Login extends Component {
   }
 
   async componentDidMount() {
-    console.log("login component did mount");
     if (this.props.isAuthenticated()) {
       await this.props.history.push("/library");
     } else {
-      console.log("not logged in");
     }
   }
 
@@ -49,7 +47,6 @@ class Login extends Component {
         localStorage.setItem("jwt", response.data.data);
       } else {
         // error
-        console.log(response.data);
         return false;
       }
       // this.props.checkForToken();
@@ -66,15 +63,21 @@ class Login extends Component {
 
         {/* <Hero imageUrl={FilmMakerImage} /> */}
 
-        <GreyBlockTop page="Login" />
+        {/* <GreyBlockTop page="Login" /> */}
 
-        <div className="container" style={{ marginBottom: 100 }}>
+        <div className="container" style={{ marginTop: 75 }}>
           <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
               <div className="card">
                 <div className="card-body">
-                  <h2 className="card-title">Log In to Your Account</h2>
+                  <h4 className="card-title text-center">
+                    Log In <span className="h6">or{" "}
+                    <Link to="/signup" style={{ textDecoration: "underline" }}>
+                      Sign Up
+                    </Link>
+                    </span>
+                  </h4>
                 </div>
 
                 <div>
@@ -90,7 +93,7 @@ class Login extends Component {
           </div>
         </div>
 
-        <GreyBlock />
+        {/* <div style={{ height: "180px"}}/> */}
       </>
     );
   }

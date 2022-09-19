@@ -65,10 +65,10 @@ const VideosTable = (props) => {
 
   return (
     <>
-      <div className="container">
+      {/* <div className="container" style={{ marginTop: "76px"}}>
         <div className="row">
           <div className="col">
-            {filteredGenres.map((genre, index) => (
+            {props.map((genre, index) => (
               <a
                 key={genre.id}
                 onClick={() => props.handleGenreClick(genre.id)}
@@ -98,7 +98,7 @@ const VideosTable = (props) => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="container">
         {props.videosToDisplay.map((video) => (
           <VideoRow

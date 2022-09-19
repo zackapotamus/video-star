@@ -26,7 +26,7 @@ const SignupForm = (props) => {
                             <input type="password" name="confirm" className="form-control" onChange={props.handleChange} vallue={props.confirmValue}>
                             </input>
                         </div>
-                        <button type="submit" className="btn btn-primary" style={{marginBottom: 15}} onClick={props.handleSubmit}>Submit</button>
+                        <button type="submit" className="btn btn-primary" style={{marginBottom: 15}} onClick={props.handleSubmit}>Sign Up</button>
                     </form>
                 </div>
             </div>

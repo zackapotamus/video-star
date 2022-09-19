@@ -16,7 +16,7 @@ const LoginForm = ({ handleChange, handleSubmit, emailValue, passwordValue}) => 
                             <input type="password" name="password" className="form-control" onChange={handleChange} value={passwordValue}>
                             </input>
                         </div>
-                        <button type="submit" className="btn btn-primary mr-3" style={{marginBottom: 15}} onClick={handleSubmit}>Submit</button>
+                        <button type="submit" className="btn btn-primary mr-3" style={{marginBottom: 15}} onClick={handleSubmit}>Log In</button>
                     </form>
                 </div>
             </div>

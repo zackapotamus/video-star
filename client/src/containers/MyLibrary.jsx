@@ -2,19 +2,21 @@ import React, { Component } from "react";
 // import NavBar2 from "../components/Shared/NavBar/NavBar2";
 // import Hero from "../components/Shared/Hero/Hero";
 // import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
-import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 // import { Redirect } from "react-router-dom";
 // import WatchingMovieImage from "../img/watching-movie.jpg";
 import VideosTable from "../components/Shared/Table/VideosTable";
 import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 // import CastSelect from "../components/Shared/Select/CastSelect";
+import Select from "react-select";
 
 class MyLibrary extends Component {
   constructor() {
     super();
     this.state = {
       results: [],
+      resultCast: [],
+      resultGenres: [],
       genreFilters: [],
       castFilters: [],
       castCountMap: new Map(),
@@ -28,8 +30,12 @@ class MyLibrary extends Component {
     this.handleCastClick = this.handleCastClick.bind(this);
     this.handleCastClear = this.handleCastClear.bind(this);
     this.handleGenreClear = this.handleGenreClear.bind(this);
-    this.getAllVideosFilteredByCast = this.getAllVideosFilteredByCast.bind(this);
-    this.getAllVideosFilteredByGenre = this.getAllVideosFilteredByGenre.bind(this); // why again?
+    this.getAllVideosFilteredByCast =
+      this.getAllVideosFilteredByCast.bind(this);
+    this.getAllVideosFilteredByGenre =
+      this.getAllVideosFilteredByGenre.bind(this); // why again?
+    this.updateVideos = this.updateVideos.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   async componentDidMount() {
@@ -52,15 +58,32 @@ class MyLibrary extends Component {
         ),
       };
     });
-    this.setState({
+    this.updateVideos({
       results: results.data,
       castCountMap: castCountMap,
       filteredVideos: results.data,
     });
   }
+  handleSelectChange(event) {
+    switch (event.action) {
+      case "select-option":
+        // console.log('event:', event);
+        this.handleCastClick(event.option.value);
+        break;
+      case "remove-value":
+        this.handleCastClick(event.removedValue.value);
+        break;
+      case "clear":
+        this.handleCastClear();
+        break;
+      default:
+        console.log("ERROR: ", event);
+        break;
+    }
+  }
 
   handleCastClear() {
-    this.setState({
+    this.updateVideos({
       castFilters: [],
       filteredVideos:
         this.state.genreFilters.length === 0
@@ -101,14 +124,95 @@ class MyLibrary extends Component {
     }
   }
 
+  updateVideos(pendingState) {
+    // console.log("updateVideos", pendingState);
+    if (!pendingState.filteredVideos) {
+      this.setState({ ...pendingState });
+      return true;
+    }
+    if (
+      !pendingState.results &&
+      pendingState.castFilters &&
+      !pendingState.genreFilters
+    ) {
+      if (
+        pendingState.castFilters.length === 0 &&
+        this.state.genreFilters.length === 0
+      ) {
+        this.setState({
+          ...pendingState,
+          filteredCast: this.state.resultCast,
+          filteredGenres: this.state.resultGenres,
+        });
+        return true;
+      }
+    }
+    if (
+      !pendingState.results &&
+      pendingState.genreFilters &&
+      !pendingState.castFilters
+    ) {
+      if (
+        pendingState.genreFilters.length === 0 &&
+        this.state.castFilters.length === 0
+      ) {
+        this.setState({
+          ...pendingState,
+          filteredCast: this.state.resultCast,
+          filteredGenres: this.state.resultGenres,
+        });
+        return true;
+      }
+    }
+    const filteredCastMap = new Map();
+    const filteredGenresMap = new Map();
+    pendingState.filteredVideos.forEach((vid) => {
+      vid.cast.forEach((c) => {
+        filteredCastMap.set(c.person_id, {
+          person_id: c.person_id,
+          name: c.name,
+        });
+      });
+      vid.genres.forEach((g) => {
+        filteredGenresMap.set(g.id, { id: g.id, name: g.name });
+      });
+    });
+    const filteredCast = Array.from(filteredCastMap.values()).sort((a, b) => {
+      return (
+        (pendingState.castCountMap || this.state.castCountMap).get(b.person_id) -
+        (pendingState.castCountMap || this.state.castCountMap).get(a.person_id)
+      );
+    });
+    const filteredGenres = Array.from(filteredGenresMap.values()).sort(
+      (a, b) => {
+        return a.id - b.id;
+      }
+    );
+    if (pendingState.results) {
+      this.setState({
+        ...pendingState,
+        resultCast: filteredCast,
+        resultGenres: filteredGenres,
+        filteredCast: filteredCast,
+        filteredGenres: filteredGenres,
+      });
+    } else {
+      this.setState({
+        ...pendingState,
+        filteredCast: filteredCast,
+        filteredGenres: filteredGenres,
+      });
+    }
+  }
+
   handleGenreClear() {
     if (this.state.castFilters.length === 0) {
-      this.setState({
+      this.updateVideos({
         genreFilters: [],
         filteredVideos: this.state.results,
       });
     } else {
-      this.setState({
+      this.updateVideos({
         genreFilters: [],
         filteredVideos: this.getAllVideosFilteredByCast(this.state.castFilters),
       });
@@ -118,17 +222,16 @@ class MyLibrary extends Component {
   handleCastClick(person_id) {
     if (this.state.castFilters.includes(person_id)) {
       // remove a filter
-      console.log('removing a cast filter');
       let newCastFilters = this.state.castFilters.filter(
         (c) => c !== person_id
       );
-      this.setState({
+      this.updateVideos({
         castFilters: newCastFilters,
         filteredVideos:
           this.state.genreFilters.length === 0 && newCastFilters.length === 0
             ? this.state.results
-            : this.getAllVideosFilteredByGenre(this.state.genreFilters)
-                .filter((video) => {
+            : this.getAllVideosFilteredByGenre(this.state.genreFilters).filter(
+                (video) => {
                   // filter cast second
                   if (newCastFilters.length === 0) {
                     return true;
@@ -143,16 +246,17 @@ class MyLibrary extends Component {
                     }
                     return true;
                   }
-                }),
+                }
+              ),
       });
     } else {
       // filter further
-      console.log('adding cast filter');
-      this.setState({
+      let filteredVids = this.state.filteredVideos.filter((video) =>
+        video.cast.map((cast) => cast.person_id).includes(person_id)
+      );
+      this.updateVideos({
         castFilters: [...this.state.castFilters, person_id],
-        filteredVideos: this.state.filteredVideos.filter((video) =>
-          video.cast.map((cast) => cast.person_id).includes(person_id)
-        ),
+        filteredVideos: filteredVids,
       });
     }
   }
@@ -160,17 +264,16 @@ class MyLibrary extends Component {
   handleGenreClick(genre_id) {
     if (this.state.genreFilters.includes(genre_id)) {
       // remove a filter
-      console.log('removing a genre filter');
       let newGenreFilters = this.state.genreFilters.filter(
         (g) => g !== genre_id
       );
-      this.setState({
+      this.updateVideos({
         genreFilters: newGenreFilters,
         filteredVideos:
           newGenreFilters.length === 0 && this.state.castFilters.length === 0
             ? this.state.results
-            : this.getAllVideosFilteredByGenre(newGenreFilters)
-                .filter((video) => {
+            : this.getAllVideosFilteredByGenre(newGenreFilters).filter(
+                (video) => {
                   // filter cast second
                   if (this.state.castFilters.length === 0) {
                     return true;
@@ -187,12 +290,12 @@ class MyLibrary extends Component {
                     }
                     return true;
                   }
-                }),
+                }
+              ),
       });
     } else {
       // filter further
-      console.log('adding a genre filter');
-      this.setState({
+      this.updateVideos({
         genreFilters: [...this.state.genreFilters, genre_id],
         filteredVideos: this.state.filteredVideos.filter((video) =>
           video.genres.map((genre) => genre.id).includes(genre_id)
@@ -206,8 +309,11 @@ class MyLibrary extends Component {
       let idToDelete = this.state.results[index].id;
       let result = await API.deleteVideo(idToDelete /*, this.state.token*/);
       if (result.data.success) {
-        this.setState({
+        this.updateVideos({
           results: this.state.results.filter((r) => r.id !== idToDelete),
+          filteredVideos: this.state.filteredVideos.filter(
+            (r) => r.id !== idToDelete
+          ),
         });
       }
     } catch (err) {
@@ -216,13 +322,51 @@ class MyLibrary extends Component {
   }
 
   render() {
+    const selectOptions = this.state.filteredCast.map((cast) => ({
+      value: cast.person_id,
+      label: cast.name,
+    }));
+    // console.log(selectOptions);
+    const defaultValues = selectOptions.filter((o) => {
+      return this.state.castFilters.includes(o.value);
+    });
     return (
       <>
-        {/* <NavBar2 /> */}
-        {/* <NavBarNew /> */}
-        {/* <Hero imageUrl={WatchingMovieImage} /> */}
-        {/* <GreyBlockTop page="My Library" /> */}
-        {/* TABLE OF LIBRARY OF VIDEOS GOES HERE */}
+        <div className="container" style={{ marginTop: "76px" }}>
+          <div className="row">
+            <div className="col">
+              {this.state.filteredGenres.map((genre, index) => (
+                <a
+                  key={genre.id}
+                  onClick={() => this.handleGenreClick(genre.id)}
+                  className={`badge badge-pill filter-badge${
+                    this.state.genreFilters.includes(genre.id)
+                      ? " badge-info"
+                      : " badge-secondary"
+                  }`}
+                  style={{ color: "white" }}
+                >
+                  {genre.name}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <Select
+                isMulti
+                name="cast"
+                value={defaultValues}
+                options={selectOptions}
+                placeholder={"Filter by cast..."}
+                onChange={(values, event) => {
+                  this.handleSelectChange(event);
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
         <VideosTable
           castFilters={this.state.castFilters}
           handleCastClick={this.handleCastClick}
@@ -236,7 +380,7 @@ class MyLibrary extends Component {
 
         {/* LIBRARY OF VIDEOS GOES HERE */}
 
-        <GreyBlock />
+        <div height="100" />
       </>
     );
   }

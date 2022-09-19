@@ -1,17 +1,17 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./NavBar.css";
-import VideoStarLogo from '../../../img/videostar-logo.png';
+import VideoStarLogo from '../../../img/star-logo.png';
 
 function NavBarLogin() {
 
   const location = useLocation();
 
   return (
-    <nav className="navbar fixed-top navbar-expand-sm navbar-dark bg-dark ml-auto">
+    <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark ml-auto">
       
-      <a className="navbar-brand" href="/">
-        <img src={VideoStarLogo} alt="logo" style={{ width: 50 }} />
+      <a className="navbar-brand" href="#">
+        <img src={VideoStarLogo} alt="logo" style={{ width: "30px" }} width="30" height="30" />
       </a>
       
       <div className="collapse navbar-collapse" id="navbarNav">

@@ -62,40 +62,27 @@ class Add extends Component {
         Digital: false,
       })),
     });
-    console.log(results.data);
+    // console.log(results.data);
   }
 
   render() {
     return (
       <>
-        {/* <NavBar2 /> */}
-        {/* <NavBarNew /> */}
-        {/* <Hero imageUrl={AddMovie} /> */}
-        {/* <GreyBlockTop page="Add" /> */}
 
-        <div className="container" style={{ marginBottom: 100 }}>
+        <div className="container" style={{ marginBottom: 100, marginTop: 128}}>
           <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
               <div className="card shadow">
                 <div className="card-body">
                   <h2 className="card-title text-center">
-                    Add a Video to your Library
+                    Add a Movie
                   </h2>
                 </div>
                 <form className="mb-4">
                   <div className="form-group px-5">
                     <label>Movie Title</label>
                     <div className="input-group">
-                      <div className="input-group-append">
-                        <button
-                          // type="button"
-                          className="btn-primary"
-                          onClick={this.handleSubmit}
-                        >
-                          Search
-                        </button>
-                      </div>
                       <input
                         name="query"
                         type="title"
@@ -106,6 +93,15 @@ class Add extends Component {
                         onChange={this.handleChange}
                         onClick={this.selectInputText}
                       />
+                      <div className="input-group-append">
+                        <button
+                          // type="button"
+                          className="btn-primary"
+                          onClick={this.handleSubmit}
+                        >
+                          Search
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>
