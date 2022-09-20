@@ -8,7 +8,8 @@ import API from "../utils/API";
 import AddMovie from "../img/add-movie.jpg";
 import TMDBTable from "../components/Shared/Table/TMDBTable";
 import TMDBRow from "../components/Shared/Table/TMDBRow";
-
+// import { GrFormSearch } from "react-icons/gr";
+import { FaSearch } from "react-icons/fa"
 class Add extends Component {
   constructor() {
     super();
@@ -69,7 +70,7 @@ class Add extends Component {
     return (
       <>
 
-        <div className="container" style={{ marginBottom: 100, marginTop: 128}}>
+        <div className="container" style={{ marginBottom: 69, marginTop: 128}}>
           <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
@@ -80,12 +81,13 @@ class Add extends Component {
                   </h2>
                 </div>
                 <form className="mb-4">
-                  <div className="form-group px-5">
+                  <div className="form-group px-4">
                     <label>Movie Title</label>
                     <div className="input-group">
                       <input
                         name="query"
-                        type="title"
+                        type="search"
+                        enterkeyhint="search"
                         className="form-control"
                         id="movieSearchInput"
                         placeholder="Search for a Movie"
@@ -99,7 +101,7 @@ class Add extends Component {
                           className="btn-primary"
                           onClick={this.handleSubmit}
                         >
-                          Search
+                          <FaSearch />
                         </button>
                       </div>
                     </div>
@@ -109,7 +111,7 @@ class Add extends Component {
             </div>
           </div>
         </div>
-        <div className="container-fluid">
+        <div className="container-fluid mb-5" style={this.state.results.length === 0 ? {marginTop: "462px"} : {}}>
           {/* <TMDBTable
             addedState={this.state.addedState}
             handleAddToLibrary={this.handleAddToLibrary}
@@ -125,7 +127,6 @@ class Add extends Component {
             />
           ))}
         </div>
-        <GreyBlock />
       </>
     );
   }

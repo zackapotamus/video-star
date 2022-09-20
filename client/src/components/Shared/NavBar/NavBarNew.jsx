@@ -7,6 +7,7 @@ import API from "../../../utils/API";
 const NavBarNew = (props) => {
   // let history = useHistory();
   const autohideEl = useRef(null);
+  const toggleButtonEl = useRef(null);
   let [lastScrollTop, setLastScrollTop] = useState(0);
   const handleScroll = () => {
     let scrollTop = window.scrollY;
@@ -17,25 +18,41 @@ const NavBarNew = (props) => {
       if (lastScrollTop >= 0) {
         autohideEl.current.classList.remove("scrolled-up");
         autohideEl.current.classList.add("scrolled-down");
+        if (!toggleButtonEl.current.classList.contains("collapsed")) {
+          toggleButtonEl.current.click();
+        }
       }
     }
     lastScrollTop = scrollTop;
 
     // window.addEventListener
   };
+  const handleClickAway = (event) => {
+    if (!autohideEl.current) return;
+    if (!toggleButtonEl.current) return;
+    const node = event.target;
+    if (autohideEl.current.contains(node)) return;
+    if (!toggleButtonEl.current.classList.contains("collapsed")) {
+      toggleButtonEl.current.click();
+    }
+  };
 
   const history = props.history;
   useEffect(() => {
-
-
     if (autohideEl.current) {
       // var last_scroll_top = 0;
       window.addEventListener("scroll", handleScroll);
       // window.addEventListener
     }
+    if (toggleButtonEl.current) {
+      document.addEventListener("click", handleClickAway);
+      document.addEventListener("touchstart", handleClickAway);
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleClickAway);
+      document.removeEventListener("touchstart", handleClickAway);
     };
   }, []);
   // const location = useLocation();
@@ -64,6 +81,7 @@ const NavBarNew = (props) => {
         <MdMovieFilter style={{ fontSize: 27 }} />
       </a>
       <button
+        ref={toggleButtonEl}
         className="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -92,6 +110,16 @@ const NavBarNew = (props) => {
           </li>
           <li className="nav-item">
             <Link
+              to="/add"
+              className={
+                location.pathname === "/add" ? "nav-link active" : "nav-link"
+              }
+            >
+              Add
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
               to="/lentborrowed"
               className={
                 location.pathname === "/lentborrowed"
@@ -100,16 +128,6 @@ const NavBarNew = (props) => {
               }
             >
               Lending
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/add"
-              className={
-                location.pathname === "/add" ? "nav-link active" : "nav-link"
-              }
-            >
-              Add
             </Link>
           </li>
           <li className="nav-item dropdown">

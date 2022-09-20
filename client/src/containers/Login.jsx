@@ -72,10 +72,15 @@ class Login extends Component {
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title text-center">
-                    Log In <span className="h6">or{" "}
-                    <Link to="/signup" style={{ textDecoration: "underline" }}>
-                      Sign Up
-                    </Link>
+                    Log In{" "}
+                    <span className="h6">
+                      or{" "}
+                      <Link
+                        to="/signup"
+                        style={{ textDecoration: "underline" }}
+                      >
+                        Sign Up
+                      </Link>
                     </span>
                   </h4>
                 </div>

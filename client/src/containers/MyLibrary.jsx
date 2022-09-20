@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-// import NavBar2 from "../components/Shared/NavBar/NavBar2";
-// import Hero from "../components/Shared/Hero/Hero";
-// import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import API from "../utils/API";
-// import { Redirect } from "react-router-dom";
-// import WatchingMovieImage from "../img/watching-movie.jpg";
 import VideosTable from "../components/Shared/Table/VideosTable";
-import NavBarNew from "../components/Shared/NavBar/NavBarNew";
-// import CastSelect from "../components/Shared/Select/CastSelect";
 import Select from "react-select";
 
 class MyLibrary extends Component {
@@ -179,7 +172,9 @@ class MyLibrary extends Component {
     });
     const filteredCast = Array.from(filteredCastMap.values()).sort((a, b) => {
       return (
-        (pendingState.castCountMap || this.state.castCountMap).get(b.person_id) -
+        (pendingState.castCountMap || this.state.castCountMap).get(
+          b.person_id
+        ) -
         (pendingState.castCountMap || this.state.castCountMap).get(a.person_id)
       );
     });
@@ -334,6 +329,11 @@ class MyLibrary extends Component {
       <>
         <div className="container" style={{ marginTop: "76px" }}>
           <div className="row">
+            <div className="col text-center mb-2">
+              <h1>Video Library</h1>
+            </div>
+          </div>
+          <div className="row mb-3">
             <div className="col">
               {this.state.filteredGenres.map((genre, index) => (
                 <a
@@ -351,10 +351,11 @@ class MyLibrary extends Component {
               ))}
             </div>
           </div>
-          <div className="row">
+          <div className="row mb-4">
             <div className="col">
               <Select
                 isMulti
+                enterkeyhint="go"
                 name="cast"
                 value={defaultValues}
                 options={selectOptions}

@@ -35,7 +35,7 @@ class Signup extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      let response = await API.logIn({
+      let response = await API.signUp({
         email: this.state.email,
         password: this.state.password,
         name: this.state.name,
