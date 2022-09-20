@@ -158,7 +158,7 @@ class App extends Component {
           <PrivateRoute exact path="/details/:id" component={Details} />
           <PrivateRoute exact path="/add" component={Add} />
         </Switch>
-        <Footer />
+        <Footer {...this.props} />
       </Router>
     );
   }

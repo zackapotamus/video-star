@@ -80,7 +80,7 @@ function TMDBRow(props) {
           </div>
           <div className="col">
             <div className="row">
-              <div className="col-7 col-sm-8 pr-1 pl-2">
+              <div className="col-7 col-sm-9 pr-1 pl-2">
                 <div
                   className="overflow-auto cast-cell"
                   style={{ height: "138px" }}
@@ -89,7 +89,7 @@ function TMDBRow(props) {
                 </div>
               </div>
               <div
-                className="col-5 col-sm-4 pl-1 pr-2"
+                className="col-5 col-sm-3 pl-1 pr-2"
                 style={{ overflow: "hidden" }}
               >
                 <div className="btn-group-vertical">

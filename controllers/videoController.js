@@ -258,8 +258,8 @@ router.put("/", withAuth, async (req, res) => {
           },
         }
       );
-      console.log(result);
-      console.log("grr...");
+      // console.log(result);
+      // console.log("grr...");
     } else {
       // borrowed
       result = await db.Video.update(
@@ -277,7 +277,6 @@ router.put("/", withAuth, async (req, res) => {
           },
         }
       );
-      console.log("wtf");
     }
     res.json({
       success: true,
