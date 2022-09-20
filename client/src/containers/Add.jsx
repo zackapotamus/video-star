@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 // import NavBar2 from "../components/Shared/NavBar/NavBar2";
 import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 import Hero from "../components/Shared/Hero/Hero";
@@ -19,6 +19,7 @@ class Add extends Component {
       message: "",
       addedState: [],
     };
+    this.movieSearchInput = createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     // this.componentDidMount = this.componentDidMount.bind(this);
@@ -37,9 +38,8 @@ class Add extends Component {
   }
 
   selectInputText = () => {
-    const movieSearchInput = document.getElementById("movieSearchInput");
-    movieSearchInput.focus();
-    movieSearchInput.select();
+    this.movieSearchInput.current.focus();
+    this.movieSearchInput.current.select();
   };
 
   async handleAddToLibrary(index, videoType) {
@@ -63,6 +63,7 @@ class Add extends Component {
         Digital: false,
       })),
     });
+    this.movieSearchInput.current.blur();
     // console.log(results.data);
   }
 
@@ -85,6 +86,7 @@ class Add extends Component {
                     <label>Movie Title</label>
                     <div className="input-group">
                       <input
+                        ref={this.movieSearchInput}
                         name="query"
                         type="search"
                         enterkeyhint="search"
