@@ -109,12 +109,15 @@ router.delete("/", withAuth, async (req, res) => {
     },
   });
   if (response > 0) {
-    return res.json({
+    return res.status(200).json({
       success: true,
       message: "Movie deleted.",
     });
   } else {
-    return res.status(404).send();
+    return res.status(404).json({
+      success: false,
+      message: "Movie not found",
+    });
   }
 });
 
@@ -165,7 +168,7 @@ router.post("/", withAuth, async (req, res) => {
       order: cast.order,
       profile_path: cast.profile_path,
     }));
-    let tmd_crew = castResult.data.crew.map((crew) => ({
+    let tmd_crew = castResult.data.crew.filter((crew)=>crew.job === 'Director').map((crew) => ({
       person_id: crew.id,
       department: crew.department,
       credit_id: crew.credit_id,
