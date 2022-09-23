@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-// import NavBar2 from "../components/Shared/NavBar/NavBar2";
-import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import ProfileCard from "../components/Shared/Card/ProfileCard";
-import MovieAction from "../img/movie-action.jpg";
-import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 import API from "../utils/API";
 // import jwt from "jsonwebtoken";
 

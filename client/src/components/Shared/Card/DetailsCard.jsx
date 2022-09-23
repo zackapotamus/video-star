@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import PlaceholderImage from "../../../img/videostar-placeholder.png";
 import moment from "moment";
 
@@ -27,8 +27,8 @@ const DetailsCard = (props) => {
     }
   }
   return (
-    <section id="more-info">
-      <div className="container-fluid">
+    <section id="more-info" className="my-5">
+      <div className="container-fluid pt-5">
         <div className="row">
           <div className="col-12">
             <h2 className="more-info-header">More information about <b>{props.video.title}</b></h2>

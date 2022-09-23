@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
@@ -11,7 +10,6 @@ class Borrow extends Component {
     return (
       <>
         <div>
-          {/* <NavBarNew /> */}
           <Hero imageUrl={Blockbuster}/>
           <GreyBlockTop page="Borrow" />
 

@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import NavBarNew from "../components/Shared/NavBar/NavBarNew";
-import Hero from "../components/Shared/Hero/Hero";
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import LentTable from "../components/Shared/Table/LentTable";
 import BorrowTable from "../components/Shared/Table/BorrowTable";
 import API from "../utils/API";
 
-import RetroCamera from "../img/retro-camera.jpg";
 class LentBorrow extends Component {
   constructor() {
     super();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { FaUser } from "react-icons/fa";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdMovieFilter } from "react-icons/md";
 import API from "../../../utils/API";
 
@@ -8,6 +8,8 @@ const NavBarNew = (props) => {
   // let history = useHistory();
   const autohideEl = useRef(null);
   const toggleButtonEl = useRef(null);
+  const collpseMenuEl = useRef(null);
+  const isHidden = (el) => el.current.offsetParent === null;
   let [lastScrollTop, setLastScrollTop] = useState(0);
   const handleScroll = () => {
     let scrollTop = window.scrollY;
@@ -18,7 +20,7 @@ const NavBarNew = (props) => {
       if (lastScrollTop >= 0) {
         autohideEl.current.classList.remove("scrolled-up");
         autohideEl.current.classList.add("scrolled-down");
-        if (!toggleButtonEl.current.classList.contains("collapsed")) {
+        if (!isHidden(collpseMenuEl) && !isHidden(toggleButtonEl)) {
           toggleButtonEl.current.click();
         }
       }
@@ -32,7 +34,7 @@ const NavBarNew = (props) => {
     if (!toggleButtonEl.current) return;
     const node = event.target;
     if (autohideEl.current.contains(node)) return;
-    if (!toggleButtonEl.current.classList.contains("collapsed")) {
+    if (!isHidden(collpseMenuEl) && !isHidden(toggleButtonEl)) {
       toggleButtonEl.current.click();
     }
   };
@@ -94,7 +96,7 @@ const NavBarNew = (props) => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <div className="collapse navbar-collapse" id="navbarSupportedContent" ref={collpseMenuEl}>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link

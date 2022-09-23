@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 import DetailsCard from "../components/Shared/Card/DetailsCard";
 
@@ -8,7 +7,7 @@ class Details extends Component {
     super();
     this.state = {
       video: {
-        id: this.props.match.params.id || 0,
+        id: 0,
         genres: [],
         cast: [],
         runtime: 0,
@@ -20,7 +19,10 @@ class Details extends Component {
     this.deleteVideo = this.deleteVideo.bind(this);
   }
 
-  async deleteVideo()
+  async deleteVideo(id) {
+    let response = await API.deleteVideo(id);
+    console.log(response);
+  }
 
   async componentDidMount() {
     let result = await API.getVideo(this.props.match.params.id /*, token*/);
