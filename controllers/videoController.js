@@ -46,7 +46,7 @@ router.get("/", withAuth, async (req, res) => {
             attributes: ["id", "name"],
             where: {
               job: "Director",
-            }
+            },
           },
         ],
         where: {
@@ -79,7 +79,7 @@ router.get("/", withAuth, async (req, res) => {
           user_id: req.id,
         },
         // order: [[db.Sequelize.literal("REGEXP_REPLACE(Video.title, '^(A |The )', '')"), "ASC"]],
-        order: [['sort_title', 'ASC']]
+        order: [["sort_title", "ASC"]],
       });
       res.status(200).json(video);
     }
@@ -158,25 +158,29 @@ router.post("/", withAuth, async (req, res) => {
         },
       }
     );
-    let tmd_cast = castResult.data.cast.map((cast) => ({
-      person_id: cast.id,
-      character: cast.character,
-      credit_id: cast.credit_id,
-      gender: cast.gender,
-      cast_id: cast.cast_id,
-      name: cast.name,
-      order: cast.order,
-      profile_path: cast.profile_path,
-    }));
-    let tmd_crew = castResult.data.crew.filter((crew)=>crew.job === 'Director').map((crew) => ({
-      person_id: crew.id,
-      department: crew.department,
-      credit_id: crew.credit_id,
-      gender: crew.gender,
-      job: crew.job,
-      name: crew.name,
-      profile_path: crew.profile_path,
-    }));
+    let tmd_cast = castResult.data.cast
+      .filter((cast, index) => cast.order < 15)
+      .map((cast) => ({
+        person_id: cast.id,
+        character: cast.character,
+        credit_id: cast.credit_id,
+        gender: cast.gender,
+        cast_id: cast.cast_id,
+        name: cast.name,
+        order: cast.order,
+        profile_path: cast.profile_path,
+      }));
+    let tmd_crew = castResult.data.crew
+      .filter((crew) => crew.job === "Director")
+      .map((crew) => ({
+        person_id: crew.id,
+        department: crew.department,
+        credit_id: crew.credit_id,
+        gender: crew.gender,
+        job: crew.job,
+        name: crew.name,
+        profile_path: crew.profile_path,
+      }));
     let tmd_movie = movieResult.data;
     let video = await db.Video.create({
       budget: tmd_movie.budget,
@@ -198,7 +202,7 @@ router.post("/", withAuth, async (req, res) => {
       is_lent: false,
       tagline: tmd_movie.tagline,
       title: tmd_movie.title,
-      sort_title: tmd_movie.title.replace(/^(An? |The )/, ''),
+      sort_title: tmd_movie.title.replace(/^(An? |The )/, ""),
       vote_average: tmd_movie.vote_average,
       vote_count: tmd_movie.vote_count,
       video_type: video_type,
