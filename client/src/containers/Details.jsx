@@ -8,7 +8,7 @@ class Details extends Component {
     super();
     this.state = {
       video: {
-        id: this.props.match.params.id || 0,
+        id: 0,
         genres: [],
         cast: [],
         runtime: 0,
@@ -20,7 +20,10 @@ class Details extends Component {
     this.deleteVideo = this.deleteVideo.bind(this);
   }
 
-  async deleteVideo()
+  async deleteVideo() {
+    let result = await API.deleteVideo(this.props.match.params.id);
+    console.log(result);
+  }
 
   async componentDidMount() {
     let result = await API.getVideo(this.props.match.params.id /*, token*/);
