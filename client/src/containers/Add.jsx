@@ -1,14 +1,6 @@
 import React, { Component, createRef } from "react";
-// import NavBar2 from "../components/Shared/NavBar/NavBar2";
-import NavBarNew from "../components/Shared/NavBar/NavBarNew";
-import Hero from "../components/Shared/Hero/Hero";
-import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
-import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
-import AddMovie from "../img/add-movie.jpg";
-import TMDBTable from "../components/Shared/Table/TMDBTable";
 import TMDBRow from "../components/Shared/Table/TMDBRow";
-// import { GrFormSearch } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa"
 class Add extends Component {
   constructor() {

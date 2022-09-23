@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import axios from "axios";
 import NavBarLogin from "../components/Shared/NavBar/NavBarLogin";
 import LoginForm from "../components/Shared/Form/LoginForm";
-import Hero from "../components/Shared/Hero/Hero";
-import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
-import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
-import FilmMakerImage from "../img/filmmaker.jpg";
-// import jwt from "jsonwebtoken";
 import API from "../utils/API";
 
 class Login extends Component {

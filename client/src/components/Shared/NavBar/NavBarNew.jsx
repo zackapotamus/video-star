@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { FaUser } from "react-icons/fa";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdMovieFilter } from "react-icons/md";
 import API from "../../../utils/API";
 

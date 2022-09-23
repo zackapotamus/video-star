@@ -2,9 +2,7 @@ import React from "react";
 import ProfileForm from "../Form/ProfileForm";
 
 import BackgroundProfile from "../../../img/background-profile.png";
-// import UserImage from '../../../img/user-image.jpeg';
 import { FaUser } from "react-icons/fa";
-// import {FaUserCircle} from 'react-icons/fa';
 
 const ProfileCard = (props) => {
   const centerBlockBackground = {
@@ -16,12 +14,12 @@ const ProfileCard = (props) => {
     width: "60%",
   };
 
-  const centerBlockAvatar = {
-    display: "block",
-    marginLeft: "auto",
-    marginRight: "auto",
-    // width: 200
-  };
+  // const centerBlockAvatar = {
+  //   display: "block",
+  //   marginLeft: "auto",
+  //   marginRight: "auto",
+  //   // width: 200
+  // };
 
   return (
     <div className="container-fluid bg-light py-3" style={props.style}>

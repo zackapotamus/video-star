@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import NavBarNew from "../components/Shared/NavBar/NavBarNew";
 import Hero from '../components/Shared/Hero/Hero';
 import GreyBlockTop from "../components/Shared/GreyBlockTop/GreyBlockTop";
 import GreyBlock from "../components/Shared/GreyBlock/GreyBlock";
 import API from "../utils/API";
 import Cashier from "../img/Cash-min.jpg";
-import moment from "moment";
 import DatePicker from "react-date-picker";
 
 class Lend extends Component {
@@ -62,7 +60,6 @@ class Lend extends Component {
     return (
       <>
         <div>
-          {/* <NavBarNew /> */}
           <Hero imageUrl={Cashier}/>
           <GreyBlockTop page="Lend" />
 
