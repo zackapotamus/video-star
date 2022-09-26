@@ -57,6 +57,7 @@ class MyLibrary extends Component {
       filteredVideos: results.data,
     });
   }
+
   handleSelectChange(event) {
     switch (event.action) {
       case "select-option":
@@ -299,16 +300,13 @@ class MyLibrary extends Component {
     }
   }
 
-  async handleDelete(index) {
+  async handleDelete(id) {
     try {
-      let idToDelete = this.state.results[index].id;
-      let result = await API.deleteVideo(idToDelete /*, this.state.token*/);
+      let result = await API.deleteVideo(id);
       if (result.data.success) {
         this.updateVideos({
-          results: this.state.results.filter((r) => r.id !== idToDelete),
-          filteredVideos: this.state.filteredVideos.filter(
-            (r) => r.id !== idToDelete
-          ),
+          results: this.state.results.filter(r => r.id !== id),
+          filteredVideos: this.state.filteredVideos.filter(v => v.id !== id),
         });
       }
     } catch (err) {

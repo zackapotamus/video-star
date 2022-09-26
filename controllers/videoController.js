@@ -94,18 +94,11 @@ router.get("/", withAuth, async (req, res) => {
 
 // Matches "/api/videos"
 router.delete("/", withAuth, async (req, res) => {
-  const { id, token } = req.query;
-  if (!token) {
-    return res.status(403).json({
-      success: false,
-      message: "Missing token.",
-    });
-  }
-  user = jwt.verify(token, process.env.REACT_APP_SESSION_SECRET);
+  const { id } = req.query;
   let response = await db.Video.destroy({
     where: {
       id: id,
-      user_id: user.id,
+      user_id: req.id,
     },
   });
   if (response > 0) {
