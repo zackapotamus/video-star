@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import VideoRow from "./VideoRow";
 import { Link } from "react-router-dom";
 
 const VideosTable = (props) => {
+  const videoRefs = useRef([]);
   if (props.videosToDisplay.length === 0) {
     return (
       <div className="container mb-5">
@@ -22,6 +23,11 @@ const VideosTable = (props) => {
     <div className="container mb-5">
       {props.videosToDisplay.map((video) => (
         <VideoRow
+          // ref={(ref) => {
+          //   props.vidRefs[video.id] = ref;
+          //   videoRefs.push(ref);
+          //   return ref;
+          // }}
           key={video.id}
           video={video}
           handleCastClick={props.handleCastClick}

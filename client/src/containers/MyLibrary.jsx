@@ -29,6 +29,8 @@ class MyLibrary extends Component {
       this.getAllVideosFilteredByGenre.bind(this); // why again?
     this.updateVideos = this.updateVideos.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleTitleClick = this.handleTitleClick.bind(this);
+    this.vidRefs = {};
   }
 
   async componentDidMount() {
@@ -215,6 +217,14 @@ class MyLibrary extends Component {
     }
   }
 
+  handleTitleClick(video_id) {
+    this.vidRefs[video_id].scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
+    });
+  }
+
   handleCastClick(person_id) {
     if (this.state.castFilters.includes(person_id)) {
       // remove a filter
@@ -305,8 +315,8 @@ class MyLibrary extends Component {
       let result = await API.deleteVideo(id);
       if (result.data.success) {
         this.updateVideos({
-          results: this.state.results.filter(r => r.id !== id),
-          filteredVideos: this.state.filteredVideos.filter(v => v.id !== id),
+          results: this.state.results.filter((r) => r.id !== id),
+          filteredVideos: this.state.filteredVideos.filter((v) => v.id !== id),
         });
       }
     } catch (err) {
@@ -315,14 +325,18 @@ class MyLibrary extends Component {
   }
 
   render() {
-    const selectOptions = this.state.filteredCast.map((cast) => ({
+    const castSelectOptions = this.state.filteredCast.map((cast) => ({
       value: cast.person_id,
       label: cast.name,
     }));
     // console.log(selectOptions);
-    const defaultValues = selectOptions.filter((o) => {
+    const defaultValues = castSelectOptions.filter((o) => {
       return this.state.castFilters.includes(o.value);
     });
+    const titleSelectOptions = this.state.filteredVideos.map((vid) => ({
+      value: vid.id,
+      label: vid.title,
+    }));
     return (
       <>
         <div className="container" style={{ marginTop: "76px" }}>
@@ -356,7 +370,7 @@ class MyLibrary extends Component {
                 enterkeyhint="go"
                 name="cast"
                 value={defaultValues}
-                options={selectOptions}
+                options={castSelectOptions}
                 placeholder={"Filter by cast..."}
                 onChange={(values, event) => {
                   this.handleSelectChange(event);
@@ -364,6 +378,25 @@ class MyLibrary extends Component {
               />
             </div>
           </div>
+          <div className="row mb-4">
+            <div className="col">
+              <Select
+                onFocus={(evt) => {
+                  evt.target.scrollIntoView();
+                }}
+                enterkeyhint="go"
+                name="cast"
+                value={null}
+                options={titleSelectOptions}
+                placeholder={"Jump to title..."}
+                onChange={(values, event) => {
+                  document
+                    .getElementById(`${values.value}`)
+                    .scrollIntoView({ behavior: "smooth" });
+                }}
+              />
+            </div>
+          </div>{" "}
         </div>
 
         <VideosTable
@@ -375,6 +408,7 @@ class MyLibrary extends Component {
           genreFilters={this.state.genreFilters}
           handleGenreClick={this.handleGenreClick}
           castCountMap={this.state.castCountMap}
+          // vidRefs={this.vidRefs}
         />
 
         {/* LIBRARY OF VIDEOS GOES HERE */}

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function VideoRow(props) {
   return (
-    <div className="row video-row">
+    <div className="row video-row" id={props.video.id}>
       <div className="col">
         <div className="row">
           <div className="h5 col-10">
